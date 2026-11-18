@@ -14,7 +14,9 @@ code and the conformance kit (`saas_core/gateways/conformance.py`) win.
 ## Capabilities (`base.CAPABILITIES`)
 
 Declare a capability if and only if you implement it. The conformance test `test_capability_honesty` fails otherwise.
-Billing checks the capability before calling the method; if it is missing the caller gets `GatewayCapabilityError`
+Billing checks the capability before calling the method. What happens when it is missing depends on the caller, see
+the "If missing" column below (for example a refund is marked failed, a cancel skips the lookup, the browser callback
+answers 422). Code that calls a missing method directly (or `require_capability`) gets `GatewayCapabilityError`
 (a `GatewayError` and a `NotImplementedError`), with `.code == "capability_unsupported"`.
 
 | Capability | Method it promises | Used by | If missing |
@@ -116,4 +118,8 @@ or leave refund events as `ignored`; the refunds your code initiates are booked 
 
 `saas_core.experimental.FEATURES` lists gated features. Built-in gating: `stripe` needs `stripe`, `fake` needs
 `fake_gateway`. A plugin can opt in by setting `experimental_feature = "<feature>"` on its class (pick an existing
-feature name; adding a new one means editing `saas_core/experimental.py`).
+feature name; adding a new one means editing `saas_core/experimental.py`). An unknown name is refused when the plugin
+loads, with a validation error listing the known names.
+
+A refund retry on a gateway that declares `refund` but not `refund_lookup` is marked non-retryable at once and needs
+manual reconciliation, so declare `refund_lookup` whenever you declare `refund`.

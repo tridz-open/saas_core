@@ -38,7 +38,24 @@ def build():
     f.local = _dict(site="test.local", request_id="req-1")
     f.form_dict = _dict()
     f.flags = _dict()
-    f.get_hooks = lambda key=None, default=None, app_name=None: f.conf.get('_test_hooks', {}).get(key, default if default is not None else [])
+    def _append_hook(target, key, value):  # mirrors frappe.utils.append_hook / append_to_list
+        if isinstance(value, dict):
+            target.setdefault(key, {})
+            for k, v in value.items():
+                _append_hook(target[key], k, v)
+        else:
+            target.setdefault(key, [])
+            target[key].extend(value if isinstance(value, list) else [value])
+
+    def get_hooks(key=None, default=None, app_name=None):
+        """Real Frappe shape: dict hooks become {name: [paths...]}, scalars become lists (one entry per app)."""
+        merged: dict = {}
+        raw = f.conf.get('_test_hooks', {})
+        for k, v in raw.items():
+            for part in (v if isinstance(v, list) and v and all(isinstance(x, dict) for x in v) else [v]):
+                _append_hook(merged, k, part)
+        return merged.get(key, default if default is not None else []) if key else merged
+    f.get_hooks = get_hooks
     f.whitelist = lambda *a, **k: (a[0] if a and callable(a[0]) else (lambda fn: fn))
     f.generate_hash = lambda *a, **k: uuid.uuid4().hex[: k.get("length", 10)]
     f.as_json = lambda o, **k: json.dumps(o, default=str)

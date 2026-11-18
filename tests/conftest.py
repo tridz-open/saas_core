@@ -14,5 +14,5 @@ def frappe(request):
         delattr(pkg, a)  # `from saas_core import jobs` must not return a module bound to the previous frappe
     f = frappe_stub.build()
     if not request.node.get_closest_marker("strict_experimental"):
-        f.conf["saas_core_experimental"] = "all"  # existing suites exercise experimental code; gate tests opt out
+        f.conf["saas_core_experimental"] = "all,fake_gateway"  # `all` excludes fake_gateway; existing suites exercise experimental code; gate tests opt out
     return f

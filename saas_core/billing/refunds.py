@@ -208,7 +208,12 @@ def issue(doc, sub, gateway, now=None) -> bool:
     except Exception as e:  # noqa: BLE001
         n = attempts(doc) + 1
         doc.status = "failed"
-        doc.error = f"attempt {n}: {type(e).__name__}: {e}"[:140]
+        if isinstance(e, GatewayCapabilityError):  # retrying cannot succeed: stop now, a human must reconcile
+            n = MAX_REFUND_ATTEMPTS
+            doc.error = (f"attempt {n}: manual reconciliation needed: gateway "
+                         f"{getattr(gateway, 'name', '')} has no refund_lookup")[:140]
+        else:
+            doc.error = f"attempt {n}: {type(e).__name__}: {e}"[:140]
         doc.save(ignore_permissions=True)
         frappe.log_error(f"saas_core refund failed {doc.get('name')} (attempt {n})", "saas_core refund")
         if n == 1 or n >= MAX_REFUND_ATTEMPTS:

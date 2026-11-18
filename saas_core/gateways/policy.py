@@ -25,7 +25,7 @@ def live_gateway_enabled() -> bool:
         rows = frappe.get_all("Gateway Account", filters={"enabled": 1}, fields=["gateway", "mode"])
     except Exception:
         return False
-    return any(r.get("gateway") != "manual" and r.get("mode") == "live" for r in rows)
+    return any(r.get("gateway") not in ("manual", "fake") and r.get("mode") == "live" for r in rows)
 
 
 def is_system_manager(user: str | None = None) -> bool:

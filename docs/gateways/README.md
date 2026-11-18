@@ -11,7 +11,7 @@ gateway without editing saas_core.
 | `razorpay` | Verified live (test mode); the only gateway verified | subscription, order, client_callback, refund, refund_lookup, payment_lookup, plan_update, invoice_lookup, payment_link | `checkout_mode=order` is the verified path. Subscription mode is experimental (`razorpay_subscription`). |
 | `stripe` | Experimental: needs `saas_core_experimental=stripe`. Built from docs, never run live | subscription, portal | No refunds, so cancel-with-refund fails with a clear error. |
 | `manual` | Mock payments, test mode only | subscription, client_callback, refund, plan_update | Never usable in live mode or next to a live account. |
-| `fake` | Test/dev reference implementation. Needs `saas_core_experimental=fake_gateway` | all capabilities | In-memory, no network. Source: `saas_core/gateways/fake.py`. |
+| `fake` | Test/dev reference implementation. Needs `saas_core_experimental=fake_gateway` (not enabled by `all`) | all capabilities | In-memory, no network. Never allowed in live mode or next to a live account, same as `manual`. Source: `saas_core/gateways/fake.py`. |
 | your plugin | Whatever you declare | whatever you declare | See [ADDING_A_GATEWAY.md](ADDING_A_GATEWAY.md). Policy: saas_core does not ship new real gateways; add yours in your own app. |
 
 ## Request flow

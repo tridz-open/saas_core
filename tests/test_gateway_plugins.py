@@ -243,3 +243,76 @@ def test_every_capability_has_a_description_and_known_method():
     assert all(isinstance(v, str) and v for v in CAPABILITIES.values())
     assert set(CAPABILITY_METHODS) <= set(CAPABILITIES)
     assert all(callable(getattr(Gateway, m)) for m in CAPABILITY_METHODS.values())
+
+
+# ---- review fixes (H1, M1, M2, L2, L3, L4) ----------------------------------------------------------------
+def test_h1_real_frappe_hook_shape_dict_becomes_list_of_paths(frappe):
+    """Frappe's append_hook turns {"plug": "x.Y"} into {"plug": ["x.Y"]}; the stub now mirrors that."""
+    from saas_core.gateways import registry
+    cls = make_plugin()
+    hooks(frappe, {"plug": "x.Y"}, {"x.Y": cls})
+    assert frappe.get_hooks("saas_core_gateways") == {"plug": ["x.Y"]}
+    assert registry.gateway_class("plug") is cls
+
+
+def test_h1_explicit_list_value_takes_last_entry(frappe):
+    from saas_core.gateways import registry
+    cls = make_plugin()
+    frappe.conf["_test_hooks"] = {"saas_core_gateways": {"plug": ["old.Y", "x.Y"]}}
+    frappe.get_attr = {"x.Y": cls}.__getitem__
+    assert registry.gateway_class("plug") is cls
+
+
+def test_m1_fake_refused_next_to_live_account(frappe):
+    from saas_core.gateways import registry
+    account(frappe, "razorpay", mode="live", name="live1")
+    account(frappe, "fake", name="f1")
+    with pytest.raises(frappe.ValidationError, match="live gateway account"):
+        registry.get_gateway("fake")
+
+
+def test_m1_experimental_all_does_not_enable_fake_gateway(frappe):
+    from saas_core import experimental
+    frappe.conf["saas_core_experimental"] = "all"
+    assert experimental.enabled("dunning") and not experimental.enabled("fake_gateway")
+    frappe.conf["saas_core_experimental"] = "all,fake_gateway"
+    assert experimental.enabled("fake_gateway")
+
+
+def test_m2_capability_error_on_retry_is_non_retryable_at_once(frappe, monkeypatch):
+    from saas_core.billing import refunds
+    sub = _refund_env(frappe, monkeypatch)
+
+    class NoLookup(fake_mod.FakeGateway):
+        name = "nolookup"
+        supports = fake_mod.FakeGateway.supports - {"refund_lookup"}
+
+        def refund_payment(self, *a, **k):
+            raise TimeoutError("lost")
+
+    doc = refunds.create_doc(sub, user="u@x.com", kind="cancel", amount=1000, currency="USD", payment_id="pay_1",
+                             reason="t", now=NOW)
+    gw = NoLookup()
+    refunds.issue(doc, sub, gw, NOW)
+    assert refunds.attempts(doc) == 1
+    refunds.issue(doc, sub, gw, NOW)
+    assert refunds.attempts(doc) == refunds.MAX_REFUND_ATTEMPTS
+    assert "manual reconciliation" in doc.error and "refund_lookup" in doc.error
+
+
+def test_l2_unknown_experimental_feature_is_a_clear_validation_error(frappe):
+    from saas_core.gateways import registry
+    hooks(frappe, {"plug": "x.Y"}, {"x.Y": make_plugin(experimental_feature="plug")})
+    account(frappe, "plug")
+    with pytest.raises(frappe.ValidationError, match="not a known feature"):
+        registry.get_gateway("plug")
+
+
+def test_l4_duplicate_plugin_name_across_apps_logs_warning_naming_both(frappe):
+    from saas_core.gateways import registry
+    cls = make_plugin()
+    frappe.conf["_test_hooks"] = {"saas_core_gateways": [{"plug": "app_a.Gw"}, {"plug": "app_b.Gw"}]}
+    frappe.get_attr = lambda path: cls
+    registry.gateway_class("plug")
+    msgs = [m[1][0] for m in frappe._store.messages if m[0] == "error"]
+    assert any("app_a.Gw" in m and "app_b.Gw" in m for m in msgs), msgs

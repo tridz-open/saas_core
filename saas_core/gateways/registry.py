@@ -42,25 +42,38 @@ def _hook_entries() -> dict[str, object]:
         return {}
     items = raw if isinstance(raw, (list, tuple)) else [raw]
     out: dict[str, object] = {}
+
+    def add(d: dict) -> None:
+        for k, v in d.items():
+            targets = list(v) if isinstance(v, (list, tuple)) else [v]  # Frappe: {"name": ["dotted.path", ...]}
+            if not targets:
+                continue
+            seen = [str(t) for t in targets] + ([str(out[k])] if k in out else [])
+            distinct = list(dict.fromkeys(seen))
+            if len(distinct) > 1:
+                frappe.log_error(f"saas_core: gateway plugin '{k}' is registered by more than one app "
+                                 f"({' and '.join(distinct)}); using {targets[-1]}", "saas_core gateway plugin")
+            out[k] = targets[-1]
+
     for item in items:
         if isinstance(item, dict):
-            out.update(item)
-        elif isinstance(item, (list, tuple)):  # frappe may hand back a list of dicts
+            add(item)
+        elif isinstance(item, (list, tuple)):  # a list of dicts
             for d in item:
                 if isinstance(d, dict):
-                    out.update(d)
+                    add(d)
     return out
 
 
 def _load_plugin(name: str, target):
     if name in GATEWAYS:
         frappe.throw(f"Gateway plugin '{name}' cannot replace the built-in gateway of the same name")
-    cls = target
-    if isinstance(target, str):
+    cls = target[-1] if isinstance(target, (list, tuple)) and target else target  # tolerate a raw list
+    if isinstance(cls, str):
         try:
-            cls = frappe.get_attr(target)
+            cls = frappe.get_attr(cls)
         except Exception:
-            frappe.throw(f"Gateway plugin '{name}': cannot import '{target}'")
+            frappe.throw(f"Gateway plugin '{name}': cannot import '{cls}'")
     validate_gateway_class(name, cls)
     return cls
 
@@ -80,6 +93,12 @@ def validate_gateway_class(name: str, cls) -> None:
     unknown = sorted(set(sup) - set(CAPABILITIES))
     if unknown:
         frappe.throw(f"Gateway plugin '{name}': unknown capabilities {unknown}; allowed: {sorted(CAPABILITIES)}")
+    feature = getattr(cls, "experimental_feature", None)
+    if feature:
+        from saas_core.experimental import FEATURES
+        if feature not in FEATURES:
+            frappe.throw(f"Gateway plugin '{name}': experimental_feature '{feature}' is not a known feature; "
+                         f"allowed: {sorted(FEATURES)}")
     if getattr(cls, "__abstractmethods__", None):
         frappe.throw(f"Gateway plugin '{name}': {cls.__name__} does not implement "
                      f"{sorted(cls.__abstractmethods__)}")
@@ -122,10 +141,10 @@ def get_gateway(name: str, account: str | None = None, **overrides) -> Gateway:
         frappe.throw("The manual (mock payment) gateway cannot be used in live mode")
     if name == "fake" and doc.get("mode") == "live":
         frappe.throw("The fake gateway cannot be used in live mode")
-    if name == "manual":
+    if name in ("manual", "fake"):
         from .policy import live_gateway_enabled
         if live_gateway_enabled():
-            frappe.throw("The manual (mock payment) gateway is disabled while a live gateway account is enabled")
+            frappe.throw(f"The {name} gateway is disabled while a live gateway account is enabled")
     extra = doc.get("extra") or {}
     if isinstance(extra, str):
         extra = json.loads(extra or "{}")

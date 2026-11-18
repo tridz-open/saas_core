@@ -26,5 +26,5 @@ def test_stripe_conformance(frappe, modname, clsname, name):
     from saas_core.gateways.base import CheckoutResult
     res = CheckoutResult(url="https://pay/x", session_ref="s")
     assert gw.client_payload(res) == {"provider": name, "url": "https://pay/x"}
-    with pytest.raises(NotImplementedError, match="webhook"):
+    with pytest.raises(NotImplementedError, match="client callbacks"):
         gw.verify_client_callback({})

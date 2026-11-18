@@ -10,6 +10,7 @@ from saas_core.config import get_setting
 
 FEATURES = {
     "stripe": "Stripe gateway (built from docs, no refunds, never run live)",
+    "fake_gateway": "In-memory fake payment gateway (tests and dev only; never charges)",
     "razorpay_subscription": "Razorpay subscription checkout mode (checkout_mode=subscription)",
     "dunning": "Failed-payment dunning stages, auto suspend/resume",
     "expiry_sweep": "Daily expired-subscription sweep",

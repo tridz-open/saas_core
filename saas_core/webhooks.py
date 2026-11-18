@@ -47,6 +47,8 @@ def ingest(gateway: str, headers: dict, raw_body: bytes, now=None) -> dict:
 def _capture_if_authorized(gw, payload: dict) -> None:
     """payment.authorized / order.paid for an order payment still `authorized`: capture it (idempotent). On
     failure answer 502 so the gateway retries; nothing is recorded or provisioned meanwhile."""
+    if getattr(gw, "name", "") != "razorpay":  # event names below are Razorpay's
+        return
     if payload.get("event") not in ("payment.authorized", "order.paid") or not hasattr(gw, "ensure_captured"):
         return
     pay = (((payload.get("payload") or {}).get("payment") or {}).get("entity")) or {}
@@ -98,6 +100,19 @@ def _receive(gateway: str) -> dict:
     rate_limit(f"webhook:{gateway}:{client_ip()}", 300, 60)
     req = frappe.request
     return ingest(gateway, dict(req.headers), req.get_data())
+
+
+_NAME = __import__("re").compile(r"^[a-z][a-z0-9_]{0,31}$")
+
+
+@frappe.whitelist(allow_guest=True)
+def receive(gateway: str = ""):
+    """Generic receiver for plugin gateways: POST /api/method/saas_core.webhooks.receive?gateway=<name>.
+    Same verify -> store -> enqueue pipeline as the built-in receivers."""
+    gateway = (gateway or (getattr(frappe, "form_dict", None) or {}).get("gateway") or "").strip()
+    if not _NAME.match(gateway):
+        _fail(400, frappe.ValidationError, "Invalid webhook request")
+    return _receive(gateway)
 
 
 @frappe.whitelist(allow_guest=True)

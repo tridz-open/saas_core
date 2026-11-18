@@ -18,6 +18,35 @@ KINDS = (
     "subscription.canceled", "subscription.updated", "refund", "ignored",
 )
 
+# Allowed values for Gateway.supports, with their meaning. Billing code checks these BEFORE calling an optional
+# method (see `require_capability`). A gateway must declare a capability if and only if it really implements it;
+# the conformance kit (saas_core/gateways/conformance.py) enforces that.
+CAPABILITIES = {
+    "subscription": "Recurring billing at the provider: create_checkout_session can start a subscription and "
+                    "cancel_subscription cancels it.",
+    "order": "One-time payment (order/invoice mode): create_checkout_session can charge a single fixed amount.",
+    "portal": "portal_link returns a provider-hosted page to manage payment methods (not just return_url).",
+    "client_callback": "Payment completes in the browser and the page posts proof back: verify_client_callback "
+                       "verifies it and returns a NormalizedEvent.",
+    "refund": "refund_payment is implemented (refund part or all of a payment).",
+    "refund_lookup": "list_payment_refunds is implemented (needed to retry a refund without double-refunding).",
+    "payment_lookup": "get_payment is implemented (amount, amount_refunded, currency of a payment).",
+    "plan_update": "update_subscription_plan is implemented (switch a provider subscription to another plan).",
+    "invoice_lookup": "invoice_payment_id is implemented (find the payment that settled a provider invoice).",
+    "payment_link": "create_payment_link is implemented (hosted one-time payment link for invoice-mode renewals).",
+}
+
+# capability -> the optional Gateway method it promises. Used by the conformance kit.
+CAPABILITY_METHODS = {
+    "client_callback": "verify_client_callback",
+    "refund": "refund_payment",
+    "refund_lookup": "list_payment_refunds",
+    "payment_lookup": "get_payment",
+    "plan_update": "update_subscription_plan",
+    "invoice_lookup": "invoice_payment_id",
+    "payment_link": "create_payment_link",
+}
+
 
 @dataclass
 class CheckoutParams:
@@ -61,6 +90,32 @@ class GatewayError(Exception):
     def __init__(self, message: str = "", *, status: int | None = None, code: str = "", description: str = ""):
         super().__init__(message)
         self.status, self.code, self.description = status, code, description
+
+
+class GatewayCapabilityError(GatewayError, NotImplementedError):
+    """The gateway does not declare a capability the caller needs. Subclasses GatewayError (so existing
+    `except GatewayError` paths handle it) and NotImplementedError (legacy callers)."""
+
+    def __init__(self, gateway: str, capability: str, what: str = ""):
+        self.gateway, self.capability = gateway, capability
+        super().__init__(f"gateway '{gateway}' does not support '{capability}'" + (f" ({what})" if what else ""),
+                         code="capability_unsupported")
+
+
+def has_capability(gateway: Any, capability: str) -> bool:
+    """True when `gateway.supports` contains `capability`. Objects without a `supports` attribute (duck-typed
+    test doubles) are judged by whether they define the capability's method."""
+    sup = getattr(gateway, "supports", None)
+    if sup is None:
+        method = CAPABILITY_METHODS.get(capability)
+        return method is None or callable(getattr(gateway, method, None))
+    return capability in sup
+
+
+def require_capability(gateway: Any, capability: str, what: str = "") -> None:
+    """Raise GatewayCapabilityError unless `gateway` declares `capability`. Call before any optional method."""
+    if not has_capability(gateway, capability):
+        raise GatewayCapabilityError(getattr(gateway, "name", "") or type(gateway).__name__, capability, what)
 
 
 def _provider_error(raw: bytes) -> tuple[str, str]:
@@ -148,12 +203,29 @@ def from_ts(ts: Any) -> datetime | None:
 
 
 class Gateway(ABC):
+    """Contract every payment gateway implements. Full rules: docs/gateways/CONTRACT.md.
+
+    Subclass, set `name` and `supports`, implement the five abstract methods, and implement an optional method
+    only when you also list its capability in `supports` (see CAPABILITIES). Register the class with the hook
+    `saas_core_gateways = {"<name>": "<dotted.path.Class>"}` in your app's hooks.py.
+
+    Rules that apply to every method:
+    - Money is an integer in minor units (cents, paise) plus an ISO 4217 currency. Never float, never bool.
+    - Raise `GatewayError` for any provider failure. Messages never contain key_id, key_secret, webhook_secret,
+      tokens, signatures or full request bodies.
+    - Never log secrets or raw webhook bodies. Use `frappe.log_error` with a short fixed message only.
+    - Network calls go through `self.http.request(...)` so tests can inject a fake client.
+    """
+
     name = ""
-    # Declared capabilities, e.g. {"subscription", "order", "client_callback"}.
+    # Declared capabilities: a frozenset of keys of CAPABILITIES, e.g. frozenset({"subscription", "refund"}).
     supports: frozenset = frozenset()
 
     def __init__(self, *, key_id: str = "", key_secret: str = "", webhook_secret: str = "",
                  http: Any = None, extra: dict | None = None):
+        """Built by the registry from a Gateway Account: key_id (public), key_secret and webhook_secret
+        (decrypted passwords), `extra` (JSON from the account). `http` is an injectable client with
+        `request(method, url, *, headers, data, json_body, basic_auth, timeout) -> dict`."""
         self._key_id = key_id
         self._key_secret = key_secret
         self._webhook_secret = webhook_secret
@@ -167,49 +239,103 @@ class Gateway(ABC):
         return self._http
 
     @abstractmethod
-    def create_checkout_session(self, params: CheckoutParams) -> CheckoutResult: ...
+    def create_checkout_session(self, params: CheckoutParams) -> CheckoutResult:
+        """Start a payment at the provider.
+
+        Input: CheckoutParams. `params.metadata` carries server-side values: `currency` (ISO 4217, from the plan
+        price row, never defaulted), `amount_minor` (int, server price), `interval`, `mode` ("order" or
+        "subscription"). `params.gateway_price_id` is the provider's plan/price id (may be empty in order mode).
+        Output: CheckoutResult(url, session_ref, raw). `session_ref` is the provider's id for the session, order
+        or subscription and MUST be non-empty: billing stores it to match later events. `url` may be "" when the
+        payment completes in the browser (see client_payload).
+        Money: charge exactly `amount_minor` in `metadata["currency"]`. If the currency is missing raise
+        GatewayError; never substitute another currency or price.
+        Idempotency: the API layer wraps this call in an Idempotency-Key; still send a deterministic reference
+        (tenant + plan) to the provider when it supports one.
+        Errors: GatewayError. Never log the request body or keys."""
 
     @abstractmethod
-    def portal_link(self, customer_ref: str, return_url: str) -> str: ...
+    def portal_link(self, customer_ref: str, return_url: str) -> str:
+        """URL where the customer manages payment methods. Return `return_url` when the provider has no portal
+        (and then do not declare "portal"). Errors: GatewayError. Never log the URL (it may be a signed link)."""
 
     @abstractmethod
-    def cancel_subscription(self, sub_ref: str, at_period_end: bool) -> None: ...
+    def cancel_subscription(self, sub_ref: str, at_period_end: bool) -> None:
+        """Cancel the provider subscription `sub_ref`. `at_period_end=True` keeps access until the paid period
+        ends; False cancels now. Idempotent: cancelling an already-cancelled subscription must not raise.
+        Gateways with no provider-side subscription (order mode only) make this a no-op.
+        Errors: GatewayError."""
 
     @abstractmethod
-    def verify_webhook(self, headers: dict, raw_body: bytes) -> bool: ...
+    def verify_webhook(self, headers: dict, raw_body: bytes) -> bool:
+        """Authenticate a webhook request. Return True only if the signature over the EXACT raw bytes is valid.
+
+        Inputs: request headers (any case; use `lower_headers`) and the raw body bytes, before JSON parsing.
+        Rules: return False (never raise) for a missing/malformed signature, an empty webhook secret, a wrong
+        secret or a modified body. Compare with `safe_equal` (constant time). If the provider signs a
+        timestamp, reject stale ones (replay window). Never log the body, signature or secret."""
 
     @abstractmethod
-    def parse_event(self, payload: dict, headers: dict | None = None) -> NormalizedEvent: ...
+    def parse_event(self, payload: dict, headers: dict | None = None) -> NormalizedEvent:
+        """Map a verified webhook payload to a NormalizedEvent with `kind` in KINDS.
+
+        Rules: `event_id` is a non-empty string derived only from the signed body (so a replay collapses to one
+        Payment Event); `amount` is an int in minor units (0 when unknown); `currency` is an ISO 4217 code (any
+        case, billing upper-cases it) or None; unknown or irrelevant provider events return kind "ignored", never
+        raise. Keep the provider payload in `raw`; it is stored as-is, so it must not contain secrets."""
 
     def client_payload(self, session: Any) -> dict:
-        """Data the browser needs to complete payment client-side (default: provider only)."""
+        """Data the browser needs to finish payment client-side, built from a CheckoutResult. Must contain
+        `provider` (== name). Only PUBLIC values (publishable key id, order id); never key_secret or
+        webhook_secret. Default: {"provider": name}."""
         return {"provider": self.name}
 
     def verify_client_callback(self, payload: dict) -> Any:
-        """Verify a client-side payment callback. Gateways that support it override this."""
-        raise NotImplementedError(f"{self.name or type(self).__name__} does not support client callbacks")
+        """Capability "client_callback". Verify proof of payment posted by the browser (e.g. an HMAC over
+        payment_id|order_id with the key secret). Return a NormalizedEvent(kind="checkout.completed") whose `raw`
+        holds only the signed fields. Raise GatewayError on any invalid or missing proof. Never trust
+        client-supplied tenant, plan or amount."""
+        raise GatewayCapabilityError(self.name or type(self).__name__, "client_callback",
+                                     "does not support client callbacks")
 
     def refund_payment(self, payment_id: str, amount_minor: int, *, notes: dict | None = None,
                        receipt: str = "") -> dict:
-        """Refund (part of) a payment. Returns {"id","status","amount","payment_id"}."""
-        raise GatewayError(f"{self.name} does not support refunds")
+        """Capability "refund". Refund `amount_minor` (positive int, minor units, in the payment's currency) of
+        `payment_id`. Raise GatewayError for 0, negative, bool or non-int amounts.
+        Idempotency: pass `receipt` (the caller's unique Refund name) to the provider as its idempotency key or
+        reference, and copy `receipt` into `notes["refund_doc"]` if the provider has no receipt field.
+        Returns {"id","status","amount","payment_id"}; status is "processed", "pending" or "failed".
+        Errors: GatewayError."""
+        raise GatewayCapabilityError(self.name or type(self).__name__, "refund")
 
     def list_payment_refunds(self, payment_id: str) -> list[dict]:
-        """Refunds already made against a payment: [{"id","status","amount","receipt","notes"}]."""
-        raise GatewayError(f"{self.name} does not support refund lookup")
+        """Capability "refund_lookup". Refunds already made against a payment:
+        [{"id","status","amount","payment_id","receipt","notes"}], `receipt` echoing what refund_payment was given.
+        Billing calls this before retrying a refund and adopts a match instead of creating a second refund."""
+        raise GatewayCapabilityError(self.name or type(self).__name__, "refund_lookup")
 
     def ensure_captured(self, payment_id: str) -> dict:
-        """Make sure a payment is captured (no-op for gateways that auto-capture)."""
+        """Make sure a payment is captured before refunding or provisioning. Idempotent. Default: no-op for
+        auto-capture gateways. Returns {"id","status", ...}. Errors: GatewayError."""
         return {"id": payment_id, "status": "captured"}
 
     def get_payment(self, payment_id: str) -> dict:
-        """{"amount","amount_refunded"} in minor units."""
-        raise GatewayError(f"{self.name} does not support payment lookup")
+        """Capability "payment_lookup". Returns {"amount","amount_refunded","currency"}: ints in minor units and
+        an ISO 4217 code (or None). Billing uses it to refuse a refund larger than the remaining balance."""
+        raise GatewayCapabilityError(self.name or type(self).__name__, "payment_lookup")
 
     def update_subscription_plan(self, sub_ref: str, plan_id: str, *, at_cycle_end: bool = True) -> dict:
-        """Switch a gateway subscription to another plan."""
-        raise GatewayError(f"{self.name} does not support subscription plan updates")
+        """Capability "plan_update". Switch provider subscription `sub_ref` to provider plan/price `plan_id`,
+        at the end of the cycle (True) or now. Returns the provider response dict. Errors: GatewayError."""
+        raise GatewayCapabilityError(self.name or type(self).__name__, "plan_update")
 
     def invoice_payment_id(self, invoice_id: str) -> str | None:
-        """Payment id that settled a gateway invoice, or None."""
-        raise GatewayError(f"{self.name} does not support invoice payment lookup")
+        """Capability "invoice_lookup". Payment id that settled provider invoice `invoice_id`, or None if unpaid."""
+        raise GatewayCapabilityError(self.name or type(self).__name__, "invoice_lookup")
+
+    def create_payment_link(self, *, amount: int, currency: str, description: str, email: str | None,
+                            notes: dict | None = None, callback_url: str = "", reference_id: str = "") -> dict:
+        """Capability "payment_link". Create a hosted one-time payment link for `amount` (int, minor units) in
+        `currency`. `reference_id` is unique per renewal period (idempotency). Returns {"id","short_url", ...}.
+        Errors: GatewayError."""
+        raise GatewayCapabilityError(self.name or type(self).__name__, "payment_link")

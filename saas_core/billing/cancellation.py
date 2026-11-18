@@ -90,6 +90,9 @@ def _payment_id(sub, held, gateway=None):
         return None
     try:
         gw = gateway or _gateway(sub)
+        from saas_core.gateways.base import has_capability
+        if not has_capability(gw, "invoice_lookup"):
+            return None  # cannot resolve: caller flags refund_payment_unknown
         return gw.invoice_payment_id(gid) or None
     except Exception:  # noqa: BLE001
         frappe.log_error(f"saas_core cancel: payment lookup failed for {sub.get('name')}", "saas_core cancel")

@@ -36,6 +36,9 @@ def verify_payment(gateway=None, payload=None):
         gw = gateway_for(name)
     except frappe.ValidationError:
         raise ApiError("validation_error", "Payment gateway unavailable", 422)
+    from saas_core.gateways.base import has_capability
+    if not has_capability(gw, "client_callback"):
+        raise ApiError("validation_error", "This payment gateway completes via webhook, not a client callback", 422)
     try:
         ev = gw.verify_client_callback(pl)
     except (GatewayError, NotImplementedError):

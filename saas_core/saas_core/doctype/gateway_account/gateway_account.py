@@ -9,6 +9,8 @@ class GatewayAccount(Document):
             frappe.throw("Mode must be test or live")
         if self.get("gateway") == "manual" and self.get("mode") == "live":
             frappe.throw("The manual (mock payment) gateway cannot be used in live mode")
+        if self.get("gateway") == "fake" and self.get("mode") == "live":
+            frappe.throw("The fake gateway cannot be used in live mode")
         key_id = (self.get("key_id") or "").strip()
         if key_id:
             if self.get("mode") == "live" and key_id.startswith("rzp_test_"):

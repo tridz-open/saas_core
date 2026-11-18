@@ -20,6 +20,7 @@ OpenAPI marks gated operations with `x-experimental` and an `[EXPERIMENTAL ...]`
 | Feature name | What it unlocks |
 |---|---|
 | `stripe` | Stripe gateway and `/webhooks.stripe` (no refunds, so cancel-with-refund fails; built from API docs) |
+| `fake_gateway` | In-memory `fake` reference gateway for tests and dev (never charges; refused in live mode). See [gateways/README.md](gateways/README.md) |
 | `razorpay_subscription` | Razorpay `checkout_mode=subscription` (default and verified mode is `order`) |
 | `dunning` | Staged failed-payment dunning, auto suspend/resume (`dunning.run_daily`) |
 | `expiry_sweep` | Daily expired-subscription sweep |

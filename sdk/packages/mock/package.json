@@ -1,0 +1,66 @@
+{
+  "name": "@frappe-saaskit/mock",
+  "version": "0.1.0-alpha.3",
+  "description": "In-memory saas_core lookalike (fetch or MSW) for tests, demos and UI work",
+  "license": "MIT",
+  "author": "Tridz Technologies",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tridz-open/frappe-saaskit-sdk.git",
+    "directory": "packages/mock"
+  },
+  "homepage": "https://github.com/tridz-open/frappe-saaskit-sdk#readme",
+  "bugs": {
+    "url": "https://github.com/tridz-open/frappe-saaskit-sdk/issues"
+  },
+  "keywords": [
+    "frappe",
+    "saas",
+    "sdk",
+    "typescript",
+    "saas_core",
+    "msw",
+    "mock"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./browser": {
+      "types": "./dist/browser.d.ts",
+      "import": "./dist/browser.js"
+    },
+    "./node": {
+      "types": "./dist/node.d.ts",
+      "import": "./dist/node.js"
+    }
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run --passWithNoTests",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@frappe-saaskit/client": "workspace:*",
+    "msw": "^2.6.0"
+  },
+  "peerDependencies": {},
+  "devDependencies": {}
+}

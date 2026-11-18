@@ -1,0 +1,67 @@
+{
+  "name": "@frappe-saaskit/react",
+  "version": "0.1.0-alpha.3",
+  "description": "React provider, TanStack Query hooks and Razorpay checkout helper for @frappe-saaskit/client",
+  "license": "MIT",
+  "author": "Tridz Technologies",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tridz-open/frappe-saaskit-sdk.git",
+    "directory": "packages/react"
+  },
+  "homepage": "https://github.com/tridz-open/frappe-saaskit-sdk#readme",
+  "bugs": {
+    "url": "https://github.com/tridz-open/frappe-saaskit-sdk/issues"
+  },
+  "keywords": [
+    "frappe",
+    "saas",
+    "sdk",
+    "typescript",
+    "saas_core",
+    "react",
+    "tanstack-query"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean",
+    "test": "vitest run --passWithNoTests",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@frappe-saaskit/client": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "@tanstack/react-query": ">=5"
+  },
+  "devDependencies": {
+    "react": "^19.0.0",
+    "@types/react": "^19.0.0",
+    "@tanstack/react-query": "^5.60.0",
+    "react-dom": "^19.0.0",
+    "jsdom": "^25.0.0",
+    "@testing-library/react": "^16.0.0"
+  }
+}

@@ -1,0 +1,83 @@
+<svg viewBox="0 0 1062 1146" width="1062" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    text { font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', system-ui, sans-serif; }
+  </style>
+  <defs>
+    <marker id="arrow-blue" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 L2,4 z" fill="#3b82f6"/></marker>
+    <marker id="arrow-green" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 L2,4 z" fill="#22c55e"/></marker>
+    <marker id="arrow-orange" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 L2,4 z" fill="#f59e0b"/></marker>
+    <marker id="arrow-pink" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 L2,4 z" fill="#ec4899"/></marker>
+    <marker id="arrow-purple" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 L2,4 z" fill="#a855f7"/></marker>
+    
+  </defs>
+  <rect x="0" y="0" width="1062" height="1146" fill="#ffffff"/>
+  <text x="531" y="34" font-size="16" fill="#1e293b" text-anchor="middle">Request lifecycle: CSRF, auth and the error envelope</text>
+  <!-- layer 1: grouping boxes -->
+<rect x="22" y="668" width="1018" height="106" rx="10" fill="#f8fafc" stroke="#94a3b8" stroke-dasharray="6,4"/>
+<text x="32" y="682" font-size="11" fill="#64748b">alt [2xx]</text>
+<rect x="22" y="782" width="1018" height="342" rx="10" fill="#f8fafc" stroke="#94a3b8" stroke-dasharray="6,4"/>
+<text x="32" y="796" font-size="11" fill="#64748b">else [error status]</text>
+<rect x="32" y="914" width="998" height="140" rx="10" fill="#f8fafc" stroke="#94a3b8" stroke-dasharray="6,4"/>
+<text x="42" y="928" font-size="11" fill="#64748b">alt [retryable]</text>
+<rect x="32" y="1062" width="998" height="52" rx="10" fill="#f8fafc" stroke="#94a3b8" stroke-dasharray="6,4"/>
+<text x="42" y="1076" font-size="11" fill="#64748b">else [other]</text>
+  <!-- layer 2: connectors and lifelines -->
+<path d="M185,130 L 419,130" fill="none" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+<path d="M435,168 L 669,168" fill="none" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+<path d="M685,206 L 919,206" fill="none" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+<path d="M925,244 L 691,244" fill="none" stroke="#22c55e" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+<path d="M675,282 L 441,282" fill="none" stroke="#22c55e" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+<path d="M435,320 C 470,322 470,360 441,360" fill="none" stroke="#a855f7" stroke-width="1.5" marker-end="url(#arrow-purple)"/>
+<path d="M185,410 L 419,410" fill="none" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+<path d="M435,448 L 669,448" fill="none" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+<path d="M685,486 C 720,488 720,526 691,526" fill="none" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#arrow-orange)"/>
+<path d="M685,566 C 720,568 720,606 691,606" fill="none" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#arrow-orange)"/>
+<path d="M685,650 L 919,650" fill="none" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+<path d="M925,712 L 691,712" fill="none" stroke="#22c55e" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+<path d="M675,750 L 191,750" fill="none" stroke="#22c55e" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+<path d="M925,826 L 691,826" fill="none" stroke="#ec4899" stroke-width="1.5" marker-end="url(#arrow-pink)"/>
+<path d="M685,864 C 720,866 720,904 691,904" fill="none" stroke="#a855f7" stroke-width="1.5" marker-end="url(#arrow-purple)"/>
+<path d="M685,944 C 720,946 720,984 691,984" fill="none" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#arrow-orange)"/>
+<path d="M685,1030 L 919,1030" fill="none" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#arrow-orange)"/>
+<path d="M675,1100 L 191,1100" fill="none" stroke="#ec4899" stroke-width="1.5" marker-end="url(#arrow-pink)"/>
+<path d="M180,99 L 180,1124" fill="none" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4,4"/>
+<path d="M430,99 L 430,1124" fill="none" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4,4"/>
+<path d="M680,99 L 680,1124" fill="none" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4,4"/>
+<path d="M930,99 L 930,1124" fill="none" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4,4"/>
+  <!-- layer 3: boxes -->
+<!-- h_App code: x=95, y=58, w=170, h=36, right=265, bottom=94 -->
+<rect x="70" y="58" width="220" height="36" rx="6" fill="#dbeafe" stroke="#3b82f6"/>
+<text x="180" y="80.2" font-size="12" fill="#1e40af" text-anchor="middle">App code</text>
+<!-- h_SaasClient: x=345, y=58, w=170, h=36, right=515, bottom=94 -->
+<rect x="320" y="58" width="220" height="36" rx="6" fill="#f3e8ff" stroke="#a855f7"/>
+<text x="430" y="80.2" font-size="12" fill="#6b21a8" text-anchor="middle">SaasClient</text>
+<!-- h_http.request: x=595, y=58, w=170, h=36, right=765, bottom=94 -->
+<rect x="570" y="58" width="220" height="36" rx="6" fill="#fef3c7" stroke="#f59e0b"/>
+<text x="680" y="80.2" font-size="12" fill="#b45309" text-anchor="middle">http.request</text>
+<!-- h_saas_core API: x=845, y=58, w=170, h=36, right=1015, bottom=94 -->
+<rect x="820" y="58" width="220" height="36" rx="6" fill="#d1fae5" stroke="#22c55e"/>
+<text x="930" y="80.2" font-size="12" fill="#166534" text-anchor="middle">saas_core API</text>
+  <!-- layer 4: labels and loop-back lines -->
+<text x="305" y="117" font-size="10" fill="#64748b" text-anchor="middle">auth.login(...) or me.get()</text>
+<text x="555" y="155" font-size="10" fill="#64748b" text-anchor="middle">GET / POST op</text>
+<text x="805" y="193" font-size="10" fill="#64748b" text-anchor="middle">request (credentials: include)</text>
+<text x="805" y="231" font-size="10" fill="#64748b" text-anchor="middle">{"message": Me}</text>
+<text x="555" y="269" font-size="10" fill="#64748b" text-anchor="middle">unwrap "message"</text>
+<text x="482" y="337" font-size="10" fill="#64748b" text-anchor="start">setCsrf(me.csrf_token)</text>
+<text x="482" y="351" font-size="10" fill="#94a3b8" font-style="italic" text-anchor="start">kept in memory, cleared on logout</text>
+<text x="305" y="397" font-size="10" fill="#64748b" text-anchor="middle">any mutating call (POST)</text>
+<text x="555" y="435" font-size="10" fill="#64748b" text-anchor="middle">request(method != GET)</text>
+<text x="732" y="503" font-size="10" fill="#64748b" text-anchor="start">newKey(): Idempotency-Key</text>
+<text x="732" y="517" font-size="10" fill="#94a3b8" font-style="italic" text-anchor="start">reused on every retry</text>
+<text x="732" y="583" font-size="10" fill="#64748b" text-anchor="start">add X-Frappe-CSRF-Token</text>
+<text x="732" y="597" font-size="10" fill="#94a3b8" font-style="italic" text-anchor="start">cookie auth only</text>
+<text x="805" y="637" font-size="10" fill="#64748b" text-anchor="middle">POST with headers</text>
+<text x="805" y="699" font-size="10" fill="#64748b" text-anchor="middle">{"message": payload}</text>
+<text x="305" y="737" font-size="10" fill="#64748b" text-anchor="middle">payload</text>
+<text x="805" y="813" font-size="10" fill="#64748b" text-anchor="middle">{"error": {code, message, ...}}</text>
+<text x="732" y="888" font-size="10" fill="#64748b" text-anchor="start">mapError(status, body, headers)</text>
+<text x="732" y="961" font-size="10" fill="#64748b" text-anchor="start">wait Retry-After or backoff</text>
+<text x="732" y="975" font-size="10" fill="#94a3b8" font-style="italic" text-anchor="start">retry up to 3 times</text>
+<text x="805" y="1017" font-size="10" fill="#64748b" text-anchor="middle">same Idempotency-Key</text>
+<text x="305" y="1087" font-size="10" fill="#64748b" text-anchor="middle">throw typed SaasError</text>
+</svg>

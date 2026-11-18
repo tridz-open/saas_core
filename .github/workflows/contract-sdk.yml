@@ -1,0 +1,28 @@
+name: contract-sdk
+# Manual: runs the SDK contract tests against a reachable saas_core site.
+on:
+  workflow_dispatch:
+    inputs:
+      saascore_url:
+        description: Base URL of a reachable saas_core site
+        required: true
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: sdk
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          package_json_file: sdk/package.json
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: sdk/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile && pnpm build
+      - run: pnpm test:contract
+        env:
+          SAASCORE_URL: ${{ inputs.saascore_url }}

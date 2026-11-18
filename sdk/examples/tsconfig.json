@@ -1,0 +1,28 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "@frappe-saaskit/client": [
+        "../packages/client/dist/index.d.ts"
+      ],
+      "@frappe-saaskit/react": [
+        "../packages/react/dist/index.d.ts"
+      ],
+      "@frappe-saaskit/mock": [
+        "../packages/mock/dist/index.d.ts"
+      ],
+      "react": [
+        "../packages/react/node_modules/@types/react"
+      ],
+      "react/jsx-runtime": [
+        "../packages/react/node_modules/@types/react/jsx-runtime"
+      ]
+    }
+  },
+  "include": [
+    "*.ts",
+    "*.tsx"
+  ]
+}

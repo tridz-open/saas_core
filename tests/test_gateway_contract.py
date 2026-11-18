@@ -63,7 +63,7 @@ def checkout(frappe, name, gw):
 
 def test_registry_covers_expected_gateways(frappe):
     from saas_core.gateways.registry import GATEWAYS
-    assert set(GATEWAYS) == set(NAMES)
+    assert set(GATEWAYS) - {"fake"} == set(NAMES)  # "fake": see test_gateway_conformance_kit.py
 
 
 @pytest.mark.parametrize("name", NAMES)

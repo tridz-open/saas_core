@@ -18,9 +18,6 @@ class StripeGateway(Gateway):
         url = session.get("url") if isinstance(session, dict) else getattr(session, "url", "")
         return {"provider": "stripe", "url": url or ""}
 
-    def verify_client_callback(self, payload: dict):
-        raise NotImplementedError("Stripe is redirect-based: payments are verified via webhook, not client callback")
-
     def __init__(self, *, clock=time.time, tolerance: int = TOLERANCE, **kw):
         super().__init__(**kw)
         self._clock = clock

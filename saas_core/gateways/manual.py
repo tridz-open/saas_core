@@ -16,7 +16,7 @@ DEFAULT_BANNER = "Test mode: payments mocked"
 
 class ManualGateway(Gateway):
     name = "manual"
-    supports = frozenset({"subscription", "client_callback"})
+    supports = frozenset({"subscription", "client_callback", "refund", "plan_update"})
 
     def _is_test_mode(self) -> bool:
         from .policy import live_gateway_enabled

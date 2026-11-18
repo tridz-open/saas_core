@@ -16,7 +16,7 @@ The browser SPA only ever calls the saas_core API. Payment gateways call back in
 
 ![Gateway adapter interface and registry](assets/gateway-registry.svg)
 
-Event `kind` is one of `checkout.completed`, `payment.succeeded`, `payment.failed`, `subscription.canceled`, `subscription.updated`, `refund`, `ignored`. Stripe (experimental) raises `NotImplementedError` from `verify_client_callback`; only Razorpay and manual accept the browser callback. `create_payment_link` exists on Razorpay only (used for the invoice fallback and renewals).
+Event `kind` is one of `checkout.completed`, `payment.succeeded`, `payment.failed`, `subscription.canceled`, `subscription.updated`, `refund`, `ignored`. Browser callback (`verify_client_callback`) and payment links (`create_payment_link`) are optional capabilities (`client_callback`, `payment_link`): a gateway that does not declare one is answered 422 at the callback endpoint and skipped for invoice renewals. Today Razorpay, manual and fake declare `client_callback`; Razorpay and fake declare `payment_link` (used for the invoice fallback and renewals); Stripe (experimental) declares neither.
 
 ## 3. Payment lifecycle
 

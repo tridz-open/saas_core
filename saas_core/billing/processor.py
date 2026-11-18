@@ -712,7 +712,10 @@ def _issue_invoice(sub, now):
     start = get_datetime(sub.get("period_end"))
     end = _period_after(start, sub.get("interval"))
     email = frappe.db.get_value("User", sub.get("owner_user"), "email") or sub.get("owner_user")
-    link = registry.get_gateway(sub.get("gateway") or "razorpay").create_payment_link(
+    gw = registry.get_gateway(sub.get("gateway") or "razorpay")
+    from saas_core.gateways.base import require_capability
+    require_capability(gw, "payment_link", "invoice-mode renewals need hosted payment links")
+    link = gw.create_payment_link(
         amount=amount, currency=currency, description=f"{sub.get('plan')} plan renewal",
         email=email, notes={"tenant": sub.get("tenant"), "subscription": sub.get("name")},
         callback_url=_return_url(), reference_id=f"{sub.get('name')}-{start:%Y%m%d}")

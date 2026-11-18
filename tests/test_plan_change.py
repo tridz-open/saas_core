@@ -181,6 +181,21 @@ def test_gateway_update_failure_tolerated(frappe, env):
     assert any(m[0] == "error" for m in frappe._store.messages)
 
 
+def test_gateway_update_failure_logs_provider_code_and_description_only(frappe, env):
+    from saas_core.gateways.base import GatewayError
+    sub = setup(frappe)
+    err = GatewayError("rzp 400 key_secret=SECRET", status=400, code="BAD_REQUEST_ERROR", description="plan not found")
+
+    def boom(*a, **k):
+        raise err
+    env.gw.update_subscription_plan = boom
+    from saas_core.billing import plan_change as pc
+    pc.apply(sub, "starter", "u@x.com", now=NOON_JAN11)
+    logs = [m[1][0] for m in frappe._store.messages if m[0] == "error"]
+    assert any("GatewayError" in m and "BAD_REQUEST_ERROR" in m and "plan not found" in m for m in logs), logs
+    assert not any("SECRET" in m for m in logs)
+
+
 def test_last_day_change_no_payment(frappe, env):
     sub = setup(frappe, cur="starter", paid=15500)
     from saas_core.billing import plan_change as pc

@@ -10,7 +10,7 @@ Set a comma-separated list (or `all`) in site_config:
 
 ```bash
 bench --site <site> set-config saas_core_experimental "stripe,dunning"
-bench --site <site> set-config saas_core_experimental all          # everything, for evaluation only
+bench --site <site> set-config saas_core_experimental all          # everything except fake_gateway, for evaluation only
 bench --site <site> set-config saas_core_experimental_restore 1     # or one key per feature
 ```
 
@@ -20,6 +20,7 @@ OpenAPI marks gated operations with `x-experimental` and an `[EXPERIMENTAL ...]`
 | Feature name | What it unlocks |
 |---|---|
 | `stripe` | Stripe gateway and `/webhooks.stripe` (no refunds, so cancel-with-refund fails; built from API docs) |
+| `fake_gateway` | In-memory `fake` reference gateway for tests and dev (never charges; refused in live mode and next to any live gateway account; opt-in by name only, `all` does not enable it). See [gateways/README.md](gateways/README.md) |
 | `razorpay_subscription` | Razorpay `checkout_mode=subscription` (default and verified mode is `order`) |
 | `dunning` | Staged failed-payment dunning, auto suspend/resume (`dunning.run_daily`) |
 | `expiry_sweep` | Daily expired-subscription sweep |

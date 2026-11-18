@@ -26,7 +26,8 @@ KIND_MAP = {
 
 class RazorpayGateway(Gateway):
     name = "razorpay"
-    supports = frozenset({"subscription", "order", "client_callback"})
+    supports = frozenset({"subscription", "order", "client_callback", "refund", "refund_lookup", "payment_lookup",
+                          "plan_update", "invoice_lookup", "payment_link"})
 
     def _auth(self):
         return (self._key_id, self._key_secret)

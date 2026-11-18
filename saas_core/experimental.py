@@ -10,6 +10,7 @@ from saas_core.config import get_setting
 
 FEATURES = {
     "stripe": "Stripe gateway (built from docs, no refunds, never run live)",
+    "fake_gateway": "In-memory fake payment gateway (tests and dev only; never charges)",
     "razorpay_subscription": "Razorpay subscription checkout mode (checkout_mode=subscription)",
     "dunning": "Failed-payment dunning stages, auto suspend/resume",
     "expiry_sweep": "Daily expired-subscription sweep",
@@ -22,6 +23,10 @@ FEATURES = {
     "team": "Tenant team invites and roles",
     "support": "Support tickets",
 }
+
+
+# Never switched on by `all`: must be enabled by name (or its per-feature key).
+OPT_IN_ONLY = frozenset({"fake_gateway"})
 
 
 class ExperimentalDisabled(Exception):
@@ -42,7 +47,7 @@ def enabled(feature: str) -> bool:
     if not raw:
         return False
     names = {x.strip().lower() for x in str(raw).split(",")}
-    return "all" in names or feature in names
+    return feature in names or ("all" in names and feature not in OPT_IN_ONLY)
 
 
 def require(feature: str) -> None:

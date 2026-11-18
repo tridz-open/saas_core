@@ -11,6 +11,7 @@ import json
 import frappe
 
 from saas_core.billing import proration
+from saas_core.gateways.base import GatewayCapabilityError, has_capability
 
 MAX_REFUND_ATTEMPTS = 5
 
@@ -129,10 +130,13 @@ def _norm_amount(v) -> int:
 def _find_existing(gateway, doc):
     """A refund Razorpay already holds for this Refund doc (matched on receipt or notes.refund_doc), or None.
     Raises when the lookup itself fails: the caller must not create blindly then."""
-    fn = getattr(gateway, "list_payment_refunds", None)
-    if not callable(fn):
-        return None
-    for r in fn(doc.get("gateway_payment_id")) or []:
+    if getattr(gateway, "supports", None) is None and not has_capability(gateway, "refund_lookup"):
+        return None  # duck-typed gateway object with no lookup method (legacy/test doubles)
+    if not has_capability(gateway, "refund_lookup"):
+        # Cannot ask the gateway what it already refunded: creating again could double-refund, so stop.
+        raise GatewayCapabilityError(getattr(gateway, "name", ""), "refund_lookup",
+                                     "needed to retry a refund safely")
+    for r in gateway.list_payment_refunds(doc.get("gateway_payment_id")) or []:
         notes = r.get("notes") if isinstance(r.get("notes"), dict) else {}
         if doc.get("name") and doc.get("name") in (r.get("receipt"), notes.get("refund_doc")):
             return r
@@ -142,10 +146,9 @@ def _find_existing(gateway, doc):
 def _cap_exceeded(gateway, doc) -> str | None:
     """Reason string when refunding doc.amount would exceed what the payment can still give back, else None.
     Uses the larger of local rows (pending/processed, excluding this doc) and Razorpay's amount_refunded."""
-    fn = getattr(gateway, "get_payment", None)
-    if not callable(fn):
-        return None
-    pay = fn(doc.get("gateway_payment_id")) or {}
+    if not has_capability(gateway, "payment_lookup"):
+        return None  # no balance lookup: the gateway itself must reject an over-refund
+    pay = gateway.get_payment(doc.get("gateway_payment_id")) or {}
     total = _norm_amount(pay.get("amount"))
     if total <= 0:
         return None
@@ -177,6 +180,12 @@ def issue(doc, sub, gateway, now=None) -> bool:
     already holds a gateway id) first asks Razorpay for the payment's refunds and adopts a match rather than
     creating a second refund; if that lookup fails we do not create."""
     now_n = proration.to_naive_utc(now or proration.utc_now())
+    if not has_capability(gateway, "refund"):  # clear, non-retryable failure instead of an AttributeError
+        doc.status = "failed"
+        doc.error = f"attempt {MAX_REFUND_ATTEMPTS}: gateway {getattr(gateway, 'name', '')} does not support refunds"[:140]
+        doc.save(ignore_permissions=True)
+        flag(sub, "refund_failed")
+        return False
     try:
         res = None
         if doc.get("gateway_refund_id") or attempts(doc) > 0:
@@ -199,7 +208,12 @@ def issue(doc, sub, gateway, now=None) -> bool:
     except Exception as e:  # noqa: BLE001
         n = attempts(doc) + 1
         doc.status = "failed"
-        doc.error = f"attempt {n}: {type(e).__name__}: {e}"[:140]
+        if isinstance(e, GatewayCapabilityError):  # retrying cannot succeed: stop now, a human must reconcile
+            n = MAX_REFUND_ATTEMPTS
+            doc.error = (f"attempt {n}: manual reconciliation needed: gateway "
+                         f"{getattr(gateway, 'name', '')} has no refund_lookup")[:140]
+        else:
+            doc.error = f"attempt {n}: {type(e).__name__}: {e}"[:140]
         doc.save(ignore_permissions=True)
         frappe.log_error(f"saas_core refund failed {doc.get('name')} (attempt {n})", "saas_core refund")
         if n == 1 or n >= MAX_REFUND_ATTEMPTS:

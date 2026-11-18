@@ -183,10 +183,15 @@ def _schedule(sub, new_plan, *, new_held: int, amount: int, effective_at, user=N
         pass
     if sub.get("gateway_sub_id") and row is not None and row.get("gateway_price_id"):
         try:
-            _gateway(sub).update_subscription_plan(sub.get("gateway_sub_id"), row.get("gateway_price_id"),
+            gw = _gateway(sub)
+            from saas_core.gateways.base import require_capability
+            require_capability(gw, "plan_update", "provider subscription plan cannot be changed automatically")
+            gw.update_subscription_plan(sub.get("gateway_sub_id"), row.get("gateway_price_id"),
                                                    at_cycle_end=True)
         except Exception as e:  # noqa: BLE001 - local schedule stands; ops re-syncs the gateway plan
-            frappe.log_error(f"update_subscription_plan failed: {e}", "saas_core plan change")
+            frappe.log_error(f"update_subscription_plan failed: {type(e).__name__} "
+                             f"code={str(getattr(e, 'code', '') or '')[:60]} "
+                             f"description={str(getattr(e, 'description', '') or '')[:200]}", "saas_core plan change")
             _flag(sub, "gateway_plan_update_failed")
     from saas_core import audit, jobs
     job = jobs.enqueue_job(sub.get("tenant"), "change_plan",

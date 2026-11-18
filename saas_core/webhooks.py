@@ -22,6 +22,9 @@ def ingest(gateway: str, headers: dict, raw_body: bytes, now=None) -> dict:
         gw = registry.get_gateway(gateway)
     except Exception:  # unknown gateway / no enabled account: generic answer, no configuration details
         gw = None
+        # frappe.throw queues its message before raising; drop it so the reply never names gateways
+        if getattr(frappe.local, "message_log", None):
+            frappe.local.message_log = []
     if gw is None:
         _fail(400, frappe.ValidationError, "Invalid webhook request")
     if not gw.verify_webhook(headers, raw_body):

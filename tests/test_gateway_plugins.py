@@ -316,3 +316,21 @@ def test_l4_duplicate_plugin_name_across_apps_logs_warning_naming_both(frappe):
     registry.gateway_class("plug")
     msgs = [m[1][0] for m in frappe._store.messages if m[0] == "error"]
     assert any("app_a.Gw" in m and "app_b.Gw" in m for m in msgs), msgs
+
+
+def test_unknown_gateway_webhook_reply_names_nothing(monkeypatch):
+    import frappe
+    from saas_core import webhooks
+    from saas_core.gateways import registry
+
+    def boom(name):
+        frappe.local.message_log = [{"message": f"Unknown gateway: {name}"}]
+        raise frappe.ValidationError(f"Unknown gateway: {name}")
+
+    monkeypatch.setattr(registry, "get_gateway", boom)
+    frappe.local.message_log = []
+    try:
+        webhooks.ingest("secretname", {}, b"{}")
+    except Exception as e:
+        assert "secretname" not in str(e)
+    assert not getattr(frappe.local, "message_log", None)

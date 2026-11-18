@@ -2,7 +2,7 @@
 
 > [!WARNING]
 > **ALPHA. Early, bleeding edge, expect breaking changes.**
-> Package version `0.1.0a1`, HTTP API `2.0.0-alpha.1`. Endpoints, DocTypes, site_config keys and error codes
+> Package version `0.1.0a2`, HTTP API `2.0.0-alpha.1`. Endpoints, DocTypes, site_config keys and error codes
 > may change between alpha releases without a migration path.
 > **Run it on test-mode payment keys only** (`rzp_test_*`). Features that have not been exercised against a real
 > deployment are **experimental and off by default**; see [Verified vs experimental](#verified-vs-experimental).
@@ -192,12 +192,6 @@ Bench tests (`saas_core/tests/test_bench_*.py`) need a Frappe bench:
 CI ([.github/workflows/ci.yml](.github/workflows/ci.yml)) runs the pure-Python suite, checks that `openapi/v1.yaml` is
 regenerated from `openapi/_gen_v1.py`, and runs the product-name gate.
 
-## Contributing
-
-Issues and pull requests are welcome, bearing in mind this is an alpha. Run the tests and the product-name script
-before opening a PR; if you change an API, update `openapi/_gen_v1.py` and regenerate `openapi/v1.yaml`. Read
-[ARCHITECTURE.md](ARCHITECTURE.md) first, and keep the package generic (no product or customer names).
-
 ## Security
 
 Do not commit keys or secrets. Use test-mode payment keys while alpha. Report vulnerabilities privately to the maintainers
@@ -206,3 +200,9 @@ Do not commit keys or secrets. Use test-mode payment keys while alpha. Report vu
 ## License
 
 [MIT](LICENSE)
+
+## Use at your own risk, and contributions
+
+**Use at your own risk:** this is early alpha software, provided "as is" without warranty of any kind (see [LICENSE](LICENSE)). Don't use it for production data you can't afford to lose.
+
+**Contributions:** we are not accepting pull requests or outside contributions at this time. If you find a bug or a problem, please [open a GitHub issue](https://github.com/tridz-open/saas_core/issues).

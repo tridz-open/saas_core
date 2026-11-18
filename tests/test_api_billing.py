@@ -47,7 +47,7 @@ def env(frappe):
     seed(frappe, "Subscription", name="SUB-2", tenant="theirs", owner_user="b@x.io", plan="pro", gateway="stripe",
          status="active", creation=2)
     seed(frappe, "Invoice", name="INV-1", tenant="acme", owner_user="a@x.io", status="paid", total_amount=900,
-         currency="USD", pdf_url="https://pdf.test/1.pdf", gateway_invoice_id="in_secret", creation=1)
+         currency="USD", pdf_url="https://rzp.io/i/1.pdf", gateway_invoice_id="in_secret", creation=1)
     seed(frappe, "Invoice", name="INV-2", tenant="theirs", owner_user="b@x.io", status="paid", total_amount=1,
          currency="USD", creation=2)
     return frappe, gw

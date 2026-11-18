@@ -3,7 +3,7 @@
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 
-const SKIP = [/^spec\//, /generated\//, /pnpm-lock\.yaml$/, /^scripts\/lint-internal\.mjs$/, /\.(png|jpg|svg)$/];
+const SKIP = [/generated\//, /pnpm-lock\.yaml$/, /^scripts\/lint-internal\.mjs$/, /\.(png|jpg|svg)$/];
 const RULES = [
   [/\/Users\//, "absolute /Users/ path"],
   [/ury_workspaces/, "internal workspace name"],

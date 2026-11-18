@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Generates packages/client/src/generated/schema.d.ts from the OpenAPI contract.
 // Usage: node scripts/codegen.mjs [spec-path] [--check]
-// Default spec: spec/v1.yaml (vendored, see spec/SOURCE.md). OPENAPI_PATH overrides. A missing spec is always an error.
+// Default spec: ../openapi/v1.yaml (saas_core single source of truth). OPENAPI_PATH overrides. A missing spec is always an error.
 import { existsSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -11,7 +11,7 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const args = process.argv.slice(2);
 const check = args.includes("--check");
 const argPath = args.find((a) => !a.startsWith("--"));
-const specPath = resolve(argPath || process.env.OPENAPI_PATH || resolve(root, "spec/v1.yaml"));
+const specPath = resolve(argPath || process.env.OPENAPI_PATH || resolve(root, "../openapi/v1.yaml"));
 const outPath = resolve(root, "packages/client/src/generated/schema.d.ts");
 
 if (!existsSync(specPath)) {

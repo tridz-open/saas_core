@@ -6,7 +6,7 @@ Facts here come from the source: `packages/*/src/index.ts`, `packages/client/src
 
 ## 1. Package map
 
-`@frappe-saaskit/client` is the only package that talks HTTP. Its types are generated from the saas_core OpenAPI contract (vendored at `spec/v1.yaml`, or `OPENAPI_PATH`) by `scripts/codegen.mjs` into `packages/client/src/generated/schema.d.ts`. `react`, `vue` and `node` are thin layers over the client. `mock` depends on the client types and answers the same URLs from memory.
+`@frappe-saaskit/client` is the only package that talks HTTP. Its types are generated from the saas_core OpenAPI contract (`openapi/v1.yaml` at the saas_core repo root, or `OPENAPI_PATH`) by `scripts/codegen.mjs` into `packages/client/src/generated/schema.d.ts`. `react`, `vue` and `node` are thin layers over the client. `mock` depends on the client types and answers the same URLs from memory.
 
 ![saas-kit package map](assets/package-map.svg)
 
@@ -18,7 +18,7 @@ Facts here come from the source: `packages/*/src/index.ts`, `packages/client/src
 | node | client (workspace) | `createNodeClient`, `tokenFromEnv`, `loadTokenFile` |
 | mock | client (workspace), `msw` | `createMockFetch`, `createMockHandlers`, `createMockApi` (root); `createMockServer` (`/node`); `createMockWorker` (`/browser`) |
 
-Contract drift is caught by `pnpm codegen:check`, which exits non-zero if `schema.d.ts` no longer matches the spec. The spec is vendored in `spec/`, so it always runs, in CI too; a missing spec is an error.
+Contract drift is caught by `pnpm codegen:check`, which exits non-zero if `schema.d.ts` no longer matches the spec. The spec is read directly from `../openapi/v1.yaml` (no copy), so changing it without regenerating fails the check, in CI too; a missing spec is an error.
 
 ## 2. Request lifecycle: CSRF, auth and the error envelope
 

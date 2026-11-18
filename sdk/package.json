@@ -10,7 +10,6 @@
     "typecheck": "pnpm -r typecheck && pnpm typecheck:examples",
     "codegen": "node scripts/codegen.mjs",
     "codegen:check": "node scripts/codegen.mjs --check",
-    "spec:sync": "node scripts/spec-sync.mjs",
     "lint:internal": "node scripts/lint-internal.mjs",
     "lint:fc": "vitest run --root . tests/no-fc.test.ts",
     "pack:all": "node scripts/pack-all.mjs",

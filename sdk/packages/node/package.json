@@ -1,17 +1,16 @@
 {
   "name": "@frappe-saaskit/node",
-  "version": "0.1.0-alpha.3",
+  "version": "0.1.0-alpha.4",
   "description": "EXPERIMENTAL: Node helpers (token loading, client factory) for @frappe-saaskit/client",
   "license": "MIT",
   "author": "Tridz Technologies",
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/tridz-open/frappe-saaskit-sdk.git",
-    "directory": "packages/node"
+    "url": "https://github.com/tridz-open/saas_core",
+    "directory": "sdk/packages/node"
   },
-  "homepage": "https://github.com/tridz-open/frappe-saaskit-sdk#readme",
+  "homepage": "https://github.com/tridz-open/saas_core/tree/main/sdk/packages/node#readme",
   "bugs": {
-    "url": "https://github.com/tridz-open/frappe-saaskit-sdk/issues"
+    "url": "https://github.com/tridz-open/saas_core/issues"
   },
   "keywords": [
     "frappe",

@@ -22,6 +22,23 @@ It handles:
 - branded transactional email
 - an admin API and a versioned OpenAPI v1 contract ([openapi/v1.yaml](openapi/v1.yaml))
 
+## Packages in this repo
+
+| Path | What it is |
+|---|---|
+| repo root (`saas_core/`) | The Frappe app: SaaS control plane (plans, provisioning, billing, versioned JSON API). Contract in [`openapi/v1.yaml`](openapi/v1.yaml). |
+| [`sdk/`](sdk/README.md) | TypeScript SDK, the browser client for this API: `@frappe-saaskit/client`, `react`, `mock` (plus experimental `vue` and `node`). Types are generated from `openapi/v1.yaml`. Versioned and released together with saas_core. |
+
+Install the SDK from the release tarballs attached to a GitHub release (not on npm). Release `v0.1.0-alpha.3` carries SDK `0.1.0-alpha.4`:
+
+```bash
+R=0.1.0-alpha.3; V=0.1.0-alpha.4
+B=https://github.com/tridz-open/saas_core/releases/download/v$R
+pnpm add "$B/frappe-saaskit-client-$V.tgz" "$B/frappe-saaskit-react-$V.tgz"
+```
+
+See [sdk/README.md](sdk/README.md#install) for the `@frappe-saaskit/client` override that the other packages need, and [docs/RELEASING.md](docs/RELEASING.md) for how releases are cut.
+
 ## Architecture in brief
 
 - **Frontends talk only to the saas_core HTTP API.** Gateways call back into saas_core webhooks. Frappe Cloud is reached
@@ -30,7 +47,7 @@ It handles:
   Event (`<gateway>:<event_id>`); the processor activates the Subscription; the first success enqueues a `provision`
   Provision Job that drives `fcctl` and emails the owner a one-time setup link. Jobs are auditable and resume-safe.
 - **Related repos:**
-  - SDK (TypeScript client for this API): [tridz-open/frappe-saaskit-sdk](https://github.com/tridz-open/frappe-saaskit-sdk)
+  - SDK (TypeScript client for this API): [`sdk/`](sdk/README.md) in this repository
   - Starter (a customer-facing app built on the SDK): [tridz-open/frappe-saaskit-starter](https://github.com/tridz-open/frappe-saaskit-starter)
   - Provisioning engine: [tridz-open/fcctl](https://github.com/tridz-open/fcctl)
 - Diagrams and module contract: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) and [ARCHITECTURE.md](ARCHITECTURE.md).
@@ -190,7 +207,8 @@ scripts/check_no_product_names.sh          # needs ripgrep
 Bench tests (`saas_core/tests/test_bench_*.py`) need a Frappe bench:
 `BENCH_DIR=~/frappe-bench ADMIN_PASSWORD=... scripts/bench_test.sh`.
 CI ([.github/workflows/ci.yml](.github/workflows/ci.yml)) runs the pure-Python suite, checks that `openapi/v1.yaml` is
-regenerated from `openapi/_gen_v1.py`, and runs the product-name gate.
+regenerated from `openapi/_gen_v1.py`, runs the product-name gate (also over `sdk/`), and runs the SDK jobs in `sdk/`
+(build, typecheck, test, codegen check, lint, pack smoke test; Node 20 and 22). SDK locally: `cd sdk && pnpm install && pnpm build && pnpm test`.
 
 ## Security
 

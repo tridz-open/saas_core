@@ -1,17 +1,16 @@
 {
   "name": "@frappe-saaskit/vue",
-  "version": "0.1.0-alpha.3",
+  "version": "0.1.0-alpha.4",
   "description": "EXPERIMENTAL: Vue 3 composables for @frappe-saaskit/client",
   "license": "MIT",
   "author": "Tridz Technologies",
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/tridz-open/frappe-saaskit-sdk.git",
-    "directory": "packages/vue"
+    "url": "https://github.com/tridz-open/saas_core",
+    "directory": "sdk/packages/vue"
   },
-  "homepage": "https://github.com/tridz-open/frappe-saaskit-sdk#readme",
+  "homepage": "https://github.com/tridz-open/saas_core/tree/main/sdk/packages/vue#readme",
   "bugs": {
-    "url": "https://github.com/tridz-open/frappe-saaskit-sdk/issues"
+    "url": "https://github.com/tridz-open/saas_core/issues"
   },
   "keywords": [
     "frappe",

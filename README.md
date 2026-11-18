@@ -168,6 +168,13 @@ curl -b jar.txt "$API.billing.preview_cancel?tenant=acme"
 
 `billing.cancel` then performs the cancel and refund. Replace `starter` with a plan code from `plans.list`.
 
+### API tokens (experimental, `api_tokens`)
+
+`api_tokens.create` returns the `secret` once (only its sha256 is stored). Send it as `Authorization: Bearer <secret>`;
+the request then runs as the token's owner. Revoked, expired, unknown or malformed Bearer credentials get `401`
+(`{"error": {"code": "unauthorized", ...}}`) instead of falling through to Guest. A token created with a `tenant`
+can only reach that tenant. Frappe's own `Authorization: token key:secret` is unchanged. Implementation: `saas_core/token_auth.py`.
+
 ## Tests and CI
 
 Pure Python; frappe is stubbed, no bench needed:

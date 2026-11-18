@@ -1,5 +1,6 @@
 # saas_core
 
+> [!WARNING]
 > **ALPHA. Early, bleeding edge, expect breaking changes.**
 > Package version `0.1.0a1`, HTTP API `2.0.0-alpha.1`. Endpoints, DocTypes, site_config keys and error codes
 > may change between alpha releases without a migration path.

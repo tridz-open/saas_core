@@ -1,0 +1,85 @@
+{
+ "doctype": "DocType",
+ "name": "Platform Settings",
+ "module": "Saas Core",
+ "engine": "InnoDB",
+ "custom": 0,
+ "issingle": 1,
+ "fields": [
+  {
+   "fieldname": "session_key",
+   "fieldtype": "Password",
+   "label": "Session Key"
+  },
+  {
+   "fieldname": "public_signup",
+   "fieldtype": "Check",
+   "label": "Public Signup",
+   "default": "1"
+  },
+  {
+   "fieldname": "default_gateway",
+   "fieldtype": "Data",
+   "label": "Default Gateway"
+  },
+  {
+   "fieldname": "site_domain",
+   "fieldtype": "Data",
+   "label": "Site Domain"
+  },
+  {
+   "fieldname": "payment_banner",
+   "fieldtype": "Data",
+   "label": "Payment Banner",
+   "default": "Test mode: payments mocked"
+  },
+  {
+   "fieldname": "capacity_open",
+   "fieldtype": "Check",
+   "label": "Capacity Open",
+   "default": "1"
+  },
+  {
+   "fieldname": "signup_mode",
+   "fieldtype": "Select",
+   "label": "Signup Mode",
+   "options": "closed\ninvite\nallowlist\nopen",
+   "default": "closed"
+  },
+  {
+   "fieldname": "signup_allow",
+   "fieldtype": "Table",
+   "label": "Signup Allowlist",
+   "options": "Signup Allow",
+   "depends_on": "eval:doc.signup_mode=='allowlist'"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "SaaS Admin",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 0,
+   "export": 0,
+   "email": 0,
+   "print": 0,
+   "share": 0
+  },
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 0,
+   "export": 0,
+   "email": 0,
+   "print": 0,
+   "share": 0
+  }
+ ],
+ "istable": 0,
+ "field_order": []
+}

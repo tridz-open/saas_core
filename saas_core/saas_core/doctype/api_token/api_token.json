@@ -1,0 +1,29 @@
+{
+ "doctype": "DocType",
+ "name": "API Token",
+ "module": "Saas Core",
+ "custom": 0,
+ "engine": "InnoDB",
+ "autoname": "hash",
+ "field_order": ["owner_user", "label", "tenant", "prefix", "token_hash", "last_used", "expires_at", "revoked", "created"],
+ "fields": [
+  {"fieldname": "owner_user", "fieldtype": "Link", "label": "Owner User", "options": "User", "reqd": 1},
+  {"fieldname": "label", "fieldtype": "Data", "label": "Label", "reqd": 1},
+  {"fieldname": "tenant", "fieldtype": "Link", "label": "Tenant", "options": "Tenant"},
+  {"fieldname": "prefix", "fieldtype": "Data", "label": "Prefix"},
+  {"fieldname": "token_hash", "fieldtype": "Data", "label": "Token Hash (sha256)", "read_only": 1, "hidden": 1},
+  {"fieldname": "last_used", "fieldtype": "Datetime", "label": "Last Used"},
+  {"fieldname": "expires_at", "fieldtype": "Datetime", "label": "Expires At"},
+  {"fieldname": "revoked", "fieldtype": "Check", "label": "Revoked", "default": "0"},
+  {"fieldname": "created", "fieldtype": "Datetime", "label": "Created"}
+ ],
+ "istable": 0,
+ "permissions": [
+  {"role": "SaaS Admin", "read": 1, "write": 1, "create": 1, "delete": 1, "export": 1, "report": 1},
+  {"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1, "export": 1, "report": 1},
+  {"role": "SaaS Customer", "read": 1, "write": 1, "create": 1, "if_owner": 1}
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "track_changes": 0
+}

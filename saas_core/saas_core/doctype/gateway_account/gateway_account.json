@@ -1,0 +1,110 @@
+{
+ "doctype": "DocType",
+ "name": "Gateway Account",
+ "module": "Saas Core",
+ "engine": "InnoDB",
+ "custom": 0,
+ "fields": [
+  {
+   "fieldname": "account_name",
+   "fieldtype": "Data",
+   "label": "Account Name",
+   "reqd": 1,
+   "unique": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "gateway",
+   "fieldtype": "Data",
+   "label": "Gateway",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "mode",
+   "fieldtype": "Select",
+   "label": "Mode",
+   "options": "test\nlive",
+   "default": "test",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "checkout_mode",
+   "fieldtype": "Select",
+   "label": "Checkout Mode",
+   "options": "order\nsubscription",
+   "default": "order",
+   "description": "order is live-verified. Razorpay subscription mode is experimental (site_config saas_core_experimental=razorpay_subscription)."
+  },
+  {
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "Enabled",
+   "default": "1"
+  },
+  {
+   "fieldname": "key_id",
+   "fieldtype": "Data",
+   "label": "Key Id"
+  },
+  {
+   "fieldname": "key_secret",
+   "fieldtype": "Password",
+   "label": "Key Secret"
+  },
+  {
+   "fieldname": "webhook_secret",
+   "fieldtype": "Password",
+   "label": "Webhook Secret"
+  },
+  {
+   "fieldname": "extra",
+   "fieldtype": "JSON",
+   "label": "Extra"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "SaaS Admin",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "email": 1,
+   "print": 1,
+   "share": 1
+  },
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "email": 1,
+   "print": 1,
+   "share": 1
+  }
+ ],
+ "istable": 0,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "naming_rule": "By fieldname",
+ "autoname": "field:account_name",
+ "field_order": [
+  "account_name",
+  "gateway",
+  "mode",
+  "checkout_mode",
+  "enabled",
+  "key_id",
+  "key_secret",
+  "webhook_secret",
+  "extra"
+ ],
+ "modified": "2026-11-17 12:00:00.000000"
+}

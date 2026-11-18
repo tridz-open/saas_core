@@ -1,0 +1,91 @@
+{
+ "creation": "2026-11-16 00:00:00.000000",
+ "docstatus": 0,
+ "doctype": "Workspace Sidebar",
+ "header_icon": "setting",
+ "items": [
+  {
+   "icon": "home",
+   "label": "Overview",
+   "link_to": "SaaS Admin",
+   "link_type": "Workspace",
+   "type": "Link"
+  },
+  {
+   "icon": "list",
+   "label": "Tenant",
+   "link_to": "Tenant",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "icon": "list",
+   "label": "Provision Job",
+   "link_to": "Provision Job",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "icon": "list",
+   "label": "Subscription",
+   "link_to": "Subscription",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "icon": "list",
+   "label": "Invoice",
+   "link_to": "Invoice",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "icon": "list",
+   "label": "Plan",
+   "link_to": "Plan",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "icon": "list",
+   "label": "Template",
+   "link_to": "Template",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "icon": "list",
+   "label": "Support Ticket",
+   "link_to": "Support Ticket",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "icon": "list",
+   "label": "Approval Request",
+   "link_to": "Approval Request",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "icon": "list",
+   "label": "Audit Event",
+   "link_to": "Audit Event",
+   "link_type": "DocType",
+   "type": "Link"
+  },
+  {
+   "icon": "list",
+   "label": "Gateway Account",
+   "link_to": "Gateway Account",
+   "link_type": "DocType",
+   "type": "Link"
+  }
+ ],
+ "modified": "2026-11-16 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Saas Core",
+ "name": "SaaS Admin",
+ "owner": "Administrator",
+ "title": "SaaS Admin"
+}

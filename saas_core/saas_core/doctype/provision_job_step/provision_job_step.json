@@ -1,0 +1,68 @@
+{
+ "doctype": "DocType",
+ "name": "Provision Job Step",
+ "module": "Saas Core",
+ "custom": 0,
+ "engine": "InnoDB",
+ "field_order": [
+  "seq",
+  "step_name",
+  "state",
+  "hook_version",
+  "started_at",
+  "finished_at",
+  "message",
+  "handle"
+ ],
+ "fields": [
+  {
+   "fieldname": "seq",
+   "fieldtype": "Int",
+   "label": "Seq",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "step_name",
+   "fieldtype": "Data",
+   "label": "Name",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "state",
+   "fieldtype": "Data",
+   "label": "State",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "hook_version",
+   "fieldtype": "Data",
+   "label": "Hook Version"
+  },
+  {
+   "fieldname": "started_at",
+   "fieldtype": "Datetime",
+   "label": "Started At"
+  },
+  {
+   "fieldname": "finished_at",
+   "fieldtype": "Datetime",
+   "label": "Finished At"
+  },
+  {
+   "fieldname": "message",
+   "fieldtype": "Small Text",
+   "label": "Message"
+  },
+  {
+   "fieldname": "handle",
+   "fieldtype": "Data",
+   "label": "Handle"
+  }
+ ],
+ "istable": 1,
+ "editable_grid": 1,
+ "permissions": [],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "track_changes": 0
+}

@@ -1,0 +1,29 @@
+name: ci
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: pip install -e '.[test]'
+      - name: Tests
+        run: python -m pytest -q tests
+      - name: OpenAPI is up to date
+        run: |
+          python openapi/_gen_v1.py /tmp/v1.yaml
+          diff -u openapi/v1.yaml /tmp/v1.yaml
+  no-product-names:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install ripgrep
+        run: sudo apt-get update && sudo apt-get install -y ripgrep
+      - name: Product-name gate
+        run: scripts/check_no_product_names.sh

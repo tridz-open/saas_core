@@ -1,0 +1,95 @@
+{
+ "doctype": "DocType",
+ "name": "Support Ticket",
+ "module": "Saas Core",
+ "custom": 0,
+ "engine": "InnoDB",
+ "field_order": [
+  "tenant",
+  "owner_user",
+  "subject",
+  "body",
+  "status",
+  "priority",
+  "replies"
+ ],
+ "fields": [
+  {
+   "fieldname": "tenant",
+   "fieldtype": "Link",
+   "label": "Tenant",
+   "options": "Tenant"
+  },
+  {
+   "fieldname": "owner_user",
+   "fieldtype": "Link",
+   "label": "Owner User",
+   "options": "User",
+   "reqd": 1
+  },
+  {
+   "fieldname": "subject",
+   "fieldtype": "Data",
+   "label": "Subject",
+   "reqd": 1
+  },
+  {
+   "fieldname": "body",
+   "fieldtype": "Text",
+   "label": "Body"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "open\npending\nresolved\nclosed",
+   "default": "open"
+  },
+  {
+   "fieldname": "priority",
+   "fieldtype": "Data",
+   "label": "Priority"
+  },
+  {
+   "fieldname": "replies",
+   "fieldtype": "Table",
+   "label": "Replies",
+   "options": "Support Ticket Reply"
+  }
+ ],
+ "istable": 0,
+ "editable_grid": 0,
+ "permissions": [
+  {
+   "role": "SaaS Admin",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1
+  },
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1
+  },
+  {
+   "role": "SaaS Customer",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "if_owner": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "track_changes": 0,
+ "autoname": "TKT-.#####"
+}

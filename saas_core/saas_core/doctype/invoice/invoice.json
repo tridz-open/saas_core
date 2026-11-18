@@ -1,0 +1,131 @@
+{
+ "doctype": "DocType",
+ "name": "Invoice",
+ "module": "Saas Core",
+ "engine": "InnoDB",
+ "custom": 0,
+ "fields": [
+  {
+   "fieldname": "tenant",
+   "fieldtype": "Link",
+   "label": "Tenant",
+   "options": "Tenant",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "owner_user",
+   "fieldtype": "Link",
+   "label": "Owner User",
+   "options": "User"
+  },
+  {
+   "fieldname": "subscription",
+   "fieldtype": "Link",
+   "label": "Subscription",
+   "options": "Subscription"
+  },
+  {
+   "fieldname": "gateway",
+   "fieldtype": "Data",
+   "label": "Gateway"
+  },
+  {
+   "fieldname": "gateway_invoice_id",
+   "fieldtype": "Data",
+   "label": "Gateway Invoice Id"
+  },
+  {
+   "fieldname": "number",
+   "fieldtype": "Data",
+   "label": "Number",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "draft\nopen\npaid\nvoid\nuncollectible\nrefunded",
+   "default": "draft",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "total_amount",
+   "fieldtype": "Int",
+   "label": "Total Amount",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Data",
+   "label": "Currency"
+  },
+  {
+   "fieldname": "issued_at",
+   "fieldtype": "Datetime",
+   "label": "Issued At"
+  },
+  {
+   "fieldname": "paid_at",
+   "fieldtype": "Datetime",
+   "label": "Paid At"
+  },
+  {
+   "fieldname": "period_start",
+   "fieldtype": "Datetime",
+   "label": "Period Start"
+  },
+  {
+   "fieldname": "period_end",
+   "fieldtype": "Datetime",
+   "label": "Period End"
+  },
+  {
+   "fieldname": "pdf_url",
+   "fieldtype": "Data",
+   "label": "Pdf Url"
+  },
+  {
+   "fieldname": "payment_mocked",
+   "fieldtype": "Check",
+   "label": "Payment Mocked",
+   "default": "0",
+   "read_only": 1
+  },
+  {
+   "fieldname": "gateway_payment_id",
+   "fieldtype": "Data",
+   "label": "Gateway Payment Id"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "SaaS Admin",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "email": 1,
+   "print": 1,
+   "share": 1
+  },
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "email": 1,
+   "print": 1,
+   "share": 1
+  }
+ ],
+ "istable": 0,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "naming_rule": "Expression (old style)",
+ "autoname": "INV-.#####"
+}

@@ -1,0 +1,50 @@
+{
+ "doctype": "DocType",
+ "name": "Template App",
+ "module": "Saas Core",
+ "custom": 0,
+ "engine": "InnoDB",
+ "field_order": [
+  "app",
+  "source_repo",
+  "branch",
+  "version",
+  "install_order"
+ ],
+ "fields": [
+  {
+   "fieldname": "app",
+   "fieldtype": "Data",
+   "label": "App",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "source_repo",
+   "fieldtype": "Data",
+   "label": "Source Repo",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Data",
+   "label": "Branch"
+  },
+  {
+   "fieldname": "version",
+   "fieldtype": "Data",
+   "label": "Version"
+  },
+  {
+   "fieldname": "install_order",
+   "fieldtype": "Int",
+   "label": "Install Order"
+  }
+ ],
+ "istable": 1,
+ "editable_grid": 1,
+ "permissions": [],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "track_changes": 0
+}

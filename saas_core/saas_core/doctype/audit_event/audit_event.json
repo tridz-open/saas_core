@@ -1,0 +1,87 @@
+{
+ "doctype": "DocType",
+ "name": "Audit Event",
+ "module": "Saas Core",
+ "custom": 0,
+ "engine": "InnoDB",
+ "field_order": [
+  "seq",
+  "at",
+  "actor",
+  "action",
+  "target_doctype",
+  "target",
+  "details",
+  "prev_hash",
+  "hash"
+ ],
+ "fields": [
+  {
+   "fieldname": "seq",
+   "fieldtype": "Int",
+   "label": "Seq"
+  },
+  {
+   "fieldname": "at",
+   "fieldtype": "Datetime",
+   "label": "At"
+  },
+  {
+   "fieldname": "actor",
+   "fieldtype": "Data",
+   "label": "Actor"
+  },
+  {
+   "fieldname": "action",
+   "fieldtype": "Data",
+   "label": "Action"
+  },
+  {
+   "fieldname": "target_doctype",
+   "fieldtype": "Data",
+   "label": "Target Doctype"
+  },
+  {
+   "fieldname": "target",
+   "fieldtype": "Data",
+   "label": "Target"
+  },
+  {
+   "fieldname": "details",
+   "fieldtype": "JSON",
+   "label": "Details"
+  },
+  {
+   "fieldname": "prev_hash",
+   "fieldtype": "Data",
+   "label": "Prev Hash"
+  },
+  {
+   "fieldname": "hash",
+   "fieldtype": "Data",
+   "label": "Hash"
+  }
+ ],
+ "istable": 0,
+ "editable_grid": 0,
+ "permissions": [
+  {
+   "role": "SaaS Admin",
+   "read": 1,
+   "create": 1,
+   "export": 1,
+   "report": 1
+  },
+  {
+   "role": "System Manager",
+   "read": 1,
+   "create": 1,
+   "export": 1,
+   "report": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "track_changes": 0,
+ "autoname": "AUD-.#########"
+}

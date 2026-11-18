@@ -1,0 +1,137 @@
+<svg viewBox="0 0 1300 713" width="1300" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    text { font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', system-ui, sans-serif; }
+  </style>
+  <defs>
+    <marker id="arrow-blue" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 L2,4 z" fill="#3b82f6"/></marker>
+    <marker id="arrow-gray" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 L2,4 z" fill="#94a3b8"/></marker>
+    <marker id="arrow-green" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 L2,4 z" fill="#22c55e"/></marker>
+    <marker id="arrow-orange" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 L2,4 z" fill="#f59e0b"/></marker>
+    <marker id="arrow-pink" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 L2,4 z" fill="#ec4899"/></marker>
+    <marker id="arrow-purple" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 L2,4 z" fill="#a855f7"/></marker>
+  </defs>
+  <rect x="0" y="0" width="1300" height="713" fill="#ffffff"/>
+  <text x="650" y="34" font-size="16" fill="#1e293b" text-anchor="middle">Payment lifecycle: checkout to first provision</text>
+  <!-- layer 1: grouping boxes -->
+<rect x="20" y="55" width="1260" height="179" rx="10" fill="#f8fafc" stroke="#94a3b8" stroke-dasharray="6,4"/>
+<text x="30" y="69" font-size="11" fill="#64748b">1. Create the checkout session (api/v1/checkout.create_session)</text>
+<rect x="20" y="264" width="1260" height="179" rx="10" fill="#f8fafc" stroke="#94a3b8" stroke-dasharray="6,4"/>
+<text x="30" y="278" font-size="11" fill="#64748b">2. Customer pays: the browser callback and the webhook record one Payment Event</text>
+<rect x="20" y="473" width="1260" height="113" rx="10" fill="#f8fafc" stroke="#94a3b8" stroke-dasharray="6,4"/>
+<text x="30" y="487" font-size="11" fill="#64748b">3. process_payment_event: _HANDLERS by kind, lock per tenant for checkout and payment</text>
+  <!-- layer 2: connectors -->
+<path d="M260,107 L 274,107" fill="none" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+<path d="M510,107 L 524,107" fill="none" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+<path d="M760,107 L 774,107" fill="none" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#arrow-orange)"/>
+<path d="M1010,107 L 1024,107" fill="none" stroke="#22c55e" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+<path d="M1010,191 L 1024,191" fill="none" stroke="#ec4899" stroke-width="1.5" marker-end="url(#arrow-pink)"/>
+<path d="M895,139 L 895,153" fill="none" stroke="#ec4899" stroke-width="1.5" marker-end="url(#arrow-pink)"/>
+<path d="M645,139 C 645,191 744,191 774,191" fill="none" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#arrow-orange)"/>
+<path d="M260,316 L 274,316" fill="none" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+<path d="M260,400 L 274,400" fill="none" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#arrow-orange)"/>
+<path d="M510,358 L 524,358" fill="none" stroke="#a855f7" stroke-width="1.5" marker-end="url(#arrow-purple)"/>
+<path d="M760,325 L 774,325" fill="none" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow-gray)"/>
+<path d="M760,392 L 774,392" fill="none" stroke="#22c55e" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+<path d="M1010,400 L 1024,400" fill="none" stroke="#22c55e" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+<path d="M1145,432 L 1145,462" fill="none" stroke="#22c55e" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+<path d="M145,575 C 145,590 345,590 345,605" fill="none" stroke="#a855f7" stroke-width="1.5" marker-end="url(#arrow-purple)"/>
+<path d="M395,575 L 395,605" fill="none" stroke="#a855f7" stroke-width="1.5" marker-end="url(#arrow-purple)"/>
+<path d="M645,575 C 645,590 445,590 445,605" fill="none" stroke="#a855f7" stroke-width="1.5" marker-end="url(#arrow-purple)"/>
+<path d="M510,652 L 524,652" fill="none" stroke="#22c55e" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+<path d="M760,652 L 774,652" fill="none" stroke="#22c55e" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+  <!-- layer 3: boxes -->
+<!-- cs: x=35, y=80, w=220, h=54, right=255, bottom=134 -->
+<rect x="35" y="80" width="220" height="54" rx="6" fill="#dbeafe" stroke="#3b82f6"/>
+<text x="145" y="102.2" font-size="12" fill="#1e40af" text-anchor="middle">checkout.create_session</text>
+<text x="145" y="120.2" font-size="12" fill="#1e40af" text-anchor="middle">api/v1</text>
+<!-- tenant: x=285, y=80, w=220, h=54, right=505, bottom=134 -->
+<rect x="285" y="80" width="220" height="54" rx="6" fill="#dbeafe" stroke="#3b82f6"/>
+<text x="395" y="102.2" font-size="12" fill="#1e40af" text-anchor="middle">create Tenant</text>
+<text x="395" y="120.2" font-size="12" fill="#1e40af" text-anchor="middle">status=pending</text>
+<!-- dec: x=535, y=80, w=220, h=54, right=755, bottom=134 -->
+<rect x="535" y="80" width="220" height="54" rx="6" fill="#fef3c7" stroke="#f59e0b"/>
+<text x="645" y="102.2" font-size="12" fill="#b45309" text-anchor="middle">Razorpay and price has</text>
+<text x="645" y="120.2" font-size="12" fill="#b45309" text-anchor="middle">gateway_price_id?</text>
+<!-- sub: x=785, y=80, w=220, h=54, right=1005, bottom=134 -->
+<rect x="785" y="80" width="220" height="54" rx="6" fill="#d1fae5" stroke="#22c55e"/>
+<text x="895" y="102.2" font-size="12" fill="#166534" text-anchor="middle">yes: create subscription</text>
+<text x="895" y="120.2" font-size="12" fill="#166534" text-anchor="middle">recurring, primary path</text>
+<!-- fallback: x=785, y=164, w=220, h=54, right=1005, bottom=218 -->
+<rect x="785" y="164" width="220" height="54" rx="6" fill="#fce7f3" stroke="#ec4899"/>
+<text x="895" y="186.2" font-size="12" fill="#9d174d" text-anchor="middle">one-time order, 1st period</text>
+<text x="895" y="204.2" font-size="12" fill="#9d174d" text-anchor="middle">billing_mode=invoice</text>
+<!-- payload: x=1035, y=80, w=220, h=138, right=1255, bottom=218 -->
+<rect x="1035" y="80" width="220" height="138" rx="6" fill="#dbeafe" stroke="#3b82f6"/>
+<text x="1145" y="126.2" font-size="12" fill="#1e40af" text-anchor="middle">client_payload</text>
+<text x="1145" y="144.2" font-size="12" fill="#1e40af" text-anchor="middle">to the browser</text>
+<text x="1145" y="162.2" font-size="12" fill="#1e40af" text-anchor="middle">customer pays in</text>
+<text x="1145" y="180.2" font-size="12" fill="#1e40af" text-anchor="middle">Checkout.js</text>
+<!-- cb: x=35, y=289, w=220, h=54, right=255, bottom=343 -->
+<rect x="35" y="289" width="220" height="54" rx="6" fill="#dbeafe" stroke="#3b82f6"/>
+<text x="145" y="311.2" font-size="12" fill="#1e40af" text-anchor="middle">checkout.verify_payment</text>
+<text x="145" y="329.2" font-size="12" fill="#1e40af" text-anchor="middle">verify_client_callback()</text>
+<!-- hook: x=35, y=373, w=220, h=54, right=255, bottom=427 -->
+<rect x="35" y="373" width="220" height="54" rx="6" fill="#fef3c7" stroke="#f59e0b"/>
+<text x="145" y="395.2" font-size="12" fill="#b45309" text-anchor="middle">gateway webhook</text>
+<text x="145" y="413.2" font-size="12" fill="#b45309" text-anchor="middle">verify_webhook() signature</text>
+<!-- rec: x=285, y=289, w=220, h=138, right=505, bottom=427 -->
+<rect x="285" y="289" width="220" height="138" rx="6" fill="#f3e8ff" stroke="#a855f7"/>
+<text x="395" y="344.2" font-size="12" fill="#6b21a8" text-anchor="middle">webhooks.record_event</text>
+<text x="395" y="362.2" font-size="12" fill="#6b21a8" text-anchor="middle">inserts Payment Event</text>
+<text x="395" y="380.2" font-size="12" fill="#6b21a8" text-anchor="middle">named gateway:event_id</text>
+<!-- dedupe: x=535, y=308, w=220, h=100, right=755, bottom=408 -->
+<rect x="535" y="308" width="220" height="100" rx="6" fill="#fef3c7" stroke="#f59e0b"/>
+<text x="645" y="344.2" font-size="12" fill="#b45309" text-anchor="middle">Payment Event</text>
+<text x="645" y="362.2" font-size="12" fill="#b45309" text-anchor="middle">gateway:event_id</text>
+<text x="645" y="380.2" font-size="12" fill="#b45309" text-anchor="middle">already exists?</text>
+<!-- dup: x=785, y=289, w=220, h=54, right=1005, bottom=343 -->
+<rect x="785" y="289" width="220" height="54" rx="6" fill="#f8fafc" stroke="#94a3b8"/>
+<text x="895" y="311.2" font-size="12" fill="#1e293b" text-anchor="middle">yes: return duplicate</text>
+<text x="895" y="329.2" font-size="12" fill="#1e293b" text-anchor="middle">no-op</text>
+<!-- ins: x=785, y=373, w=220, h=54, right=1005, bottom=427 -->
+<rect x="785" y="373" width="220" height="54" rx="6" fill="#d1fae5" stroke="#22c55e"/>
+<text x="895" y="395.2" font-size="12" fill="#166534" text-anchor="middle">no: insert Payment Event</text>
+<text x="895" y="413.2" font-size="12" fill="#166534" text-anchor="middle">status=received</text>
+<!-- enq: x=1035, y=373, w=220, h=54, right=1255, bottom=427 -->
+<rect x="1035" y="373" width="220" height="54" rx="6" fill="#d1fae5" stroke="#22c55e"/>
+<text x="1145" y="395.2" font-size="12" fill="#166534" text-anchor="middle">enqueue</text>
+<text x="1145" y="413.2" font-size="12" fill="#166534" text-anchor="middle">process_payment_event</text>
+<!-- checkout.completed0: x=35, y=498, w=220, h=72, right=255, bottom=570 -->
+<rect x="35" y="498" width="220" height="72" rx="6" fill="#f3e8ff" stroke="#a855f7"/>
+<text x="145" y="520.2" font-size="12" fill="#6b21a8" text-anchor="middle">checkout.completed</text>
+<text x="145" y="538.2" font-size="12" fill="#6b21a8" text-anchor="middle">(paid order): invoice</text>
+<text x="145" y="556.2" font-size="12" fill="#6b21a8" text-anchor="middle">Subscription + paid Invoice</text>
+<!-- checkout.completed1: x=285, y=498, w=220, h=72, right=505, bottom=570 -->
+<rect x="285" y="498" width="220" height="72" rx="6" fill="#f3e8ff" stroke="#a855f7"/>
+<text x="395" y="520.2" font-size="12" fill="#6b21a8" text-anchor="middle">checkout.completed</text>
+<text x="395" y="538.2" font-size="12" fill="#6b21a8" text-anchor="middle">(subscription):</text>
+<text x="395" y="556.2" font-size="12" fill="#6b21a8" text-anchor="middle">Subscription active/trialing</text>
+<!-- payment.succeeded2: x=535, y=498, w=220, h=72, right=755, bottom=570 -->
+<rect x="535" y="498" width="220" height="72" rx="6" fill="#f3e8ff" stroke="#a855f7"/>
+<text x="645" y="529.2" font-size="12" fill="#6b21a8" text-anchor="middle">payment.succeeded</text>
+<text x="645" y="547.2" font-size="12" fill="#6b21a8" text-anchor="middle">Invoice paid, dunning reset</text>
+<!-- payment.failed3: x=785, y=498, w=220, h=72, right=1005, bottom=570 -->
+<rect x="785" y="498" width="220" height="72" rx="6" fill="#f3e8ff" stroke="#a855f7"/>
+<text x="895" y="529.2" font-size="12" fill="#6b21a8" text-anchor="middle">payment.failed</text>
+<text x="895" y="547.2" font-size="12" fill="#6b21a8" text-anchor="middle">dunning.on_payment_failed</text>
+<!-- subscription.canceled4: x=1035, y=498, w=220, h=72, right=1255, bottom=570 -->
+<rect x="1035" y="498" width="220" height="72" rx="6" fill="#f3e8ff" stroke="#a855f7"/>
+<text x="1145" y="529.2" font-size="12" fill="#6b21a8" text-anchor="middle">subscription.canceled</text>
+<text x="1145" y="547.2" font-size="12" fill="#6b21a8" text-anchor="middle">suspend job, reason=canceled</text>
+<!-- pm: x=285, y=616, w=220, h=72, right=505, bottom=688 -->
+<rect x="285" y="616" width="220" height="72" rx="6" fill="#d1fae5" stroke="#22c55e"/>
+<text x="395" y="638.2" font-size="12" fill="#166534" text-anchor="middle">_maybe_provision(tenant)</text>
+<text x="395" y="656.2" font-size="12" fill="#166534" text-anchor="middle">only if Tenant pending and</text>
+<text x="395" y="674.2" font-size="12" fill="#166534" text-anchor="middle">no open provision job</text>
+<!-- job: x=535, y=616, w=220, h=72, right=755, bottom=688 -->
+<rect x="535" y="616" width="220" height="72" rx="6" fill="#d1fae5" stroke="#22c55e"/>
+<text x="645" y="647.2" font-size="12" fill="#166534" text-anchor="middle">jobs.enqueue_job(tenant,</text>
+<text x="645" y="665.2" font-size="12" fill="#166534" text-anchor="middle">provision, dedupe_key)</text>
+<!-- run: x=785, y=616, w=220, h=72, right=1005, bottom=688 -->
+<rect x="785" y="616" width="220" height="72" rx="6" fill="#f8fafc" stroke="#94a3b8"/>
+<text x="895" y="647.2" font-size="12" fill="#1e293b" text-anchor="middle">runner.run_job</text>
+<text x="895" y="665.2" font-size="12" fill="#1e293b" text-anchor="middle">see the job state machine</text>
+  <!-- layer 4: labels and cross-layer lines -->
+<text x="905" y="153" font-size="10" fill="#64748b" text-anchor="start">GatewayError</text>
+<text x="625" y="174" font-size="10" fill="#64748b" text-anchor="end">no price id</text>
+</svg>

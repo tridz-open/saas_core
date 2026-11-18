@@ -1,0 +1,47 @@
+{
+ "doctype": "DocType",
+ "name": "Plan Price",
+ "module": "Saas Core",
+ "engine": "InnoDB",
+ "custom": 0,
+ "fields": [
+  {
+   "fieldname": "interval",
+   "fieldtype": "Select",
+   "label": "Interval",
+   "options": "month\nyear",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Data",
+   "label": "Currency",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Int",
+   "label": "Amount",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "gateway",
+   "fieldtype": "Data",
+   "label": "Gateway",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "gateway_price_id",
+   "fieldtype": "Data",
+   "label": "Gateway Price Id"
+  }
+ ],
+ "permissions": [],
+ "istable": 1,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "naming_rule": "Random"
+}

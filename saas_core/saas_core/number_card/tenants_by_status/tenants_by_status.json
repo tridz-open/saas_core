@@ -1,0 +1,20 @@
+{
+ "color": "Blue",
+ "creation": "2026-11-16 00:00:00.000000",
+ "docstatus": 0,
+ "doctype": "Number Card",
+ "document_type": "Tenant",
+ "filters_json": "[[\"Tenant\", \"status\", \"in\", [\"active\", \"pending\", \"suspended\", \"failed\"]]]",
+ "function": "Count",
+ "is_public": 1,
+ "is_standard": 1,
+ "label": "Tenants by Status",
+ "modified": "2026-11-16 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Saas Core",
+ "name": "Tenants by Status",
+ "owner": "Administrator",
+ "show_percentage_stats": 1,
+ "stats_time_interval": "Daily",
+ "type": "Document Type"
+}

@@ -1,0 +1,171 @@
+{
+ "doctype": "DocType",
+ "name": "Tenant",
+ "module": "Saas Core",
+ "custom": 0,
+ "engine": "InnoDB",
+ "field_order": [
+  "slug",
+  "owner_user",
+  "status",
+  "plan",
+  "template",
+  "region",
+  "fc_server_id",
+  "fc_site",
+  "custom_domain",
+  "created_via",
+  "suspend_reason",
+  "active_job",
+  "workflow_id",
+  "recipe_fields",
+  "admin_password",
+  "setup_secret",
+  "setup_email_sent_at",
+  "setup_completed_at",
+  "welcome_sent_at"
+ ],
+ "fields": [
+  {
+   "fieldname": "slug",
+   "fieldtype": "Data",
+   "label": "Slug",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "owner_user",
+   "fieldtype": "Link",
+   "label": "Owner User",
+   "options": "User",
+   "reqd": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "pending\nprovisioning\nactive\nsuspended\nterminating\nfailed",
+   "default": "pending"
+  },
+  {
+   "fieldname": "plan",
+   "fieldtype": "Link",
+   "label": "Plan",
+   "options": "Plan"
+  },
+  {
+   "fieldname": "template",
+   "fieldtype": "Link",
+   "label": "Template",
+   "options": "Template"
+  },
+  {
+   "fieldname": "region",
+   "fieldtype": "Data",
+   "label": "Region"
+  },
+  {
+   "fieldname": "fc_server_id",
+   "fieldtype": "Data",
+   "label": "Fc Server Id"
+  },
+  {
+   "fieldname": "fc_site",
+   "fieldtype": "Data",
+   "label": "Fc Site"
+  },
+  {
+   "fieldname": "custom_domain",
+   "fieldtype": "Data",
+   "label": "Custom Domain"
+  },
+  {
+   "fieldname": "created_via",
+   "fieldtype": "Data",
+   "label": "Created Via"
+  },
+  {
+   "fieldname": "suspend_reason",
+   "fieldtype": "Data",
+   "label": "Suspend Reason"
+  },
+  {
+   "fieldname": "active_job",
+   "fieldtype": "Data",
+   "label": "Active Job"
+  },
+  {
+   "fieldname": "workflow_id",
+   "fieldtype": "Data",
+   "label": "Workflow Id"
+  },
+  {
+   "fieldname": "recipe_fields",
+   "fieldtype": "JSON",
+   "label": "Recipe Fields"
+  },
+  {
+   "fieldname": "admin_password",
+   "fieldtype": "Password",
+   "label": "Admin Password"
+  },
+  {
+   "fieldname": "setup_secret",
+   "fieldtype": "Password",
+   "label": "Setup Secret"
+  },
+  {
+   "fieldname": "setup_email_sent_at",
+   "fieldtype": "Datetime",
+   "label": "Setup Email Sent At",
+   "read_only": 1
+  },
+  {
+   "fieldname": "setup_completed_at",
+   "fieldtype": "Datetime",
+   "label": "Setup Completed At",
+   "read_only": 1
+  },
+  {
+   "fieldname": "welcome_sent_at",
+   "fieldtype": "Datetime",
+   "label": "Welcome Sent At",
+   "read_only": 1
+  }
+ ],
+ "istable": 0,
+ "editable_grid": 0,
+ "permissions": [
+  {
+   "role": "SaaS Admin",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1
+  },
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1
+  },
+  {
+   "role": "SaaS Customer",
+   "read": 1,
+   "create": 0,
+   "write": 0,
+   "if_owner": 0
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "track_changes": 0,
+ "autoname": "field:slug"
+}

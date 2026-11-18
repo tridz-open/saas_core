@@ -1,0 +1,219 @@
+{
+ "doctype": "DocType",
+ "name": "Subscription",
+ "module": "Saas Core",
+ "engine": "InnoDB",
+ "custom": 0,
+ "fields": [
+  {
+   "fieldname": "tenant",
+   "fieldtype": "Link",
+   "label": "Tenant",
+   "options": "Tenant",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "owner_user",
+   "fieldtype": "Link",
+   "label": "Owner User",
+   "options": "User",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "plan",
+   "fieldtype": "Link",
+   "label": "Plan",
+   "options": "Plan"
+  },
+  {
+   "fieldname": "gateway",
+   "fieldtype": "Data",
+   "label": "Gateway"
+  },
+  {
+   "fieldname": "gateway_sub_id",
+   "fieldtype": "Data",
+   "label": "Gateway Sub Id"
+  },
+  {
+   "fieldname": "gateway_customer_id",
+   "fieldtype": "Data",
+   "label": "Gateway Customer Id"
+  },
+  {
+   "fieldname": "interval",
+   "fieldtype": "Select",
+   "label": "Interval",
+   "options": "month\nyear"
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Data",
+   "label": "Currency"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "trialing\nactive\npast_due\ncanceled",
+   "default": "trialing",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "period_end",
+   "fieldtype": "Datetime",
+   "label": "Period End"
+  },
+  {
+   "fieldname": "trial_end",
+   "fieldtype": "Datetime",
+   "label": "Trial End"
+  },
+  {
+   "fieldname": "cancel_at_period_end",
+   "fieldtype": "Check",
+   "label": "Cancel At Period End"
+  },
+  {
+   "fieldname": "dunning_stage",
+   "fieldtype": "Int",
+   "label": "Dunning Stage",
+   "default": "0"
+  },
+  {
+   "fieldname": "first_failure_at",
+   "fieldtype": "Datetime",
+   "label": "First Failure At"
+  },
+  {
+   "fieldname": "next_retry_at",
+   "fieldtype": "Datetime",
+   "label": "Next Retry At",
+   "read_only": 1
+  },
+  {
+   "fieldname": "suspend_date",
+   "fieldtype": "Datetime",
+   "label": "Suspend Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "last_event_at",
+   "fieldtype": "Datetime",
+   "label": "Last Event At"
+  },
+  {
+   "fieldname": "payment_mocked",
+   "fieldtype": "Check",
+   "label": "Payment Mocked",
+   "default": "0",
+   "read_only": 1
+  },
+  {
+   "fieldname": "billing_mode",
+   "fieldtype": "Select",
+   "label": "Billing Mode",
+   "options": "subscription\ninvoice",
+   "default": "subscription"
+  },
+  {
+   "fieldname": "period_start",
+   "fieldtype": "Datetime",
+   "label": "Period Start"
+  },
+  {
+   "fieldname": "paid_amount",
+   "fieldtype": "Int",
+   "label": "Paid Amount"
+  },
+  {
+   "fieldname": "gateway_payment_id",
+   "fieldtype": "Data",
+   "label": "Gateway Payment Id"
+  },
+  {
+   "fieldname": "refunded_amount",
+   "fieldtype": "Int",
+   "label": "Refunded Amount"
+  },
+  {
+   "fieldname": "canceled_at",
+   "fieldtype": "Datetime",
+   "label": "Canceled At"
+  },
+  {
+   "fieldname": "cancel_effective_at",
+   "fieldtype": "Datetime",
+   "label": "Cancel Effective At"
+  },
+  {
+   "fieldname": "cancel_reason",
+   "fieldtype": "Data",
+   "label": "Cancel Reason"
+  },
+  {
+   "fieldname": "pending_plan",
+   "fieldtype": "Link",
+   "label": "Pending Plan",
+   "options": "Plan"
+  },
+  {
+   "fieldname": "plan_change_state",
+   "fieldtype": "Select",
+   "label": "Plan Change State",
+   "options": "\nawaiting_payment\nscheduled"
+  },
+  {
+   "fieldname": "plan_change_at",
+   "fieldtype": "Datetime",
+   "label": "Plan Change At"
+  },
+  {
+   "fieldname": "plan_change_link_id",
+   "fieldtype": "Data",
+   "label": "Plan Change Link Id"
+  },
+  {
+   "fieldname": "plan_change_amount",
+   "fieldtype": "Int",
+   "label": "Plan Change Amount"
+  },
+  {
+   "description": "JSON list of {payment_id, amount}: extra payments (upgrade payment links) funding the held amount",
+   "fieldname": "extra_payments",
+   "fieldtype": "Small Text",
+   "label": "Extra Payments"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "SaaS Admin",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "email": 1,
+   "print": 1,
+   "share": 1
+  },
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "email": 1,
+   "print": 1,
+   "share": 1
+  }
+ ],
+ "istable": 0,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "naming_rule": "Expression (old style)",
+ "autoname": "SUB-.#####"
+}

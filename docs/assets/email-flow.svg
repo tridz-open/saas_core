@@ -1,0 +1,102 @@
+<svg viewBox="0 0 800 636" width="800" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    text { font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', system-ui, sans-serif; }
+  </style>
+  <defs>
+    <marker id="arrow-blue" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 L2,4 z" fill="#3b82f6"/></marker>
+    <marker id="arrow-gray" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 L2,4 z" fill="#94a3b8"/></marker>
+    <marker id="arrow-green" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 L2,4 z" fill="#22c55e"/></marker>
+    <marker id="arrow-orange" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 L2,4 z" fill="#f59e0b"/></marker>
+    <marker id="arrow-purple" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 L2,4 z" fill="#a855f7"/></marker>
+  </defs>
+  <rect x="0" y="0" width="800" height="636" fill="#ffffff"/>
+  <text x="400" y="34" font-size="16" fill="#1e293b" text-anchor="middle">Email flow: welcome and billing mail</text>
+  <!-- layer 1: grouping boxes -->
+<rect x="25" y="55" width="750" height="263" rx="10" fill="#f8fafc" stroke="#94a3b8" stroke-dasharray="6,4"/>
+<text x="35" y="69" font-size="11" fill="#64748b">Welcome mail: sent once after a provision job succeeds</text>
+<rect x="25" y="348" width="750" height="263" rx="10" fill="#f8fafc" stroke="#94a3b8" stroke-dasharray="6,4"/>
+<text x="35" y="362" font-size="11" fill="#64748b">Billing mail: payment failed, dunning, invoice paid</text>
+  <!-- layer 2: connectors -->
+<path d="M265,107 L 279,107" fill="none" stroke="#22c55e" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+<path d="M515,107 L 529,107" fill="none" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+<path d="M650,139 L 650,153" fill="none" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+<path d="M535,191 L 521,191" fill="none" stroke="#a855f7" stroke-width="1.5" marker-end="url(#arrow-purple)"/>
+<path d="M285,191 L 271,191" fill="none" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#arrow-orange)"/>
+<path d="M150,223 L 150,237" fill="none" stroke="#a855f7" stroke-width="1.5" marker-end="url(#arrow-purple)"/>
+<path d="M265,275 L 279,275" fill="none" stroke="#a855f7" stroke-width="1.5" marker-end="url(#arrow-purple)"/>
+<path d="M265,400 L 279,400" fill="none" stroke="#22c55e" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+<path d="M515,400 L 529,400" fill="none" stroke="#a855f7" stroke-width="1.5" marker-end="url(#arrow-purple)"/>
+<path d="M650,432 L 650,446" fill="none" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#arrow-orange)"/>
+<path d="M535,484 L 521,484" fill="none" stroke="#a855f7" stroke-width="1.5" marker-end="url(#arrow-purple)"/>
+<path d="M285,484 L 271,484" fill="none" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow-gray)"/>
+<path d="M400,516 L 400,530" fill="none" stroke="#a855f7" stroke-width="1.5" marker-end="url(#arrow-purple)"/>
+<path d="M285,568 L 271,568" fill="none" stroke="#a855f7" stroke-width="1.5" marker-end="url(#arrow-purple)"/>
+<path d="M150,516 L 150,530" fill="none" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow-gray)"/>
+  <!-- layer 3: boxes -->
+<!-- a1: x=40, y=80, w=220, h=54, right=260, bottom=134 -->
+<rect x="40" y="80" width="220" height="54" rx="6" fill="#d1fae5" stroke="#22c55e"/>
+<text x="150" y="102.2" font-size="12" fill="#166534" text-anchor="middle">provision job succeeded</text>
+<text x="150" y="120.2" font-size="12" fill="#166534" text-anchor="middle">runner.complete_provision</text>
+<!-- a2: x=290, y=80, w=220, h=54, right=510, bottom=134 -->
+<rect x="290" y="80" width="220" height="54" rx="6" fill="#dbeafe" stroke="#3b82f6"/>
+<text x="400" y="102.2" font-size="12" fill="#1e40af" text-anchor="middle">set_admin_password</text>
+<text x="400" y="120.2" font-size="12" fill="#1e40af" text-anchor="middle">random, never stored</text>
+<!-- a3: x=540, y=80, w=220, h=54, right=760, bottom=134 -->
+<rect x="540" y="80" width="220" height="54" rx="6" fill="#dbeafe" stroke="#3b82f6"/>
+<text x="650" y="102.2" font-size="12" fill="#1e40af" text-anchor="middle">create_password_setup_link</text>
+<text x="650" y="120.2" font-size="12" fill="#1e40af" text-anchor="middle">port call for the site</text>
+<!-- a4: x=540, y=164, w=220, h=54, right=760, bottom=218 -->
+<rect x="540" y="164" width="220" height="54" rx="6" fill="#f3e8ff" stroke="#a855f7"/>
+<text x="650" y="186.2" font-size="12" fill="#6b21a8" text-anchor="middle">enqueue send_tenant_ready</text>
+<text x="650" y="204.2" font-size="12" fill="#6b21a8" text-anchor="middle">setup_url as job arg only</text>
+<!-- a5: x=290, y=164, w=220, h=54, right=510, bottom=218 -->
+<rect x="290" y="164" width="220" height="54" rx="6" fill="#fef3c7" stroke="#f59e0b"/>
+<text x="400" y="186.2" font-size="12" fill="#b45309" text-anchor="middle">welcome_sent_at set?</text>
+<text x="400" y="204.2" font-size="12" fill="#b45309" text-anchor="middle">yes: no-op, no: go on</text>
+<!-- a6: x=40, y=164, w=220, h=54, right=260, bottom=218 -->
+<rect x="40" y="164" width="220" height="54" rx="6" fill="#f3e8ff" stroke="#a855f7"/>
+<text x="150" y="186.2" font-size="12" fill="#6b21a8" text-anchor="middle">Email Template by setting</text>
+<text x="150" y="204.2" font-size="12" fill="#6b21a8" text-anchor="middle">default: saas-tenant-ready</text>
+<!-- a7: x=40, y=248, w=220, h=54, right=260, bottom=302 -->
+<rect x="40" y="248" width="220" height="54" rx="6" fill="#f3e8ff" stroke="#a855f7"/>
+<text x="150" y="270.2" font-size="12" fill="#6b21a8" text-anchor="middle">render context</text>
+<text x="150" y="288.2" font-size="12" fill="#6b21a8" text-anchor="middle">brand, urls, setup_url</text>
+<!-- a8: x=290, y=248, w=220, h=54, right=510, bottom=302 -->
+<rect x="290" y="248" width="220" height="54" rx="6" fill="#d1fae5" stroke="#22c55e"/>
+<text x="400" y="270.2" font-size="12" fill="#166534" text-anchor="middle">frappe.sendmail to owner</text>
+<text x="400" y="288.2" font-size="12" fill="#166534" text-anchor="middle">then set welcome_sent_at</text>
+<!-- b1: x=40, y=373, w=220, h=54, right=260, bottom=427 -->
+<rect x="40" y="373" width="220" height="54" rx="6" fill="#d1fae5" stroke="#22c55e"/>
+<text x="150" y="395.2" font-size="12" fill="#166534" text-anchor="middle">billing events</text>
+<text x="150" y="413.2" font-size="12" fill="#166534" text-anchor="middle">failed, dunning, invoice paid</text>
+<!-- b2: x=290, y=373, w=220, h=54, right=510, bottom=427 -->
+<rect x="290" y="373" width="220" height="54" rx="6" fill="#f3e8ff" stroke="#a855f7"/>
+<text x="400" y="395.2" font-size="12" fill="#6b21a8" text-anchor="middle">notifications</text>
+<text x="400" y="413.2" font-size="12" fill="#6b21a8" text-anchor="middle">billing_mail</text>
+<!-- b3: x=540, y=373, w=220, h=54, right=760, bottom=427 -->
+<rect x="540" y="373" width="220" height="54" rx="6" fill="#fef3c7" stroke="#f59e0b"/>
+<text x="650" y="395.2" font-size="12" fill="#b45309" text-anchor="middle">cache marker claimed?</text>
+<text x="650" y="413.2" font-size="12" fill="#b45309" text-anchor="middle">seen: no-op, first: go on</text>
+<!-- b4: x=540, y=457, w=220, h=54, right=760, bottom=511 -->
+<rect x="540" y="457" width="220" height="54" rx="6" fill="#f3e8ff" stroke="#a855f7"/>
+<text x="650" y="479.2" font-size="12" fill="#6b21a8" text-anchor="middle">templating.render</text>
+<text x="650" y="497.2" font-size="12" fill="#6b21a8" text-anchor="middle">(key, brand_context)</text>
+<!-- b5: x=290, y=457, w=220, h=54, right=510, bottom=511 -->
+<rect x="290" y="457" width="220" height="54" rx="6" fill="#fef3c7" stroke="#f59e0b"/>
+<text x="400" y="479.2" font-size="12" fill="#b45309" text-anchor="middle">template configured</text>
+<text x="400" y="497.2" font-size="12" fill="#b45309" text-anchor="middle">and exists?</text>
+<!-- b6: x=40, y=457, w=220, h=54, right=260, bottom=511 -->
+<rect x="40" y="457" width="220" height="54" rx="6" fill="#f8fafc" stroke="#94a3b8"/>
+<text x="150" y="479.2" font-size="12" fill="#1e293b" text-anchor="middle">no: plain-text</text>
+<text x="150" y="497.2" font-size="12" fill="#1e293b" text-anchor="middle">fallback</text>
+<!-- b7: x=290, y=541, w=220, h=54, right=510, bottom=595 -->
+<rect x="290" y="541" width="220" height="54" rx="6" fill="#f3e8ff" stroke="#a855f7"/>
+<text x="400" y="563.2" font-size="12" fill="#6b21a8" text-anchor="middle">yes: branded subject</text>
+<text x="400" y="581.2" font-size="12" fill="#6b21a8" text-anchor="middle">+ HTML</text>
+<!-- b8: x=40, y=541, w=220, h=54, right=260, bottom=595 -->
+<rect x="40" y="541" width="220" height="54" rx="6" fill="#d1fae5" stroke="#22c55e"/>
+<text x="150" y="563.2" font-size="12" fill="#166534" text-anchor="middle">frappe.sendmail</text>
+<text x="150" y="581.2" font-size="12" fill="#166534" text-anchor="middle">to the recipient</text>
+  <!-- layer 4: labels and cross-layer lines -->
+
+</svg>

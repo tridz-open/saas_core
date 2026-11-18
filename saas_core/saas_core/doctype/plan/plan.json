@@ -1,0 +1,111 @@
+{
+ "doctype": "DocType",
+ "name": "Plan",
+ "module": "Saas Core",
+ "engine": "InnoDB",
+ "custom": 0,
+ "fields": [
+  {
+   "fieldname": "code",
+   "fieldtype": "Data",
+   "label": "Code",
+   "reqd": 1,
+   "unique": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "label": "Title",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  },
+  {
+   "fieldname": "is_public",
+   "fieldtype": "Check",
+   "label": "Is Public",
+   "default": "1"
+  },
+  {
+   "fieldname": "available",
+   "fieldtype": "Check",
+   "label": "Available",
+   "default": "1"
+  },
+  {
+   "fieldname": "trial_days",
+   "fieldtype": "Int",
+   "label": "Trial Days",
+   "default": "0"
+  },
+  {
+   "fieldname": "fc_server_plan",
+   "fieldtype": "Data",
+   "label": "Fc Server Plan"
+  },
+  {
+   "fieldname": "limits",
+   "fieldtype": "JSON",
+   "label": "Limits"
+  },
+  {
+   "fieldname": "template",
+   "fieldtype": "Link",
+   "label": "Template",
+   "options": "Template"
+  },
+  {
+   "fieldname": "features",
+   "fieldtype": "JSON",
+   "label": "Features"
+  },
+  {
+   "fieldname": "prices",
+   "fieldtype": "Table",
+   "label": "Prices",
+   "options": "Plan Price"
+  },
+  {
+   "fieldname": "sort_order",
+   "fieldtype": "Int",
+   "label": "Sort Order",
+   "default": "0"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "SaaS Admin",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "email": 1,
+   "print": 1,
+   "share": 1
+  },
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "email": 1,
+   "print": 1,
+   "share": 1
+  }
+ ],
+ "istable": 0,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "naming_rule": "By fieldname",
+ "autoname": "field:code"
+}

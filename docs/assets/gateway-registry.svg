@@ -1,0 +1,74 @@
+<svg viewBox="0 0 900 560" width="900" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    text { font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', system-ui, sans-serif; }
+  </style>
+  <defs>
+    <marker id="arrow-blue" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 L2,4 z" fill="#3b82f6"/></marker>
+    <marker id="arrow-orange" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 L2,4 z" fill="#f59e0b"/></marker>
+    <marker id="arrow-purple" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 L2,4 z" fill="#a855f7"/></marker>
+  </defs>
+  <rect x="0" y="0" width="900" height="560" fill="#ffffff"/>
+  <text x="450" y="34" font-size="16" fill="#1e293b" text-anchor="middle">Gateway adapter interface and registry</text>
+  <!-- layer 1: grouping boxes -->
+
+  <!-- layer 2: connectors -->
+<path d="M120,413 L 120,399" fill="none" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+<path d="M340,413 L 340,399" fill="none" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+<path d="M780,413 L 780,399" fill="none" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+<path d="M310,124 L 296,124" fill="none" stroke="#a855f7" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#arrow-purple)"/>
+<path d="M455,183 L 455,197" fill="none" stroke="#a855f7" stroke-width="1.5" marker-end="url(#arrow-purple)"/>
+<path d="M750,203 L 750,189" fill="none" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#arrow-orange)"/>
+  <!-- layer 3: boxes -->
+<!-- acct: x=25, y=70, w=260, h=108, right=285, bottom=178 -->
+<rect x="25" y="70" width="260" height="108" rx="6" fill="#d1fae5" stroke="#22c55e"/>
+<text x="155" y="101.2" font-size="12" fill="#166534" text-anchor="middle">Gateway Account</text>
+<text x="155" y="119.2" font-size="12" fill="#166534" text-anchor="middle">(DocType)</text>
+<text x="155" y="137.2" font-size="12" fill="#166534" text-anchor="middle">gateway, mode, enabled</text>
+<text x="155" y="155.2" font-size="12" fill="#166534" text-anchor="middle">secrets via get_password</text>
+<!-- registry: x=315, y=70, w=280, h=108, right=595, bottom=178 -->
+<rect x="315" y="70" width="280" height="108" rx="6" fill="#f3e8ff" stroke="#a855f7"/>
+<text x="455" y="101.2" font-size="12" fill="#6b21a8" text-anchor="middle">registry.py</text>
+<text x="455" y="119.2" font-size="12" fill="#6b21a8" text-anchor="middle">GATEWAYS: name to adapter</text>
+<text x="455" y="137.2" font-size="12" fill="#6b21a8" text-anchor="middle">get_gateway(name, account)</text>
+<text x="455" y="155.2" font-size="12" fill="#6b21a8" text-anchor="middle">manual refused if any live account</text>
+<!-- event: x=625, y=70, w=250, h=108, right=875, bottom=178 -->
+<rect x="625" y="70" width="250" height="108" rx="6" fill="#fef3c7" stroke="#f59e0b"/>
+<text x="750" y="92.2" font-size="12" fill="#b45309" text-anchor="middle">NormalizedEvent</text>
+<text x="750" y="110.2" font-size="12" fill="#b45309" text-anchor="middle">event_id, gateway, kind,</text>
+<text x="750" y="128.2" font-size="12" fill="#b45309" text-anchor="middle">subscription_ref, tenant_ref,</text>
+<text x="750" y="146.2" font-size="12" fill="#b45309" text-anchor="middle">amount, currency, period_end,</text>
+<text x="750" y="164.2" font-size="12" fill="#b45309" text-anchor="middle">invoice_ref</text>
+<!-- gateway: x=45, y=208, w=810, h=180, right=855, bottom=388 -->
+<rect x="45" y="208" width="810" height="180" rx="6" fill="#dbeafe" stroke="#3b82f6"/>
+<text x="450" y="230.2" font-size="12" fill="#1e40af" text-anchor="middle">Gateway (ABC, gateways/base.py)</text>
+<text x="450" y="248.2" font-size="12" fill="#1e40af" text-anchor="middle">name, supports: frozenset</text>
+<text x="450" y="266.2" font-size="12" fill="#1e40af" text-anchor="middle">create_checkout_session(CheckoutParams) -&gt; CheckoutResult</text>
+<text x="450" y="284.2" font-size="12" fill="#1e40af" text-anchor="middle">portal_link(customer_ref, return_url)</text>
+<text x="450" y="302.2" font-size="12" fill="#1e40af" text-anchor="middle">cancel_subscription(sub_ref, at_period_end)</text>
+<text x="450" y="320.2" font-size="12" fill="#1e40af" text-anchor="middle">verify_webhook(headers, raw_body) -&gt; bool</text>
+<text x="450" y="338.2" font-size="12" fill="#1e40af" text-anchor="middle">parse_event(payload, headers) -&gt; NormalizedEvent</text>
+<text x="450" y="356.2" font-size="12" fill="#1e40af" text-anchor="middle">client_payload(session) -&gt; dict</text>
+<text x="450" y="374.2" font-size="12" fill="#1e40af" text-anchor="middle">verify_client_callback(payload) -&gt; NormalizedEvent</text>
+<!-- RazorpayGateway: x=25, y=418, w=190, h=90, right=215, bottom=508 -->
+<rect x="25" y="418" width="190" height="90" rx="6" fill="#d1fae5" stroke="#22c55e"/>
+<text x="120" y="440.2" font-size="12" fill="#166534" text-anchor="middle">RazorpayGateway</text>
+<text x="120" y="458.2" font-size="12" fill="#166534" text-anchor="middle">subscription, order,</text>
+<text x="120" y="476.2" font-size="12" fill="#166534" text-anchor="middle">client_callback</text>
+<text x="120" y="494.2" font-size="12" fill="#166534" text-anchor="middle">create_payment_link()</text>
+<!-- StripeGateway: x=245, y=418, w=190, h=90, right=435, bottom=508 -->
+<rect x="245" y="418" width="190" height="90" rx="6" fill="#f8fafc" stroke="#94a3b8"/>
+<text x="340" y="440.2" font-size="12" fill="#1e293b" text-anchor="middle">StripeGateway</text>
+<text x="340" y="458.2" font-size="12" fill="#1e293b" text-anchor="middle">subscription, portal</text>
+<text x="340" y="476.2" font-size="12" fill="#1e293b" text-anchor="middle">client callback:</text>
+<text x="340" y="494.2" font-size="12" fill="#1e293b" text-anchor="middle">NotImplementedError</text>
+<!-- ManualGateway: x=685, y=418, w=190, h=90, right=875, bottom=508 -->
+<rect x="685" y="418" width="190" height="90" rx="6" fill="#fce7f3" stroke="#ec4899"/>
+<text x="780" y="440.2" font-size="12" fill="#9d174d" text-anchor="middle">ManualGateway</text>
+<text x="780" y="458.2" font-size="12" fill="#9d174d" text-anchor="middle">subscription,</text>
+<text x="780" y="476.2" font-size="12" fill="#9d174d" text-anchor="middle">client_callback</text>
+<text x="780" y="494.2" font-size="12" fill="#9d174d" text-anchor="middle">payment_mocked, test only</text>
+  <!-- layer 4: labels and cross-layer lines -->
+<text x="465" y="197" font-size="10" fill="#64748b" text-anchor="start">builds</text>
+<text x="760" y="197" font-size="10" fill="#64748b" text-anchor="start">returns an event</text>
+<text x="450" y="534" font-size="10" fill="#64748b" text-anchor="middle">arrows up = implements the Gateway ABC  ·  dashed = registry loads the enabled account</text>
+</svg>

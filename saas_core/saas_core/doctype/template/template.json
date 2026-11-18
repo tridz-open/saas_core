@@ -1,0 +1,123 @@
+{
+ "doctype": "DocType",
+ "name": "Template",
+ "module": "Saas Core",
+ "custom": 0,
+ "engine": "InnoDB",
+ "field_order": [
+  "slug",
+  "title",
+  "description",
+  "is_public",
+  "min_plan",
+  "recipe",
+  "apps",
+  "backup_source",
+  "hooks",
+  "sanitize_config",
+  "health_checks",
+  "site_config",
+  "site_admin"
+ ],
+ "fields": [
+  {
+   "fieldname": "slug",
+   "fieldtype": "Data",
+   "label": "Slug",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "label": "Title"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  },
+  {
+   "fieldname": "is_public",
+   "fieldtype": "Check",
+   "label": "Is Public"
+  },
+  {
+   "fieldname": "min_plan",
+   "fieldtype": "Link",
+   "label": "Min Plan",
+   "options": "Plan"
+  },
+  {
+   "fieldname": "recipe",
+   "fieldtype": "Data",
+   "label": "Recipe"
+  },
+  {
+   "fieldname": "apps",
+   "fieldtype": "Table",
+   "label": "Apps",
+   "options": "Template App"
+  },
+  {
+   "fieldname": "backup_source",
+   "fieldtype": "JSON",
+   "label": "Backup Source"
+  },
+  {
+   "fieldname": "hooks",
+   "fieldtype": "JSON",
+   "label": "Hooks"
+  },
+  {
+   "fieldname": "sanitize_config",
+   "fieldtype": "JSON",
+   "label": "Sanitize Config"
+  },
+  {
+   "fieldname": "health_checks",
+   "fieldtype": "JSON",
+   "label": "Health Checks"
+  },
+  {
+   "fieldname": "site_config",
+   "fieldtype": "JSON",
+   "label": "Site Config"
+  },
+  {
+   "fieldname": "site_admin",
+   "fieldtype": "Check",
+   "label": "Expose Site Admin to Hooks",
+   "default": "0",
+   "description": "Opt in: recipe hooks receive ctx.site_admin (fcctl SiteAdminClient)."
+  }
+ ],
+ "istable": 0,
+ "editable_grid": 0,
+ "permissions": [
+  {
+   "role": "SaaS Admin",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1
+  },
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "track_changes": 0,
+ "autoname": "field:slug"
+}

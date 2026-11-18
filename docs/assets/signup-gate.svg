@@ -1,0 +1,88 @@
+<svg viewBox="0 0 1270 584" width="1270" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    text { font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', system-ui, sans-serif; }
+  </style>
+  <defs>
+    <marker id="arrow-blue" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 L2,4 z" fill="#3b82f6"/></marker>
+    <marker id="arrow-green" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 L2,4 z" fill="#22c55e"/></marker>
+    <marker id="arrow-orange" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 L2,4 z" fill="#f59e0b"/></marker>
+    <marker id="arrow-pink" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 L2,4 z" fill="#ec4899"/></marker>
+  </defs>
+  <rect x="0" y="0" width="1270" height="584" fill="#ffffff"/>
+  <text x="635" y="34" font-size="16" fill="#1e293b" text-anchor="middle">Signup gate (auth.signup)</text>
+  <!-- layer 1: grouping boxes -->
+
+  <!-- layer 2: connectors -->
+<path d="M250,322 L 264,322" fill="none" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+<path d="M385,290 L 385,276" fill="none" stroke="#22c55e" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+<path d="M500,322 L 514,322" fill="none" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#arrow-orange)"/>
+<path d="M750,112 L 764,112" fill="none" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#arrow-orange)"/>
+<path d="M750,196 L 764,196" fill="none" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#arrow-orange)"/>
+<path d="M750,322 L 764,322" fill="none" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#arrow-orange)"/>
+<path d="M750,490 L 764,490" fill="none" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#arrow-orange)"/>
+<path d="M1000,112 L 1014,112" fill="none" stroke="#22c55e" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+<path d="M1000,196 L 1014,196" fill="none" stroke="#ec4899" stroke-width="1.5" marker-end="url(#arrow-pink)"/>
+<path d="M1000,280 L 1014,280" fill="none" stroke="#22c55e" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+<path d="M1000,364 L 1014,364" fill="none" stroke="#ec4899" stroke-width="1.5" marker-end="url(#arrow-pink)"/>
+<path d="M1000,448 L 1014,448" fill="none" stroke="#22c55e" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+<path d="M1000,532 L 1014,532" fill="none" stroke="#ec4899" stroke-width="1.5" marker-end="url(#arrow-pink)"/>
+  <!-- layer 3: boxes -->
+<!-- req: x=25, y=295, w=220, h=54, right=245, bottom=349 -->
+<rect x="25" y="295" width="220" height="54" rx="6" fill="#dbeafe" stroke="#3b82f6"/>
+<text x="135" y="317.2" font-size="12" fill="#1e40af" text-anchor="middle">POST signup</text>
+<text x="135" y="335.2" font-size="12" fill="#1e40af" text-anchor="middle">email, invite_token?</text>
+<!-- legacy: x=275, y=295, w=220, h=54, right=495, bottom=349 -->
+<rect x="275" y="295" width="220" height="54" rx="6" fill="#fef3c7" stroke="#f59e0b"/>
+<text x="385" y="317.2" font-size="12" fill="#b45309" text-anchor="middle">saas_core_public_signup</text>
+<text x="385" y="335.2" font-size="12" fill="#b45309" text-anchor="middle">truthy? (no: continue)</text>
+<!-- allow0: x=275, y=211, w=220, h=54, right=495, bottom=265 -->
+<rect x="275" y="211" width="220" height="54" rx="6" fill="#d1fae5" stroke="#22c55e"/>
+<text x="385" y="233.2" font-size="12" fill="#166534" text-anchor="middle">allowed</text>
+<text x="385" y="251.2" font-size="12" fill="#166534" text-anchor="middle">yes: legacy bypass</text>
+<!-- mode: x=525, y=85, w=220, h=474, right=745, bottom=559 -->
+<rect x="525" y="85" width="220" height="474" rx="6" fill="#fef3c7" stroke="#f59e0b"/>
+<text x="635" y="272.2" font-size="12" fill="#b45309" text-anchor="middle">signup_mode</text>
+<text x="635" y="290.2" font-size="12" fill="#b45309" text-anchor="middle">default closed;</text>
+<text x="635" y="308.2" font-size="12" fill="#b45309" text-anchor="middle">unknown value = closed</text>
+<text x="635" y="326.2" font-size="12" fill="#b45309" text-anchor="middle">site_config</text>
+<text x="635" y="344.2" font-size="12" fill="#b45309" text-anchor="middle">saas_core_signup_mode</text>
+<text x="635" y="362.2" font-size="12" fill="#b45309" text-anchor="middle">or Platform Settings</text>
+<text x="635" y="380.2" font-size="12" fill="#b45309" text-anchor="middle">signup_mode</text>
+<!-- open: x=775, y=85, w=220, h=54, right=995, bottom=139 -->
+<rect x="775" y="85" width="220" height="54" rx="6" fill="#f8fafc" stroke="#94a3b8"/>
+<text x="885" y="116.2" font-size="12" fill="#1e293b" text-anchor="middle">open</text>
+<!-- closed: x=775, y=169, w=220, h=54, right=995, bottom=223 -->
+<rect x="775" y="169" width="220" height="54" rx="6" fill="#f8fafc" stroke="#94a3b8"/>
+<text x="885" y="200.2" font-size="12" fill="#1e293b" text-anchor="middle">closed</text>
+<!-- invite: x=775, y=253, w=220, h=138, right=995, bottom=391 -->
+<rect x="775" y="253" width="220" height="138" rx="6" fill="#fef3c7" stroke="#f59e0b"/>
+<text x="885" y="299.2" font-size="12" fill="#b45309" text-anchor="middle">invite</text>
+<text x="885" y="317.2" font-size="12" fill="#b45309" text-anchor="middle">valid invite token?</text>
+<text x="885" y="335.2" font-size="12" fill="#b45309" text-anchor="middle">Tenant Member</text>
+<text x="885" y="353.2" font-size="12" fill="#b45309" text-anchor="middle">status=invited</text>
+<!-- allow: x=775, y=421, w=220, h=138, right=995, bottom=559 -->
+<rect x="775" y="421" width="220" height="138" rx="6" fill="#fef3c7" stroke="#f59e0b"/>
+<text x="885" y="476.2" font-size="12" fill="#b45309" text-anchor="middle">allowlist</text>
+<text x="885" y="494.2" font-size="12" fill="#b45309" text-anchor="middle">email matches signup_allow?</text>
+<text x="885" y="512.2" font-size="12" fill="#b45309" text-anchor="middle">exact address or @domain</text>
+<!-- allowed85: x=1025, y=85, w=220, h=54, right=1245, bottom=139 -->
+<rect x="1025" y="85" width="220" height="54" rx="6" fill="#d1fae5" stroke="#22c55e"/>
+<text x="1135" y="116.2" font-size="12" fill="#166534" text-anchor="middle">allowed</text>
+<!-- 403 signup_disabled169: x=1025, y=169, w=220, h=54, right=1245, bottom=223 -->
+<rect x="1025" y="169" width="220" height="54" rx="6" fill="#fce7f3" stroke="#ec4899"/>
+<text x="1135" y="200.2" font-size="12" fill="#9d174d" text-anchor="middle">403 signup_disabled</text>
+<!-- yes: allowed253: x=1025, y=253, w=220, h=54, right=1245, bottom=307 -->
+<rect x="1025" y="253" width="220" height="54" rx="6" fill="#d1fae5" stroke="#22c55e"/>
+<text x="1135" y="284.2" font-size="12" fill="#166534" text-anchor="middle">yes: allowed</text>
+<!-- no: 403 invite_required337: x=1025, y=337, w=220, h=54, right=1245, bottom=391 -->
+<rect x="1025" y="337" width="220" height="54" rx="6" fill="#fce7f3" stroke="#ec4899"/>
+<text x="1135" y="368.2" font-size="12" fill="#9d174d" text-anchor="middle">no: 403 invite_required</text>
+<!-- yes: allowed421: x=1025, y=421, w=220, h=54, right=1245, bottom=475 -->
+<rect x="1025" y="421" width="220" height="54" rx="6" fill="#d1fae5" stroke="#22c55e"/>
+<text x="1135" y="452.2" font-size="12" fill="#166534" text-anchor="middle">yes: allowed</text>
+<!-- no: 403 not_allowlisted505: x=1025, y=505, w=220, h=54, right=1245, bottom=559 -->
+<rect x="1025" y="505" width="220" height="54" rx="6" fill="#fce7f3" stroke="#ec4899"/>
+<text x="1135" y="536.2" font-size="12" fill="#9d174d" text-anchor="middle">no: 403 not_allowlisted</text>
+  <!-- layer 4: labels and cross-layer lines -->
+<text x="395" y="288" font-size="10" fill="#64748b" text-anchor="start">yes</text>
+</svg>

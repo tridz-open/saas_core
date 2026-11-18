@@ -1,0 +1,106 @@
+{
+ "charts": [],
+ "content": "[{\"id\": \"h1\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>SaaS Admin</b></span>\", \"col\": 12}}, {\"id\": \"n0\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Tenants by Status\", \"col\": 4}}, {\"id\": \"n1\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Failed Jobs\", \"col\": 4}}, {\"id\": \"n2\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Past Due Subscriptions\", \"col\": 4}}, {\"id\": \"h2\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Shortcuts</b></span>\", \"col\": 12}}, {\"id\": \"s0\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Tenant\", \"col\": 3}}, {\"id\": \"s1\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Provision Job\", \"col\": 3}}, {\"id\": \"s2\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Subscription\", \"col\": 3}}, {\"id\": \"s3\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Invoice\", \"col\": 3}}, {\"id\": \"s4\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Plan\", \"col\": 3}}, {\"id\": \"s5\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Template\", \"col\": 3}}, {\"id\": \"s6\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Support Ticket\", \"col\": 3}}, {\"id\": \"s7\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Approval Request\", \"col\": 3}}, {\"id\": \"s8\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Audit Event\", \"col\": 3}}, {\"id\": \"s9\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Gateway Account\", \"col\": 3}}]",
+ "creation": "2026-11-16 00:00:00.000000",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "setting",
+ "idx": 0,
+ "is_hidden": 0,
+ "label": "SaaS Admin",
+ "links": [],
+ "modified": "2026-11-16 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Saas Core",
+ "name": "SaaS Admin",
+ "number_cards": [
+  {
+   "label": "Tenants by Status",
+   "number_card_name": "Tenants by Status"
+  },
+  {
+   "label": "Failed Jobs",
+   "number_card_name": "Failed Jobs"
+  },
+  {
+   "label": "Past Due Subscriptions",
+   "number_card_name": "Past Due Subscriptions"
+  }
+ ],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [
+  {
+   "role": "SaaS Admin"
+  }
+ ],
+ "sequence_id": 1,
+ "shortcuts": [
+  {
+   "doc_view": "List",
+   "label": "Tenant",
+   "link_to": "Tenant",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "List",
+   "label": "Provision Job",
+   "link_to": "Provision Job",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "List",
+   "label": "Subscription",
+   "link_to": "Subscription",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "List",
+   "label": "Invoice",
+   "link_to": "Invoice",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "List",
+   "label": "Plan",
+   "link_to": "Plan",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "List",
+   "label": "Template",
+   "link_to": "Template",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "List",
+   "label": "Support Ticket",
+   "link_to": "Support Ticket",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "List",
+   "label": "Approval Request",
+   "link_to": "Approval Request",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "List",
+   "label": "Audit Event",
+   "link_to": "Audit Event",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "List",
+   "label": "Gateway Account",
+   "link_to": "Gateway Account",
+   "type": "DocType"
+  }
+ ],
+ "title": "SaaS Admin"
+}

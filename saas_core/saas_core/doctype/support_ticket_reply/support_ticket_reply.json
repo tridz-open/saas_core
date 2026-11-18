@@ -1,0 +1,43 @@
+{
+ "doctype": "DocType",
+ "name": "Support Ticket Reply",
+ "module": "Saas Core",
+ "custom": 0,
+ "engine": "InnoDB",
+ "field_order": [
+  "from_staff",
+  "body",
+  "at",
+  "author"
+ ],
+ "fields": [
+  {
+   "fieldname": "from_staff",
+   "fieldtype": "Check",
+   "label": "From Staff"
+  },
+  {
+   "fieldname": "body",
+   "fieldtype": "Text",
+   "label": "Body",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "at",
+   "fieldtype": "Datetime",
+   "label": "At"
+  },
+  {
+   "fieldname": "author",
+   "fieldtype": "Data",
+   "label": "Author",
+   "in_list_view": 1
+  }
+ ],
+ "istable": 1,
+ "editable_grid": 1,
+ "permissions": [],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "track_changes": 0
+}

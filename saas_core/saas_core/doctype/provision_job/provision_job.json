@@ -1,0 +1,123 @@
+{
+ "doctype": "DocType",
+ "name": "Provision Job",
+ "module": "Saas Core",
+ "custom": 0,
+ "engine": "InnoDB",
+ "field_order": [
+  "tenant",
+  "kind",
+  "state",
+  "workflow_id",
+  "attempts",
+  "needs_attention",
+  "error",
+  "args",
+  "approval",
+  "dedupe_key",
+  "steps",
+  "finished_at"
+ ],
+ "fields": [
+  {
+   "fieldname": "tenant",
+   "fieldtype": "Link",
+   "label": "Tenant",
+   "options": "Tenant",
+   "reqd": 1
+  },
+  {
+   "fieldname": "kind",
+   "fieldtype": "Select",
+   "label": "Kind",
+   "options": "provision\nsuspend\nresume\nchange_plan\nterminate\nbackup\nrestore",
+   "reqd": 1
+  },
+  {
+   "fieldname": "state",
+   "fieldtype": "Select",
+   "label": "State",
+   "options": "pending\ndispatching\nsubmitted\nrunning\nsucceeded\nfailed\nstuck\noutcome_unknown\nneeds_attention",
+   "default": "pending"
+  },
+  {
+   "fieldname": "workflow_id",
+   "fieldtype": "Data",
+   "label": "Workflow Id"
+  },
+  {
+   "fieldname": "attempts",
+   "fieldtype": "Int",
+   "label": "Attempts"
+  },
+  {
+   "fieldname": "needs_attention",
+   "fieldtype": "Check",
+   "label": "Needs Attention"
+  },
+  {
+   "fieldname": "error",
+   "fieldtype": "Small Text",
+   "label": "Error"
+  },
+  {
+   "fieldname": "args",
+   "fieldtype": "JSON",
+   "label": "Args"
+  },
+  {
+   "fieldname": "approval",
+   "fieldtype": "Link",
+   "label": "Approval",
+   "options": "Approval Request"
+  },
+  {
+   "fieldname": "dedupe_key",
+   "fieldtype": "Data",
+   "label": "Dedupe Key"
+  },
+  {
+   "fieldname": "steps",
+   "fieldtype": "Table",
+   "label": "Steps",
+   "options": "Provision Job Step"
+  },
+  {
+   "fieldname": "finished_at",
+   "fieldtype": "Datetime",
+   "label": "Finished At"
+  }
+ ],
+ "istable": 0,
+ "editable_grid": 0,
+ "permissions": [
+  {
+   "role": "SaaS Admin",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1
+  },
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1
+  },
+  {
+   "role": "SaaS Customer",
+   "read": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "track_changes": 0,
+ "autoname": "PJ-.######"
+}

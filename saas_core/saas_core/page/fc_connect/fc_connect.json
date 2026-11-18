@@ -1,0 +1,10 @@
+{
+ "doctype": "Page",
+ "name": "fc-connect",
+ "title": "FC Connect",
+ "module": "Saas Core",
+ "page_name": "fc-connect",
+ "standard": "Yes",
+ "system_page": 0,
+ "roles": [{"role": "SaaS Admin"}, {"role": "System Manager"}]
+}

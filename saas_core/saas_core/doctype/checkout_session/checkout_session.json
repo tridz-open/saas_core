@@ -1,0 +1,129 @@
+{
+ "doctype": "DocType",
+ "name": "Checkout Session",
+ "module": "Saas Core",
+ "engine": "InnoDB",
+ "custom": 0,
+ "fields": [
+  {
+   "fieldname": "session_key",
+   "fieldtype": "Data",
+   "label": "Session Key",
+   "reqd": 1,
+   "unique": 1,
+   "set_only_once": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "gateway",
+   "fieldtype": "Data",
+   "label": "Gateway",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "session_ref",
+   "fieldtype": "Data",
+   "label": "Session Ref",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "tenant",
+   "fieldtype": "Data",
+   "label": "Tenant",
+   "reqd": 1,
+   "set_only_once": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "owner_user",
+   "fieldtype": "Data",
+   "label": "Owner User",
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "plan",
+   "fieldtype": "Data",
+   "label": "Plan",
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "interval",
+   "fieldtype": "Data",
+   "label": "Interval",
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Data",
+   "label": "Currency",
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "billing_mode",
+   "fieldtype": "Data",
+   "label": "Billing Mode",
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "checkout_mode",
+   "fieldtype": "Data",
+   "label": "Checkout Mode",
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "amount_minor",
+   "fieldtype": "Int",
+   "label": "Amount Minor",
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "gateway_price_id",
+   "fieldtype": "Data",
+   "label": "Gateway Price Id",
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "price_row",
+   "fieldtype": "Int",
+   "label": "Price Row",
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "subscription",
+   "fieldtype": "Data",
+   "label": "Subscription"
+  },
+  {
+   "fieldname": "consumed_at",
+   "fieldtype": "Datetime",
+   "label": "Consumed At"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "SaaS Admin",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1
+  },
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1
+  }
+ ],
+ "istable": 0,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "naming_rule": "By fieldname",
+ "autoname": "field:session_key"
+}

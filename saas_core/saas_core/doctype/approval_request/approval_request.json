@@ -1,0 +1,103 @@
+{
+ "doctype": "DocType",
+ "name": "Approval Request",
+ "module": "Saas Core",
+ "custom": 0,
+ "engine": "InnoDB",
+ "field_order": [
+  "op",
+  "target",
+  "args",
+  "digest",
+  "requested_by",
+  "approved_by",
+  "status",
+  "expires_at",
+  "journal_id",
+  "blast_radius"
+ ],
+ "fields": [
+  {
+   "fieldname": "op",
+   "fieldtype": "Data",
+   "label": "Op",
+   "reqd": 1
+  },
+  {
+   "fieldname": "target",
+   "fieldtype": "Data",
+   "label": "Target"
+  },
+  {
+   "fieldname": "args",
+   "fieldtype": "JSON",
+   "label": "Args"
+  },
+  {
+   "fieldname": "digest",
+   "fieldtype": "Data",
+   "label": "Digest"
+  },
+  {
+   "fieldname": "requested_by",
+   "fieldtype": "Link",
+   "label": "Requested By",
+   "options": "User"
+  },
+  {
+   "fieldname": "approved_by",
+   "fieldtype": "JSON",
+   "label": "Approved By"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "pending\napproved\nexecuting\nexecuted\nfailed\nexpired\noutcome_unknown",
+   "default": "pending"
+  },
+  {
+   "fieldname": "expires_at",
+   "fieldtype": "Datetime",
+   "label": "Expires At"
+  },
+  {
+   "fieldname": "journal_id",
+   "fieldtype": "Data",
+   "label": "Journal Id"
+  },
+  {
+   "fieldname": "blast_radius",
+   "fieldtype": "JSON",
+   "label": "Blast Radius"
+  }
+ ],
+ "istable": 0,
+ "editable_grid": 0,
+ "permissions": [
+  {
+   "role": "SaaS Admin",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1
+  },
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "track_changes": 0,
+ "autoname": "APR-.#####"
+}

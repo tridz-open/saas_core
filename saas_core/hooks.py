@@ -42,3 +42,6 @@ scheduler_events = {
 }
 before_install = "saas_core.install.before_install"
 after_install = "saas_core.install.after_install"
+
+# Bearer API tokens (see saas_core/token_auth.py); Frappe `token key:secret` auth is unaffected
+auth_hooks = ["saas_core.token_auth.validate"]

@@ -296,6 +296,9 @@ def rate_limit(key: str, limit: int, window: int) -> None:
 def tenant_access(tenant: str, user: str | None = None, ptype: str = "read"):
     """Ownership gate: any non-owner/unknown tenant => 404 (no enumeration)."""
     from saas_core.permissions import assert_tenant_access
+    scoped = getattr(frappe.local, "api_token_tenant", None)  # tenant-scoped API token: other tenants => 404
+    if scoped and scoped != tenant:
+        raise not_found("Tenant")
     try:
         return assert_tenant_access(tenant, user or current_user(), ptype)
     except (frappe.DoesNotExistError, frappe.PermissionError):

@@ -1,0 +1,66 @@
+<svg viewBox="3 0 944 492" width="944" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    text { font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', system-ui, sans-serif; }
+  </style>
+  <defs>
+    <marker id="arrow-blue" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 L2,4 z" fill="#3b82f6"/></marker>
+    <marker id="arrow-green" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 L2,4 z" fill="#22c55e"/></marker>
+    <marker id="arrow-orange" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 L2,4 z" fill="#f59e0b"/></marker>
+    <marker id="arrow-purple" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 L2,4 z" fill="#a855f7"/></marker>
+    
+  </defs>
+  <rect x="3" y="0" width="944" height="492" fill="#ffffff"/>
+  <text x="475" y="34" font-size="16" fill="#1e293b" text-anchor="middle">saas-kit package map</text>
+  <!-- layer 1: grouping boxes -->
+<rect x="25" y="312" width="900" height="130" rx="10" fill="#f8fafc" stroke="#94a3b8" stroke-dasharray="6,4"/>
+<text x="35" y="326" font-size="11" fill="#64748b">Thin layers over client (peers are not bundled)</text>
+  <!-- layer 2: connectors and lifelines -->
+<path d="M315,87 L 329,87" fill="none" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+<path d="M475,119 L 475,133" fill="none" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#arrow-orange)"/>
+<path d="M475,203 L 475,217" fill="none" stroke="#22c55e" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+<path d="M615,255 L 629,255" fill="none" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+<path d="M315,255 L 329,255" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#arrow-orange)"/>
+<path d="M475,287 L 475,301" fill="none" stroke="#a855f7" stroke-width="1.5" marker-end="url(#arrow-purple)"/>
+  <!-- layer 3: boxes -->
+<!-- spec: x=40, y=60, w=270, h=54, right=310, bottom=114 -->
+<rect x="40" y="60" width="270" height="54" rx="6" fill="#dbeafe" stroke="#3b82f6"/>
+<text x="175" y="82.2" font-size="12" fill="#1e40af" text-anchor="middle">saas_core/openapi/v1.yaml</text>
+<text x="175" y="100.2" font-size="12" fill="#1e40af" text-anchor="middle">OpenAPI contract</text>
+<!-- codegen: x=340, y=60, w=270, h=54, right=610, bottom=114 -->
+<rect x="340" y="60" width="270" height="54" rx="6" fill="#fef3c7" stroke="#f59e0b"/>
+<text x="475" y="82.2" font-size="12" fill="#b45309" text-anchor="middle">scripts/codegen.mjs</text>
+<text x="475" y="100.2" font-size="12" fill="#b45309" text-anchor="middle">pnpm codegen / codegen:check</text>
+<!-- schema: x=340, y=144, w=270, h=54, right=610, bottom=198 -->
+<rect x="340" y="144" width="270" height="54" rx="6" fill="#d1fae5" stroke="#22c55e"/>
+<text x="475" y="166.2" font-size="12" fill="#166534" text-anchor="middle">generated/schema.d.ts</text>
+<text x="475" y="184.2" font-size="12" fill="#166534" text-anchor="middle">components, paths, operations</text>
+<!-- mock: x=40, y=228, w=270, h=54, right=310, bottom=282 -->
+<rect x="40" y="228" width="270" height="54" rx="6" fill="#f8fafc" stroke="#94a3b8"/>
+<text x="175" y="250.2" font-size="12" fill="#1e293b" text-anchor="middle">@frappe-saaskit/mock</text>
+<text x="175" y="268.2" font-size="12" fill="#1e293b" text-anchor="middle">createMockFetch, createMockServer</text>
+<!-- client: x=340, y=228, w=270, h=54, right=610, bottom=282 -->
+<rect x="340" y="228" width="270" height="54" rx="6" fill="#f3e8ff" stroke="#a855f7"/>
+<text x="475" y="250.2" font-size="12" fill="#6b21a8" text-anchor="middle">@frappe-saaskit/client</text>
+<text x="475" y="268.2" font-size="12" fill="#6b21a8" text-anchor="middle">createClient, errors, SSE, types</text>
+<!-- api: x=640, y=228, w=270, h=54, right=910, bottom=282 -->
+<rect x="640" y="228" width="270" height="54" rx="6" fill="#dbeafe" stroke="#3b82f6"/>
+<text x="775" y="250.2" font-size="12" fill="#1e40af" text-anchor="middle">saas_core API</text>
+<text x="775" y="268.2" font-size="12" fill="#1e40af" text-anchor="middle">/api/method/saas_core.api.v1.*</text>
+<!-- react: x=40, y=337, w=270, h=90, right=310, bottom=427 -->
+<rect x="40" y="337" width="270" height="90" rx="6" fill="#d1fae5" stroke="#22c55e"/>
+<text x="175" y="359.2" font-size="12" fill="#166534" text-anchor="middle">@frappe-saaskit/react</text>
+<text x="175" y="377.2" font-size="12" fill="#166534" text-anchor="middle">SaasProvider, hooks,</text>
+<text x="175" y="395.2" font-size="12" fill="#166534" text-anchor="middle">useRazorpayCheckout</text>
+<text x="175" y="413.2" font-size="12" fill="#166534" text-anchor="middle">peers: react, @tanstack/react-query</text>
+<!-- vue: x=340, y=337, w=270, h=90, right=610, bottom=427 -->
+<rect x="340" y="337" width="270" height="90" rx="6" fill="#d1fae5" stroke="#22c55e"/>
+<text x="475" y="368.2" font-size="12" fill="#166534" text-anchor="middle">@frappe-saaskit/vue</text>
+<text x="475" y="386.2" font-size="12" fill="#166534" text-anchor="middle">provideSaas, composables</text>
+<text x="475" y="404.2" font-size="12" fill="#166534" text-anchor="middle">peer: vue</text>
+<!-- node: x=640, y=337, w=270, h=90, right=910, bottom=427 -->
+<rect x="640" y="337" width="270" height="90" rx="6" fill="#d1fae5" stroke="#22c55e"/>
+<text x="775" y="377.2" font-size="12" fill="#166534" text-anchor="middle">@frappe-saaskit/node</text>
+<text x="775" y="395.2" font-size="12" fill="#166534" text-anchor="middle">createNodeClient, tokenFromEnv</text>
+  <!-- layer 4: labels and loop-back lines -->
+<text x="475" y="467" font-size="10" fill="#64748b" text-anchor="middle">solid = real data path  ·  dashed = mock path (same URLs, same envelope)</text>
+</svg>

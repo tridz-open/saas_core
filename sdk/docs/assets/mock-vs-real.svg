@@ -1,0 +1,59 @@
+<svg viewBox="0 0 1065 350" width="1065" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    text { font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', system-ui, sans-serif; }
+  </style>
+  <defs>
+    <marker id="arrow-blue" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 L2,4 z" fill="#3b82f6"/></marker>
+    <marker id="arrow-gray" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 L2,4 z" fill="#94a3b8"/></marker>
+    <marker id="arrow-green" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 L2,4 z" fill="#22c55e"/></marker>
+    <marker id="arrow-orange" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 L2,4 z" fill="#f59e0b"/></marker>
+  </defs>
+  <rect x="0" y="0" width="1065" height="350" fill="#ffffff"/>
+  <text x="532.5" y="34" font-size="16" fill="#1e293b" text-anchor="middle">Mock vs real adapter</text>
+  <!-- layer 1: grouping boxes -->
+<rect x="510" y="214" width="530" height="90" rx="10" fill="#f8fafc" stroke="#94a3b8" stroke-dasharray="6,4"/>
+<text x="520" y="228" font-size="11" fill="#64748b">other mock entry points</text>
+  <!-- layer 2: connectors -->
+<path d="M250,97 L 264,97" fill="none" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+<path d="M500,97 L 514,97" fill="none" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow-gray)"/>
+<path d="M750,97 L 764,97" fill="none" stroke="#22c55e" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+<path d="M385,129 L 385,139" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#arrow-orange)"/>
+<path d="M500,177 L 514,177" fill="none" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#arrow-orange)"/>
+<path d="M700,229 L 700,215" fill="none" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow-gray)"/>
+<path d="M790,229 L 790,215" fill="none" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow-gray)"/>
+  <!-- layer 3: boxes -->
+<!-- app: x=25, y=70, w=220, h=54, right=245, bottom=124 -->
+<rect x="25" y="70" width="220" height="54" rx="6" fill="#dbeafe" stroke="#3b82f6"/>
+<text x="135" y="92.2" font-size="12" fill="#1e40af" text-anchor="middle">App or test</text>
+<text x="135" y="110.2" font-size="12" fill="#1e40af" text-anchor="middle">SaasProvider, useX hooks</text>
+<!-- client: x=275, y=70, w=220, h=54, right=495, bottom=124 -->
+<rect x="275" y="70" width="220" height="54" rx="6" fill="#f3e8ff" stroke="#a855f7"/>
+<text x="385" y="92.2" font-size="12" fill="#6b21a8" text-anchor="middle">createClient</text>
+<text x="385" y="110.2" font-size="12" fill="#6b21a8" text-anchor="middle">{ baseUrl, auth, fetch? }</text>
+<!-- gfetch: x=525, y=70, w=220, h=54, right=745, bottom=124 -->
+<rect x="525" y="70" width="220" height="54" rx="6" fill="#f8fafc" stroke="#94a3b8"/>
+<text x="635" y="92.2" font-size="12" fill="#1e293b" text-anchor="middle">globalThis.fetch</text>
+<text x="635" y="110.2" font-size="12" fill="#1e293b" text-anchor="middle">used when fetch is omitted</text>
+<!-- real: x=775, y=70, w=250, h=54, right=1025, bottom=124 -->
+<rect x="775" y="70" width="250" height="54" rx="6" fill="#d1fae5" stroke="#22c55e"/>
+<text x="900" y="92.2" font-size="12" fill="#166534" text-anchor="middle">saas_core on Frappe</text>
+<text x="900" y="110.2" font-size="12" fill="#166534" text-anchor="middle">real DB, gateways, provisioning</text>
+<!-- mfetch: x=275, y=150, w=220, h=54, right=495, bottom=204 -->
+<rect x="275" y="150" width="220" height="54" rx="6" fill="#fef3c7" stroke="#f59e0b"/>
+<text x="385" y="172.2" font-size="12" fill="#b45309" text-anchor="middle">createMockFetch()</text>
+<text x="385" y="190.2" font-size="12" fill="#b45309" text-anchor="middle">passed as the fetch option</text>
+<!-- core: x=525, y=150, w=280, h=54, right=805, bottom=204 -->
+<rect x="525" y="150" width="280" height="54" rx="6" fill="#fef3c7" stroke="#f59e0b"/>
+<text x="665" y="172.2" font-size="12" fill="#b45309" text-anchor="middle">createMockApi</text>
+<text x="665" y="190.2" font-size="12" fill="#b45309" text-anchor="middle">in-memory store, timers, SSE</text>
+<!-- srv: x=525, y=234, w=220, h=54, right=745, bottom=288 -->
+<rect x="525" y="234" width="220" height="54" rx="6" fill="#f8fafc" stroke="#94a3b8"/>
+<text x="635" y="256.2" font-size="12" fill="#1e293b" text-anchor="middle">createMockServer()</text>
+<text x="635" y="274.2" font-size="12" fill="#1e293b" text-anchor="middle">msw setupServer, Node tests</text>
+<!-- hnd: x=775, y=234, w=250, h=54, right=1025, bottom=288 -->
+<rect x="775" y="234" width="250" height="54" rx="6" fill="#f8fafc" stroke="#94a3b8"/>
+<text x="900" y="256.2" font-size="12" fill="#1e293b" text-anchor="middle">createMockHandlers()</text>
+<text x="900" y="274.2" font-size="12" fill="#1e293b" text-anchor="middle">msw handlers, browser worker</text>
+  <!-- layer 4: labels and cross-layer lines -->
+<text x="532.5" y="326" font-size="10" fill="#64748b" text-anchor="middle">orange = mock path (same URLs, same envelope)</text>
+</svg>

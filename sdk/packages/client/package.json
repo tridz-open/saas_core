@@ -1,0 +1,51 @@
+{
+  "name": "@frappe-saaskit/client",
+  "version": "0.1.0-alpha.4",
+  "description": "Framework-free typed client for the saas_core SaaS API (Frappe)",
+  "license": "MIT",
+  "author": "Tridz Technologies",
+  "repository": {
+    "url": "https://github.com/tridz-open/saas_core",
+    "directory": "sdk/packages/client"
+  },
+  "homepage": "https://github.com/tridz-open/saas_core/tree/main/sdk/packages/client#readme",
+  "bugs": {
+    "url": "https://github.com/tridz-open/saas_core/issues"
+  },
+  "keywords": [
+    "frappe",
+    "saas",
+    "sdk",
+    "typescript",
+    "saas_core"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean",
+    "test": "vitest run --passWithNoTests",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {},
+  "devDependencies": {}
+}

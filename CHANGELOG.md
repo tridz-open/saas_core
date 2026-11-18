@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0a3 (alpha, API 2.0.0-alpha.1)
+
+- The TypeScript SDK (`@frappe-saaskit/client`, `react`, `mock`, plus `vue` and `node`) moved into this repository under `sdk/`, with its git history. It is now versioned and released together with saas_core; the separate `frappe-saaskit-sdk` repository is being retired.
+- Single source of truth for the API description: the SDK codegen reads `openapi/v1.yaml` directly (the vendored copy and `spec:sync` are gone). `pnpm codegen:check` fails if the contract changes without regenerating.
+- npm package names are unchanged. SDK version `0.1.0-alpha.4` (SDK tarballs are attached to the saas_core release `v0.1.0-alpha.3`).
+- CI: new Node job (build, typecheck, test, codegen check, lint, pack smoke test; Node 20 and 22) in `sdk/`; the product-name gate now covers `sdk/`.
+- Release flow documented in `docs/RELEASING.md`; `scripts/release_sdk_tarballs.sh` builds the tarballs.
+
 ## 0.1.0a2 (alpha, API 2.0.0-alpha.1)
 
 - Package metadata: version bumped to `0.1.0a2`.

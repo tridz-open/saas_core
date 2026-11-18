@@ -27,3 +27,32 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y ripgrep
       - name: Product-name gate
         run: scripts/check_no_product_names.sh
+  sdk:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: sdk
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [20, 22]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          package_json_file: sdk/package.json
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: pnpm
+          cache-dependency-path: sdk/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      - name: Codegen drift check (reads ../openapi/v1.yaml)
+        run: pnpm codegen:check
+      - run: pnpm build
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: pnpm lint:fc
+      - run: pnpm lint:internal
+      - name: Pack and smoke-test tarballs
+        run: pnpm pack:all && pnpm smoke:pack

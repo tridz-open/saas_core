@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.0a2 (alpha, API 2.0.0-alpha.1)
+
+- Package metadata: version bumped to `0.1.0a2`.
+- Added public policy files: `SECURITY.md` (private vulnerability reporting), `CONTRIBUTING.md` (issues welcome, no pull requests), GitHub issue and pull request templates.
+- README: "Use at your own risk, and contributions" section replaces "Contributing".
+
 ## 0.1.0a1 (alpha, API 2.0.0-alpha.1)
 
 First public alpha. Expect breaking changes.

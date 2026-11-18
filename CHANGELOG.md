@@ -9,4 +9,8 @@ First public alpha. Expect breaking changes.
 - Razorpay order-mode checkout and webhooks (verified, test mode); monthly-in-advance billing, whole-day IST pro-rata cancel with refund, plan upgrade.
 - Branded transactional email; admin API; OpenAPI v1 (`openapi/v1.yaml`).
 - Unverified features are experimental and off by default behind `saas_core_experimental` (see `docs/STATUS.md`).
+- Fixed: `invoices.pdf` open redirect. Redirects now go only to https hosts on an allowlist (site_config `saas_core_pdf_url_hosts` extends it).
+- Added: `Authorization: Bearer <secret>` API-token authentication via `auth_hooks`; bad tokens get 401 in the API error shape (experimental, `api_tokens`).
+- Fixed: `patches.txt` now has both `[pre_model_sync]` and `[post_model_sync]` sections, as Frappe requires.
+- Changed: depends on fcctl `v0.1.0-alpha.4`.
 - Removed: `tenants.duplicate`, Paddle gateway, `subscription.cancel`, `subscription.portal_link`.

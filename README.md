@@ -40,10 +40,12 @@ It handles:
 ## Install on a bench
 
 ```bash
-bench get-app https://github.com/tridz-dev/saas_core
+bench get-app https://github.com/tridz-open/saas_core --branch main
 bench --site <site> install-app saas_core
 bench --site <site> migrate
 ```
+
+`fcctl` is pulled in automatically, pinned to `v0.1.0-alpha.4` (see `pyproject.toml`).
 
 Install creates the roles `SaaS Admin`, `SaaS Customer` and `SaaS Platform Worker`. To deploy to a Frappe Cloud
 control-plane site instead, follow [DEPLOY.md](DEPLOY.md).
@@ -96,7 +98,8 @@ check it came up healthy. Full field reference and examples: **[docs/TEMPLATES.m
   Refunds round down, charges round up.
 - **Plan upgrade** is charged by payment link for the difference; the new plan starts at the next IST day.
 - **No tax and no invoices without ERPNext:** saas_core issues **receipts** only. `invoices.pdf` generates no PDF; it redirects to the
-  gateway-hosted payment page when one exists.
+  gateway-hosted payment page when one exists. The redirect target must be an `https` host on a built-in allowlist
+  (Razorpay, Stripe) or listed in site_config `saas_core_pdf_url_hosts` (list or comma-separated string); anything else is 404 `not_available`.
 
 ## Verified vs experimental
 

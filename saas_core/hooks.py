@@ -1,8 +1,8 @@
 app_name = "saas_core"
 app_title = "SaaS Core"
-app_publisher = "saas_core contributors"
+app_publisher = "Tridz Technologies"
 app_description = "Generic SaaS control plane"
-app_email = "dev@example.com"
+app_email = ""
 app_license = "MIT"
 
 fixtures = [

@@ -4,13 +4,24 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "saas_core"
-authors = [{ name = "saas_core contributors", email = "dev@example.com" }]
+authors = [{ name = "Tridz Technologies" }]
 description = "Generic SaaS control plane for Frappe: tenants, plans, billing, provisioning via fcctl"
 requires-python = ">=3.10"
 readme = "README.md"
 dynamic = ["version"]
 license = { text = "MIT" }
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Framework :: Frappe",
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+]
 dependencies = ["fcctl @ git+https://github.com/tridz-open/fcctl@v0.1.0-alpha.4", "cryptography>=42"]
+
+[project.urls]
+Homepage = "https://github.com/tridz-open/saas_core"
+Repository = "https://github.com/tridz-open/saas_core"
+Issues = "https://github.com/tridz-open/saas_core/issues"
 
 [project.optional-dependencies]
 test = ["pytest>=8", "werkzeug>=3", "cryptography>=42", "pyyaml>=6", "jsonschema>=4", "jinja2>=3"]

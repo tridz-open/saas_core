@@ -1,6 +1,6 @@
 # saas_core
 
-Part of **Frappe SaaS**. Docs: https://tridz-open.github.io/frappe-saaskit/ · Payment gateways: [docs/gateways](docs/gateways/README.md) · All docs: [docs/](docs/README.md)
+Part of **Frappe SaaS**. Docs: https://frappesaas.tridz.in/ · Payment gateways: [docs/gateways](docs/gateways/README.md) · All docs: [docs/](docs/README.md)
 
 > [!WARNING]
 > **ALPHA. Early, bleeding edge, expect breaking changes.**

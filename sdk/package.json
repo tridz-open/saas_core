@@ -27,7 +27,7 @@
     "prettier": "^3.10.1",
     "tsup": "^8.3.0",
     "typescript": "^5.6.0",
-    "vitest": "^2.1.0"
+    "vitest": "^4.1.11"
   },
   "description": "TypeScript SDK monorepo for saas_core (Frappe SaaS backend)",
   "license": "MIT",

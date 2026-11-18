@@ -62,10 +62,10 @@ share their code): suspend / resume / terminate provision jobs, the downgrade pa
 | Trust-tier preflight | Experimental (`trust_tier_preflight`) | |
 | Local bench mode | Experimental (`local_bench`) | Development only |
 | SSE events | Experimental (`sse`) | Each stream holds a worker for up to an hour |
-| API tokens | Experimental (`api_tokens`) | `Authorization: Bearer <secret>` authenticates REST calls (`saas_core.token_auth`); unit-tested only, not yet verified on a live bench. Tenant-scoped tokens are limited via `tenant_access` |
+| API tokens | Experimental (`api_tokens`) | `Authorization: Bearer <secret>` authenticates REST calls (`saas_core.token_auth`); a bad, revoked or expired Bearer token returns 401 in the API error shape; unit-tested only, not yet verified on a live bench. Tenant-scoped tokens are limited via `tenant_access` |
 | Team invites and roles | Experimental (`team`) | |
 | Support tickets | Experimental (`support`) | No staff-side notification |
-| `invoices.pdf` | Honest stub | Redirects to the gateway-hosted payment URL when one exists; otherwise 404 `not_available`. No PDF is generated |
+| `invoices.pdf` | Honest stub | Redirects to the gateway-hosted payment URL when one exists and its host is allowlisted (https only; built-in Razorpay/Stripe hosts, extend via site_config `saas_core_pdf_url_hosts`); otherwise 404 `not_available`. No PDF is generated |
 | `payment_methods.portal_link` | Experimental (no gate) | Razorpay has no portal (returns `return_url`); Stripe is experimental |
 | `tenants.duplicate` | **Removed** | Enqueued a job kind with no runner handler |
 | Paddle gateway | **Removed** | Was a stub |

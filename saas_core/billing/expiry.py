@@ -10,8 +10,9 @@ GATEWAY_STALE = _dt.timedelta(days=3)
 
 
 def _now(now=None):
-    from frappe.utils import now_datetime
-    return now or now_datetime()
+    """Naive UTC, like period_start/period_end/issued_at (never site-local now_datetime())."""
+    from saas_core.billing import proration
+    return proration.naive_utc_now(now)
 
 
 def _cancel(sub, now):

@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Docs and messages now say "template site" (the prepared site whose backup is restored into each new tenant site) instead of "golden backup". Config keys (`saas_golden`, `saas_core_local_golden_*`) are unchanged.
+- Fixed invoice renewals firing early on sites whose timezone is ahead of UTC (e.g. Asia/Kolkata): the billing processor, expiry sweep and dunning compared `period_end` (naive UTC) against Frappe's site-local `now_datetime()`, so `issue_due_invoices` issued renewals up to the UTC offset early. They now use naive UTC throughout, and `issued_at`, `paid_at`, `period_start` and `last_event_at` are stamped in UTC too. A passed-in `now` is normalised to naive UTC.
 
 ## 0.1.0a3 (alpha, API 2.0.0-alpha.1)
 

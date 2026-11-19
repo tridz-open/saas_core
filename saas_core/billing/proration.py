@@ -41,6 +41,12 @@ def to_aware(dt: _dt.datetime) -> _dt.datetime:
     return dt.replace(tzinfo=UTC) if dt.tzinfo is None else dt
 
 
+def naive_utc_now(now=None) -> _dt.datetime:
+    """Naive UTC "now" (the storage convention); a passed-in `now` is normalised to it. Never Frappe's
+    `now_datetime()`, which is site-local."""
+    return to_naive_utc(now if now is not None else utc_now())
+
+
 def billing_date(dt) -> _dt.date:
     """IST calendar date of a datetime (a plain `date` is returned as is)."""
     if isinstance(dt, _dt.datetime):

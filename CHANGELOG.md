@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Docs and messages now say "template site" (the prepared site whose backup is restored into each new tenant site) instead of "golden backup". Config keys (`saas_golden`, `saas_core_local_golden_*`) are unchanged.
+
 ## 0.1.0a3 (alpha, API 2.0.0-alpha.1)
 
 - The TypeScript SDK (`@frappe-saaskit/client`, `react`, `mock`, plus `vue` and `node`) moved into this repository under `sdk/`, with its git history. It is now versioned and released together with saas_core; the separate `frappe-saaskit-sdk` repository is being retired.

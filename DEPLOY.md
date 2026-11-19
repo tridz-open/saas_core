@@ -82,8 +82,8 @@ Runs the full flow against REAL Frappe sites on the same bench as the control pl
 Site config keys (control-plane site):
 - `saas_core_local_bench` = `1` (enables the mode)
 - `saas_core_local_db_root_password` = MariaDB root password (used by new-site / restore / drop-site)
-- `saas_core_local_golden_sql` = absolute path of the golden site backup `.sql.gz` (passed as `--source-sql`; falls back to new-site + `restore` if the bench lacks that option)
-- `saas_core_local_golden_files` / `saas_core_local_golden_private_files` = optional public/private files tarballs of the golden backup
+- `saas_core_local_golden_sql` = absolute path of the template site's backup `.sql.gz` (passed as `--source-sql`; falls back to new-site + `restore` if the bench lacks that option)
+- `saas_core_local_golden_files` / `saas_core_local_golden_private_files` = optional public/private files tarballs of the template site's backup
 - `saas_core_local_tenant_port` = port of the tenant URLs (default `8004`)
 - `saas_core_local_bench_bin` = optional path to the `bench` executable (default: first on PATH)
 - `saas_core_site_domain` = `localhost` (so site names become `<slug>.localhost`)

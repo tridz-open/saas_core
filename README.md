@@ -18,7 +18,7 @@ It handles:
 - signup, login, password reset and a configurable signup gate (`closed`, `invite`, `allowlist`, `open`)
 - plans and templates (what a new tenant site contains)
 - Razorpay checkout and webhooks (Razorpay in `order` mode is the verified gateway)
-- provisioning tenant sites on Frappe Cloud with [`fcctl`](https://github.com/tridz-open/fcctl), restoring from a golden backup
+- provisioning tenant sites on Frappe Cloud with [`fcctl`](https://github.com/tridz-open/fcctl), restoring from a template site's backup
 - billing: monthly in advance, whole-day pro-rata cancel with refund, plan upgrades
 - beta-access invites (an allowlist plus branded invite email)
 - branded transactional email
@@ -96,10 +96,10 @@ the account's `webhook_secret` and duplicate events are ignored.
 
 ## Templates and recipes
 
-A **Template** says what a new tenant site is: which apps, which golden backup to restore, which hooks to run, and how to
+A **Template** says what a new tenant site is: which apps, which template site to restore, which hooks to run, and how to
 check it came up healthy. Full field reference and examples: **[docs/TEMPLATES.md](docs/TEMPLATES.md)**.
 
-- **Golden-backup templates:** `backup_source` points at a Frappe Cloud site backup or at a backup in object storage
+- **Template-site backups:** `backup_source` points at a Frappe Cloud site backup or at a backup in object storage
   (sha256-verified parts). The new site is restored from it instead of installed from scratch.
 - **Hooks:** an ordered list of `{name, version, args}` run after restore. `core.*` hooks are built in to fcctl; other hooks
   come from a registered recipe (`saas_core.recipes.registry`). End every template with `core.scheduler_resume` and
@@ -131,7 +131,7 @@ unit-tested against stubs only. This table mirrors [docs/STATUS.md](docs/STATUS.
 | Beta-access allowlist and invites | Verified |
 | Branded transactional email over SMTP | Verified (tenant-setup and beta-invite mails; billing mails tested via templates only) |
 | Razorpay order-mode checkout, payment capture, webhooks | Verified |
-| Provisioning on Frappe Cloud from a golden backup | Verified |
+| Provisioning on Frappe Cloud from a template site's backup | Verified |
 | Cancel with day-based pro-rata refund | Verified |
 | Plan upgrade | Verified |
 | Template validation, daily tenant backups, unattended FC re-login | Verified |

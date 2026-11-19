@@ -7,7 +7,7 @@ import pytest
 
 def _eq(frappe, name, msg, status="Sent", ref="Tenant", age_h=2):
     d = frappe.get_doc({"doctype": "Email Queue", "name": name, "message": msg, "status": status,
-                        "reference_doctype": ref, "modified": dt.datetime.utcnow() - dt.timedelta(hours=age_h)})
+                        "reference_doctype": ref, "modified": frappe.utils.now_datetime() - dt.timedelta(hours=age_h)})  # modified is site-local
     d.insert()
     return d
 

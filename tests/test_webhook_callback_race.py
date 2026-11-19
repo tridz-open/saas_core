@@ -147,6 +147,11 @@ def test_gateway_lookup_resolves_subscription(env):
     assert evs(env)[0].status == "processed"
 
 
+def _site_local(utc_naive):
+    """Frappe's modified/creation are site-local (IST in the stub); T0 is naive UTC."""
+    return utc_naive + dt.timedelta(hours=5, minutes=30)
+
+
 def test_backoff_sweep_and_needs_attention(env):
     from saas_core.billing import processor
     hook(env, "payment.captured", CAPTURED)
@@ -172,8 +177,19 @@ def test_sweep_picks_up_old_received_event_only(env):
     hook(env, "subscription.activated", ACTIVATED, "a")
     env.frappe._store.enqueued.clear()  # job lost
     e = evs(env)[0]
-    e.modified = T0
+    e.modified = _site_local(T0)
     assert processor.sweep_received_events(T0 + dt.timedelta(seconds=60)) == 0
     assert processor.sweep_received_events(T0 + dt.timedelta(seconds=121)) == 1
     drain(env)
     assert e.status == "processed"
+
+
+def test_sweep_accepts_aware_now_and_converts_to_site_local(env):
+    from saas_core.billing import processor
+    hook(env, "subscription.activated", ACTIVATED, "a")
+    env.frappe._store.enqueued.clear()
+    e = evs(env)[0]
+    e.modified = _site_local(T0)
+    aware = lambda s: (T0 + dt.timedelta(seconds=s)).replace(tzinfo=dt.timezone.utc)
+    assert processor.sweep_received_events(aware(60)) == 0
+    assert processor.sweep_received_events(aware(121)) == 1

@@ -46,8 +46,8 @@ class ManualGateway(Gateway):
                                raw={"tenant": tenant})  # client payload is not stored
 
     def create_checkout_session(self, params: CheckoutParams) -> CheckoutResult:
-        from frappe.utils import now_datetime
-        now = now_datetime()
+        from saas_core.billing.proration import naive_utc_now
+        now = naive_utc_now()  # billing datetimes are naive UTC
         meta = params.metadata or {}
         tenant = frappe.get_doc("Tenant", params.tenant)
         interval = meta.get("interval") or "month"

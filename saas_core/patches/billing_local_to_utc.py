@@ -8,7 +8,8 @@ import datetime as _dt
 FIELDS = {
     "Subscription": ["first_failure_at", "next_retry_at", "suspend_date", "last_event_at"],
     "Invoice": ["issued_at", "paid_at"],
-    "Payment Event": ["next_retry_at"],
+    "Payment Event": ["next_retry_at", "processed_at"],
+    # Refund.processed_at is not converted: older rows came from both a UTC and a site-local writer and cannot be told apart.
 }
 
 

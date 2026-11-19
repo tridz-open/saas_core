@@ -206,9 +206,9 @@ def test_to_job_started_at_and_step_aliases(frappe):
     j = s.to_job(frappe._dict(name="PJ-1", tenant="acme", kind="provision", state="running", creation="2026-11-18 10:00:00",
                               steps=[{"seq": 2, "name": "b", "state": "running", "started_at": "2026-11-18 10:02:00"},
                                      {"seq": 1, "name": "a", "state": "succeeded", "started_at": "2026-11-18 10:01:00"}]))
-    assert j["started_at"] == "2026-11-18 10:01:00"  # earliest step start
+    assert j["started_at"] == "2026-11-18T04:31:00Z"  # site-local (IST stub) -> UTC  # earliest step start
     assert [(x["key"], x["status"]) for x in j["steps"]] == [("b", "running"), ("a", "succeeded")]
     assert all(x["key"] == x["name"] and x["status"] == x["state"] for x in j["steps"])
-    assert s.to_job(frappe._dict(name="PJ-2", tenant="t", kind="provision", state="pending", creation="2026-11-18 10:00:00"))["started_at"] == "2026-11-18 10:00:00"
-    assert s.to_job(frappe._dict(name="PJ-3", tenant="t", kind="provision", state="pending", started_at="2026-11-18 09:00:00"))["started_at"] == "2026-11-18 09:00:00"
+    assert s.to_job(frappe._dict(name="PJ-2", tenant="t", kind="provision", state="pending", creation="2026-11-18 10:00:00"))["started_at"] == "2026-11-18T04:30:00Z"
+    assert s.to_job(frappe._dict(name="PJ-3", tenant="t", kind="provision", state="pending", started_at="2026-11-18 09:00:00"))["started_at"] == "2026-11-18T03:30:00Z"
     assert s.to_job(frappe._dict(name="PJ-4", tenant="t", kind="provision", state="pending"))["started_at"] is None

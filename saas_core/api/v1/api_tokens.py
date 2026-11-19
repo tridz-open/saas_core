@@ -25,8 +25,8 @@ def hash_secret(secret: str) -> str:
 
 def _ser(r) -> dict:
     return {"name": _g(r, "name"), "label": _g(r, "label"), "tenant": _g(r, "tenant") or None,
-            "prefix": _g(r, "prefix") or "", "created_at": iso(_g(r, "created")),
-            "last_used_at": iso(_g(r, "last_used")), "expires_at": iso(_g(r, "expires_at"))}
+            "prefix": _g(r, "prefix") or "", "created_at": iso(_g(r, "created"), utc=True),
+            "last_used_at": iso(_g(r, "last_used")), "expires_at": iso(_g(r, "expires_at"), utc=True)}
 
 
 @endpoint()

@@ -32,13 +32,17 @@ def test_fmt_date_and_titles(env):
     assert templating.plan_label("acme-standard") == "Standard"
 
 
-def test_invoice_is_a_receipt_with_formatted_dates(env):
+def test_invoice_is_a_receipt_with_formatted_dates(env, monkeypatch):
     frappe, sent = env
     from saas_core.notifications import billing_mail as bm
     frappe._store.docs[("Email Template", "saas-invoice-paid")] = frappe._Doc(doctype="Email Template", name="saas-invoice-paid", subject="x", response_html="{{ tenant_title }}|{{ paid_date }}|{{ period }}|{{ plan_label }}|{{ invoice_url }}", response="")
+    import datetime as _d
+    from saas_core.billing import proration
+    monkeypatch.setattr(proration, "naive_utc_now", lambda now=None: _d.datetime(2026, 11, 17, 3, 30))  # fallback "today" is UTC
     assert bm.send_invoice_paid("INV1") is True
     body = sent[0]["message"]
-    assert body.startswith("Acme Cafe|17 Nov 2026|17 Nov 2026 to 16 Dec 2026|Standard|") and body.endswith("/console/billing/invoices/INV1")
+    # period_end 16 Dec 18:30 UTC is 00:00 IST on 17 Dec: dates render in the site timezone
+    assert body.startswith("Acme Cafe|17 Nov 2026|17 Nov 2026 to 17 Dec 2026|Standard|") and body.endswith("/console/billing/invoices/INV1")
     assert "00:00" not in body and "18:30" not in body
     assert sent[0]["subject"] == "x"
 

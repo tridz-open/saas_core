@@ -4,7 +4,7 @@ Part of **Frappe SaaS**. Docs: https://frappesaas.tridz.in/ · Payment gateways:
 
 > [!WARNING]
 > **ALPHA. Early, bleeding edge, expect breaking changes.**
-> Package version `0.1.0a2`, HTTP API `2.0.0-alpha.1`. Endpoints, DocTypes, site_config keys and error codes
+> Package version `0.1.0a4`, HTTP API `2.0.0-alpha.1`. Endpoints, DocTypes, site_config keys and error codes
 > may change between alpha releases without a migration path.
 > **Run it on test-mode payment keys only** (`rzp_test_*`). Features that have not been exercised against a real
 > deployment are **experimental and off by default**; see [Verified vs experimental](#verified-vs-experimental).

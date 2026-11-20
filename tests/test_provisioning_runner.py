@@ -195,3 +195,34 @@ def test_effective_at_compared_in_utc_not_site_local(frappe):
     j = job(frappe, kind="change_plan", args='{"plan": "pro", "effective_at": "%s"}' % soon)
     assert runner.run_due_scheduled() == []
     assert runner.run_job(j, port=port) == "pending" and not port.count("change_plan")
+
+
+def test_reconcile_stops_retrying_outcome_unknown_after_cap(frappe):
+    """A provision job whose resume is refused deterministically must not be re-enqueued forever."""
+    _, reconcile, Fake, _ = mods()
+    seed(frappe)
+    port = Fake()
+    j = job(frappe, state="outcome_unknown", workflow_id="wf-x", attempts=reconcile.DEFAULT_MAX_ATTEMPTS,
+            error="outcome unknown: resume of wf-x refused: recipe/hook versions changed")
+    n_enq = len(frappe._store.enqueued)
+    assert reconcile.run(port=port)[j] == "needs_attention"
+    d = frappe.get_doc("Provision Job", j)
+    assert d.state == "needs_attention" and d.needs_attention == 1
+    assert "auto-retry limit" in d.error and "refused" in d.error
+    assert len(frappe._store.enqueued) == n_enq
+    assert tenant_status(frappe) != "failed"
+    assert j not in reconcile.run(port=port)  # needs_attention is not swept again
+
+
+def test_reconcile_change_plan_loop_also_capped(frappe):
+    _, reconcile, Fake, _ = mods()
+    seed(frappe, status="active", fc_site="acme.apps.test")
+    j = job(frappe, kind="change_plan", state="outcome_unknown", attempts=reconcile.DEFAULT_MAX_ATTEMPTS)
+    assert reconcile.run(port=Fake())[j] == "needs_attention"
+
+
+def test_reconcile_below_cap_still_retries(frappe):
+    _, reconcile, Fake, _ = mods()
+    seed(frappe)
+    j = job(frappe, state="outcome_unknown", workflow_id="wf-x", attempts=reconcile.DEFAULT_MAX_ATTEMPTS - 1)
+    assert reconcile.run(port=Fake())[j] == "redispatched"

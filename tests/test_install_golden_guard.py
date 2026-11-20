@@ -8,7 +8,7 @@ def _install(frappe):
 
 def test_blocks_on_saas_golden(frappe):
     frappe.conf["saas_golden"] = 1
-    with pytest.raises(frappe.ValidationError, match="golden template site"):
+    with pytest.raises(frappe.ValidationError, match="template site"):
         _install(frappe).before_install()
 
 

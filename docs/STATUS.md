@@ -46,7 +46,7 @@ share their code): suspend / resume / terminate provision jobs, the downgrade pa
 | Branded transactional email over SMTP | Verified | Tenant-setup and beta-invite mails live; billing mails (renewal receipt, refund, cancellation) are template-rendered in tests only |
 | Razorpay **order**-mode checkout + payment capture, `checkout.verify_payment` | Verified | `capture_authorized` path included |
 | Razorpay webhooks, incl. `payment_link.paid` | Verified | |
-| Provisioning on Frappe Cloud from a golden backup (`fcctl` workflow, hooks, release, health) | Verified | Uses `BackupSource` `from_backup` |
+| Provisioning on Frappe Cloud from a template site's backup (`fcctl` workflow, hooks, release, health) | Verified | Uses `BackupSource` `from_backup` |
 | Cancel with day-based pro-rata refund (`billing.preview_cancel`, `billing.cancel`) | Verified | The only cancel path |
 | Plan **upgrade** (`billing.preview_change`, payment link) | Verified | |
 | Template validation (`templates.list`, `provisioning/templates.py`) | Verified | |

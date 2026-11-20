@@ -1,7 +1,7 @@
 """Install hooks: create platform roles idempotently."""
 import frappe
 
-GOLDEN_MSG = "saas_core must not be installed on a golden template site (site_config saas_golden set)"
+GOLDEN_MSG = "saas_core must not be installed on a template site (site_config saas_golden set)"
 ROLES = ("SaaS Admin", "SaaS Customer", "SaaS Platform Worker")
 
 

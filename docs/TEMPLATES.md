@@ -12,7 +12,7 @@ A Template (doctype `Template`) is the recipe for a new tenant site: which apps,
 | `min_plan` | Link Plan | Lowest plan allowed to use the template. |
 | `recipe` | Data | Name of a registered recipe (`saas_core.recipes.registry`); supplies tenant site_config and the `name@version` hook callables. |
 | `apps` | Table | Rows `{app, source_repo, branch, version, install_order}`. At least one; no duplicates. Installed in ascending `install_order` (blank = row position). |
-| `backup_source` | JSON | Golden site to restore from. Shapes below. Empty = fresh site. |
+| `backup_source` | JSON | The template site to restore from (its backup). Shapes below. Empty = fresh site. |
 | `hooks` | JSON list | `[{"name": "...", "version": "1", "args": {...}}]`. `name` and `version` are required, `args` is optional. Run after restore, in order. |
 | `site_admin` | Check, default 0 | Hooks receive `ctx.site_admin` (fcctl `SiteAdminClient`). Required when any recipe hook (anything not `core.*`, e.g. `acme.*`) uses it. |
 | `sanitize_config` | JSON object | Passed to the post-restore sanitize step. |
@@ -22,13 +22,13 @@ A Template (doctype `Template`) is the recipe for a new tenant site: which apps,
 ### backup_source shapes
 
 ```json
-{"profile": "gold", "server": "srv-1", "site": "golden.example.com", "ts": "20260101_000000"}
-{"bucket": "acme-backups", "prefix": "golden/acme-v16/20260101_000000",
+{"profile": "gold", "server": "srv-1", "site": "template.example.com", "ts": "20260101_000000"}
+{"bucket": "acme-backups", "prefix": "templates/acme-v16/20260101_000000",
  "manifest": {"parts": [{"name": "database.sql.gz", "sha256": "..."}]}}
-{"bucket": "acme-backups", "prefix": "golden/acme-v16/20260101_000000", "manifest": "golden/acme-v16/manifest.json"}
+{"bucket": "acme-backups", "prefix": "templates/acme-v16/20260101_000000", "manifest": "templates/acme-v16/manifest.json"}
 ```
 
-The first is a Frappe Cloud site backup. The bucket forms restore a golden backup from object storage: parts are sha256-verified, and `manifest` may be an inline object or a bucket path fetched at restore time. `profile` + `site` (+ backup) or `bucket_key`/`bucket` are accepted by validation.
+The first is a Frappe Cloud site backup. The bucket forms restore a template site's backup from object storage: parts are sha256-verified, and `manifest` may be an inline object or a bucket path fetched at restore time. `profile` + `site` (+ backup) or `bucket_key`/`bucket` are accepted by validation.
 
 ### Hooks
 
@@ -60,7 +60,7 @@ By default the provisioner passes `allow_existing_sites=True`: tenant servers ar
   "is_public": 1,
   "site_admin": 1,
   "apps": [{"app": "frappe", "install_order": 1}, {"app": "erpnext", "install_order": 2}],
-  "backup_source": {"bucket": "acme-backups", "prefix": "golden/starter/20260101_000000", "manifest": "golden/starter/manifest.json"},
+  "backup_source": {"bucket": "acme-backups", "prefix": "templates/starter/20260101_000000", "manifest": "templates/starter/manifest.json"},
   "hooks": [
     {"name": "acme.seed", "version": "1", "args": {}},
     {"name": "core.scheduler_resume", "version": "1"},

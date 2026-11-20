@@ -16,8 +16,9 @@ SWEEP_AFTER_SECONDS = 120
 
 
 def _now(now=None):
-    from frappe.utils import now_datetime
-    return now or now_datetime()
+    """Naive UTC, like period_start/period_end/issued_at (never site-local now_datetime())."""
+    from saas_core.billing import proration
+    return proration.naive_utc_now(now)
 
 
 def _find_sub(ev, sess=None):
@@ -659,8 +660,15 @@ def sweep_received_events(now=None) -> int:
     Returns the number re-enqueued."""
     from datetime import timedelta
     from frappe.utils import get_datetime
+    from frappe.utils import now_datetime
+    # modified/creation are Frappe-managed (site-local); next_retry_at is ours (UTC)
+    if now is None:
+        local_now = now_datetime()
+    else:  # a given `now` (naive UTC or aware) -> naive site-local
+        from frappe.utils import convert_utc_to_system_timezone
+        local_now = convert_utc_to_system_timezone(_now(now)).replace(tzinfo=None)
+    cutoff = local_now - timedelta(seconds=SWEEP_AFTER_SECONDS)
     now = _now(now)
-    cutoff = now - timedelta(seconds=SWEEP_AFTER_SECONDS)
     n = 0
     for name in frappe.get_all("Payment Event", filters={"status": "received"}, pluck="name"):
         row = frappe.get_doc("Payment Event", name)

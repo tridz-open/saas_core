@@ -14,12 +14,7 @@ def _g(o: Any, k: str, d: Any = None) -> Any:
     return d if v is None else v
 
 
-def iso(v: Any) -> str | None:
-    if v in (None, ""):
-        return None
-    if isinstance(v, (_dt.datetime, _dt.date)):
-        return v.isoformat()
-    return str(v)
+from ._timefmt import iso  # noqa: E402,F401  (re-exported: serializers.iso)
 
 
 def to_plan(doc: Any, available: bool | None = None) -> dict:
@@ -115,10 +110,10 @@ def to_subscription(doc: Any) -> dict:
     out = {
         "tenant": _g(doc, "tenant"), "plan": _g(doc, "plan"), "status": _g(doc, "status"),
         "interval": _g(doc, "interval"),
-        "period_end": iso(_g(doc, "period_end")),
+        "period_end": iso(_g(doc, "period_end"), utc=True),
         "cancel_at_period_end": bool(_g(doc, "cancel_at_period_end", False)),
         "dunning_stage": int(_g(doc, "dunning_stage", 0) or 0),
-        "trial_end": iso(_g(doc, "trial_end")),
+        "trial_end": iso(_g(doc, "trial_end"), utc=True),
     }
     if _g(doc, "gateway"):
         out["gateway"] = _g(doc, "gateway")
@@ -133,8 +128,8 @@ def to_invoice(doc: Any) -> dict:
         "name": _g(doc, "name"), "tenant": _g(doc, "tenant"), "number": _g(doc, "number") or _g(doc, "name"),
         "status": _g(doc, "status"),
         "total": {"amount": int(_g(doc, "total_amount", 0) or 0), "currency": _g(doc, "currency", "")},
-        "issued_at": iso(_g(doc, "issued_at")), "paid_at": iso(_g(doc, "paid_at")),
-        "period_start": iso(_g(doc, "period_start")), "period_end": iso(_g(doc, "period_end")),
+        "issued_at": iso(_g(doc, "issued_at"), utc=True), "paid_at": iso(_g(doc, "paid_at"), utc=True),
+        "period_start": iso(_g(doc, "period_start"), utc=True), "period_end": iso(_g(doc, "period_end"), utc=True),
         "has_pdf": bool(_g(doc, "pdf_url")),
         "payment_mocked": bool(_g(doc, "payment_mocked", False)),
     }

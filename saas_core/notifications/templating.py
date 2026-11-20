@@ -17,8 +17,9 @@ def console_url(path: str = "") -> str:
     return absolute_url(base + ("/" + path.lstrip("/") if path else ""))
 
 
-def fmt_date(value) -> str:
-    """'17 Nov 2026' from a date/datetime/ISO string; '' when empty or unparseable (templates hide empty rows)."""
+def fmt_date(value, utc=False) -> str:
+    """'17 Nov 2026' from a date/datetime/ISO string; '' when empty or unparseable (templates hide empty rows).
+    `utc=True`: a naive datetime is naive UTC (billing fields) and is shown in the site's system timezone."""
     import datetime as _dt
     if not value:
         return ""
@@ -27,6 +28,11 @@ def fmt_date(value) -> str:
             value = _dt.datetime.fromisoformat(value.strip().replace("Z", "")[:19])
         except ValueError:
             return ""
+    if utc and isinstance(value, _dt.datetime):
+        try:
+            value = frappe.utils.convert_utc_to_system_timezone(value)
+        except Exception:  # noqa: BLE001 - tz lookup failure: show the UTC date
+            pass
     try:
         return f"{value.day} {value.strftime('%b %Y')}"
     except AttributeError:

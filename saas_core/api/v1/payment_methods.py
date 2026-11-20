@@ -18,4 +18,4 @@ def portal_link(tenant: str | None = None, return_url: str | None = None):
     if not sub:
         raise not_found("Subscription")
     url = gateway_for(sub.get("gateway")).portal_link(sub.get("gateway_customer_id"), body.get("return_url"))
-    return {"url": url, "expires_at": utc_in(3600)}
+    return {"url": url, "expires_at": utc_in(3600) + "Z"}

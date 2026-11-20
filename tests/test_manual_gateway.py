@@ -59,3 +59,20 @@ def test_banner_follows_default_gateway(frappe):
     frappe.db.set_value("Gateway Account", rz, "mode", "live")
     frappe.conf["saas_core_default_gateway"] = "razorpay"
     assert payment_banner() is None
+
+
+def test_manual_checkout_stamps_naive_utc(frappe, jobs):
+    """period_end / last_event_at / invoice issued_at/paid_at are naive UTC even on an IST site clock."""
+    import datetime as dt
+    setup_t(frappe)
+    mk(frappe, "Gateway Account", account_name="m", gateway="manual", mode="test", enabled=1)
+    from saas_core.gateways.manual import ManualGateway
+    from saas_core.gateways.base import CheckoutParams
+    before = dt.datetime.now(dt.timezone.utc).replace(tzinfo=None)
+    ManualGateway().create_checkout_session(CheckoutParams(tenant="acme", plan="pro", gateway_price_id="x",
+                                                           success_url="https://ok", metadata={"interval": "month"}))
+    after = dt.datetime.now(dt.timezone.utc).replace(tzinfo=None)
+    sub, inv = frappe.get_all("Subscription")[0], frappe.get_all("Invoice")[0]
+    assert before <= sub.last_event_at <= after
+    assert before <= inv.issued_at <= after and before <= inv.paid_at <= after
+    assert before + dt.timedelta(days=30) <= sub.period_end <= after + dt.timedelta(days=30)

@@ -355,8 +355,8 @@ def _effective_at(args):
 
 def run_due_scheduled() -> list[str]:
     """Scheduler hook: re-enqueue pending jobs whose args.effective_at has passed."""
-    from frappe.utils import now_datetime
-    now, out = now_datetime(), []
+    from saas_core.billing.proration import naive_utc_now
+    now, out = naive_utc_now(), []  # effective_at is naive UTC (from period_end), not site-local
     for row in frappe.get_all("Provision Job", filters={"state": "pending"}, fields=["name", "args"]):
         at = _effective_at(row.get("args"))
         if at is not None and at <= now:
@@ -383,8 +383,8 @@ def run_job(job: str, port: FcctlPort | None = None) -> str:
         return cur.get("state")
     if cur.get("state") == "pending":
         at = _effective_at(cur.get("args"))
-        from frappe.utils import now_datetime
-        if at is not None and at > now_datetime():
+        from saas_core.billing.proration import naive_utc_now
+        if at is not None and at > naive_utc_now():
             return "pending"  # not yet due; run_due_scheduled() re-enqueues it at/after effective_at
     try:
         with audit.cache_lock(f"saas_core:job:{job}", ttl=3600, wait=0):

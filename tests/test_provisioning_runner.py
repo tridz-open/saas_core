@@ -183,3 +183,15 @@ def test_site_domain_set_still_used(frappe):
     seed(frappe)
     spec = runner.build_spec(frappe.get_doc("Tenant", "acme"), "wf")
     assert spec.site == "acme.apps.test" and spec.domain == "apps.test"
+
+
+def test_effective_at_compared_in_utc_not_site_local(frappe):
+    """effective_at is naive UTC; with an IST site clock a change due in 3h must not run yet."""
+    import datetime as dt
+    runner, _, Fake, _ = mods()
+    seed(frappe, status="active", fc_site="acme.apps.test"); port = Fake()
+    port.sites["acme.apps.test"] = {"status": "active"}
+    soon = (dt.datetime.utcnow() + dt.timedelta(hours=3)).isoformat()
+    j = job(frappe, kind="change_plan", args='{"plan": "pro", "effective_at": "%s"}' % soon)
+    assert runner.run_due_scheduled() == []
+    assert runner.run_job(j, port=port) == "pending" and not port.count("change_plan")

@@ -3,6 +3,7 @@ Templates come from get_setting("<key>_email_template"); a plain-text fallback i
 import frappe
 
 from saas_core import audit
+from saas_core.billing import proration
 from saas_core.config import get_setting
 from saas_core.notifications import templating
 
@@ -96,8 +97,8 @@ def send_payment_failed(invoice, reason=None, subscription=None):
     amount = format_amount((inv or {}).get("total_amount"), (inv or {}).get("currency")) if inv else _unpaid_amount(sub)
     ctx = {"amount": amount, "reason": reason or "", "tenant_title": _tenant_title(tenant),
            "invoice_number": (inv or {}).get("number") or (inv or {}).get("name") or "",
-           "next_retry": templating.fmt_date((sub or {}).get("next_retry_at")),
-           "suspend_date": templating.fmt_date((sub or {}).get("suspend_date"))}
+           "next_retry": templating.fmt_date((sub or {}).get("next_retry_at"), utc=True),
+           "suspend_date": templating.fmt_date((sub or {}).get("suspend_date"), utc=True)}
     text = (f"Your payment of {amount} failed" if amount else "Your payment failed") + (f": {reason}" if reason else "") + f". Update your payment method: {billing_url()}. {BILLING_POLICY_LINE}"
     return _deliver("payment_failed", "payment_failed", marker, _recipient(owner), ctx,
                     "Payment failed", text, "Invoice" if inv else "Subscription", marker)
@@ -107,8 +108,8 @@ def send_dunning(subscription, attempt=1):
     sub = _doc("Subscription", subscription)
     to = _recipient(sub.get("owner_user"))
     ctx = {"attempt": attempt, "is_final": int(attempt or 0) >= 3, "tenant_title": _tenant_title(sub.get("tenant")),
-           "next_retry": templating.fmt_date(sub.get("next_retry_at")),
-           "suspend_date": templating.fmt_date(sub.get("suspend_date")),
+           "next_retry": templating.fmt_date(sub.get("next_retry_at"), utc=True),
+           "suspend_date": templating.fmt_date(sub.get("suspend_date"), utc=True),
            "amount": _unpaid_amount(sub)}
     text = f"Your payment is overdue (notice {attempt}). Please update billing: {billing_url()}. {BILLING_POLICY_LINE}"
     return _deliver("dunning", "dunning", f"{sub.get('name')}:{attempt}", to, ctx,
@@ -119,7 +120,7 @@ def send_invoice_paid(invoice):
     inv = _doc("Invoice", invoice)
     amount = format_amount(inv.get("total_amount"), inv.get("currency"))
     url = billing_url()
-    start, end = templating.fmt_date(inv.get("period_start")), templating.fmt_date(inv.get("period_end"))
+    start, end = templating.fmt_date(inv.get("period_start"), utc=True), templating.fmt_date(inv.get("period_end"), utc=True)
     sub_plan = ""
     if inv.get("subscription"):
         try:
@@ -127,7 +128,7 @@ def send_invoice_paid(invoice):
         except Exception:  # noqa: BLE001
             sub_plan = ""
     ctx = {"amount": amount, "invoice_number": inv.get("number") or inv.get("name"),
-           "paid_date": templating.fmt_date(inv.get("paid_at") or inv.get("issued_at")) or templating.fmt_date(frappe.utils.now_datetime()),
+           "paid_date": templating.fmt_date(inv.get("paid_at") or inv.get("issued_at"), utc=True) or templating.fmt_date(proration.naive_utc_now(), utc=True),
            "plan_label": templating.plan_label(sub_plan), "period_start": start, "period_end": end,
            "period": f"{start} to {end}" if start and end else end,
            "invoice_url": f"{url}/invoices/{inv.get('name')}", "tenant_title": _tenant_title(inv.get("tenant"))}
@@ -183,7 +184,7 @@ def send_refund_processed(refund):
     ref = _doc("Refund", refund)
     amount = format_amount(ref.get("amount"), ref.get("currency"))
     ctx = {"refund_amount": amount, "payment_method": _payment_method(ref),
-           "refund_date": templating.fmt_date(ref.get("processed_at")) or templating.fmt_date(frappe.utils.now_datetime()),
+           "refund_date": templating.fmt_date(ref.get("processed_at"), utc=True) or templating.fmt_date(proration.naive_utc_now(), utc=True),
            "reference": ref.get("gateway_refund_id") or ref.get("name"),
            "tenant_title": _tenant_title(ref.get("tenant"))}
     text = (f"Your refund of {amount} has been processed to your original payment method. Refunds usually take 5 to 7 "
@@ -196,12 +197,12 @@ def send_renewal_receipt(invoice):
     inv = _doc("Invoice", invoice)
     amount = format_amount(inv.get("total_amount"), inv.get("currency"))
     url = billing_url()
-    start, end = templating.fmt_date(inv.get("period_start")), templating.fmt_date(inv.get("period_end"))
+    start, end = templating.fmt_date(inv.get("period_start"), utc=True), templating.fmt_date(inv.get("period_end"), utc=True)
     sub_plan, next_renewal = "", ""
     if inv.get("subscription"):
         try:
             sub_plan = frappe.db.get_value("Subscription", inv.get("subscription"), "plan") or ""
-            next_renewal = templating.fmt_date(frappe.db.get_value("Subscription", inv.get("subscription"), "period_end"))
+            next_renewal = templating.fmt_date(frappe.db.get_value("Subscription", inv.get("subscription"), "period_end"), utc=True)
         except Exception:  # noqa: BLE001
             pass
     ctx = {"amount": amount, "invoice_number": inv.get("number") or inv.get("name"),

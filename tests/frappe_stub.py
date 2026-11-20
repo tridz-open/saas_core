@@ -153,7 +153,10 @@ def build():
     f.cache = lambda: Cache()
     # utils
     u = types.ModuleType("frappe.utils")
-    u.now_datetime = lambda: _dt.datetime.utcnow()
+    _site_tz = _dt.timezone(_dt.timedelta(hours=5, minutes=30))  # site clock is IST, like production
+    u.get_system_timezone = lambda: "Asia/Kolkata"
+    u.now_datetime = lambda: _dt.datetime.now(_site_tz).replace(tzinfo=None)  # site-local, naive (as Frappe)
+    u.convert_utc_to_system_timezone = lambda d: d.replace(tzinfo=_dt.timezone.utc).astimezone(_site_tz) if d.tzinfo is None else d.astimezone(_site_tz)
     u.now = lambda: _dt.datetime.utcnow().isoformat(sep=" ")
     u.get_datetime = lambda v: v if isinstance(v, _dt.datetime) else _dt.datetime.fromisoformat(str(v))
     u.getdate = lambda v=None: (v or _dt.date.today()) if not isinstance(v, str) else _dt.date.fromisoformat(v[:10])

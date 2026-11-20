@@ -96,8 +96,9 @@ def run_idempotent(scope, user, payload, fn, status=None):
     return res
 
 
-def _iso(v):
-    return v.isoformat() if hasattr(v, "isoformat") else v
+def _iso(v, utc=False):
+    from saas_core.api.v1._timefmt import iso
+    return iso(v, utc=utc)
 
 
 RESERVED = frozenset({

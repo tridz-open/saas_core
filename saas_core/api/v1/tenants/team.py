@@ -20,8 +20,9 @@ def hash_token(token: str) -> str:
     return hashlib.sha256(str(token).encode()).hexdigest()
 
 
-def _iso(v):
-    return v.isoformat() if hasattr(v, "isoformat") else v
+def _iso(v, utc=False):
+    from saas_core.api.v1._timefmt import iso
+    return iso(v, utc=utc)
 
 
 def _nf(what="Resource"):

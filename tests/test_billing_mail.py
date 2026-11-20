@@ -94,3 +94,21 @@ def test_failed_send_does_not_consume_marker(env):
         bm.send_payment_failed("INV1")
     frappe.sendmail = lambda **kw: sent.append(kw)
     assert bm.send_payment_failed("INV1") is True
+
+
+def test_receipt_dates_render_in_site_timezone(env):
+    frappe, sent = env
+    from saas_core.notifications import billing_mail
+    import datetime as dt
+    inv = frappe._store.docs[("Invoice", "INV1")]
+    inv.paid_at = dt.datetime(2026, 11, 30, 20, 30)  # naive UTC = 1 Dec 02:00 IST
+    inv.period_start = dt.datetime(2026, 11, 30, 18, 30)  # 00:00 IST on 1 Dec
+    inv.period_end = dt.datetime(2026, 12, 31, 18, 30)
+    from saas_core.notifications import templating
+    assert templating.fmt_date(inv.paid_at, utc=True) == "1 Dec 2026"
+    assert templating.fmt_date(inv.paid_at) == "30 Nov 2026"
+    assert templating.fmt_date("2026-11-30T20:30:00Z", utc=True) == "1 Dec 2026"
+    frappe._store.docs[("Email Template", "saas-invoice-paid")] = frappe._Doc(
+        doctype="Email Template", name="saas-invoice-paid", subject="x", response_html="{{ paid_date }}|{{ period }}", response="")
+    assert billing_mail.send_invoice_paid("INV1") is True
+    assert sent[-1]["message"] == "1 Dec 2026|1 Dec 2026 to 1 Jan 2027"

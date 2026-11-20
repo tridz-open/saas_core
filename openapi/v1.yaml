@@ -8,7 +8,8 @@ info:
     (saas_core installs an exception handler that emits it with the HTTP status). GET methods take query params, POST methods take a JSON body.
     Mutations accept `Idempotency-Key`. Pagination is cursor-based (`cursor`, `limit` -> `next_cursor`). Alpha: the 2.0.0-alpha line removed tenants.duplicate,
     subscription.cancel, subscription.portal_link and the Paddle gateway, and gates unverified operations behind site_config `saas_core_experimental`
-    (see docs/STATUS.md; those operations carry `x-experimental`). All timestamps are ISO-8601 in UTC with a trailing `Z` (e.g. `2026-11-30T20:30:00Z`); clients convert to local time for display.'
+    (see docs/STATUS.md; those operations carry `x-experimental`). All timestamps are ISO-8601 in UTC with a trailing `Z` (e.g. `2026-11-30T20:30:00Z`);
+    clients convert to local time for display.'
 servers:
 - url: https://{host}
   variables:
